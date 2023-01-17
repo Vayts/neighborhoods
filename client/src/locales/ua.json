@@ -1,0 +1,12 @@
+{
+  "mainPage": "Головна",
+  "notifications": "Повідомлення",
+  "neighborhoods": "Сусідства",
+  "debtTotal": "Боргів загалом",
+  "debtInTheAmount": "Потрібно повернути",
+  "yourDebtor": "Боржників загалом",
+  "yourDebtorInTheAmount": "Вам повернуть",
+  "debt": "Борг(-ів)",
+  "hryvnia": "Гривень",
+  "details": "Детальніше"
+}
