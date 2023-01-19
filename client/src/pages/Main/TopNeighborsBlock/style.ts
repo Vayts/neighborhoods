@@ -23,19 +23,20 @@ export const TopNeighborInfoList = styled.ul`
 `;
 
 export const TopNeighborInfoItem = styled.li`
-	flex-basis: 25%;
+	flex-basis: 20%;
 	display: flex;
 	width: 100%;
 	flex-grow: 1;
 	align-items: center;
-  font-weight: 600;
+  font-weight: 500;
 	
 	&:nth-child(1) {
-		flex-basis: 35%;
+		flex-basis: 40%;
 		
 	}
 	
 	&:nth-child(2) {
+		flex-basis: 20%;
 		justify-content: flex-start;
 	}
 	
@@ -52,7 +53,7 @@ export const TopNeighborInfoItem = styled.li`
 `;
 
 export const TopNeighborName = styled.p`
-	margin: 0 0 0 20px;
+	margin: 0 20px 0 20px;
 	font-size: 16px;
 	font-weight: 700;
 `;
