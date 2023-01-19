@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components';
 import { useAppSelector } from '@src/hooks/hooks';
 import { selectTheme } from '@src/store/base/selectors';
 import { THEMES } from '@constants/colors';
-import { useTranslation } from 'react-i18next';
 import { Main } from '@src/pages/Main/Main';
 import { NeighborhoodsPage } from '@src/pages/NeighborhoodsPage/NeighborhoodsPage';
 import { NotificationsPage } from '@src/pages/NotificationsPage/NotificationsPage';
