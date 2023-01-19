@@ -19,7 +19,7 @@ export const TopNeighborsBlock: React.FC = () => {
 					<TopNeighborItem key={item.id}>
 						<TopNeighborInfoList>
 							<TopNeighborInfoItem>
-								<AvatarFiller text={item.nickname} size={60}/>
+								<AvatarFiller text={item.nickname} size={50}/>
 								<TopNeighborName>{item.nickname}</TopNeighborName>
 							</TopNeighborInfoItem>
 							<TopNeighborInfoItem>
