@@ -12,7 +12,7 @@ const initialState: BaseState = {
 };
 
 export const baseSlice = createSlice({
-	name: 'auth',
+	name: 'base',
 	initialState,
 	reducers: {
 		setTheme: (state, action: PayloadAction<string>) => {
