@@ -5,6 +5,11 @@ export const THEMES = {
 		primary: '#6C5DD3',
 		hover: '#5d52b2',
 		hoverLight: '#958fc4',
+		secondColor: '#FF9F38',
+		secondHover: '#f69342',
+		linkColor: '#2C80FF',
+		disabledBg: '#8d8d8d',
+		disabledTxt: '#6b6969',
 	},
 	dark: {
 		txtColor: '#2E3A59',
@@ -12,5 +17,10 @@ export const THEMES = {
 		primary: '#f6b146',
 		hover: '#9e9af1',
 		hoverLight: '#958fc4',
+		secondColor: '#FF9F38',
+		secondHover: '#d97b2e',
+		linkColor: '#2C80FF',
+		disabledBg: '#424242',
+		disabledTxt: '#6b6969',
 	},
 };

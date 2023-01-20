@@ -6,7 +6,7 @@ export const Header: React.FC = () => {
 		<HeaderWrapper>
 			<HeaderLogoWrapper>
 				<HeaderLogoImg src='./assets/img/logo.svg' alt='logo'/>
-				<HeaderLogoTitle>Neighborhoods</HeaderLogoTitle>
+				<HeaderLogoTitle>Neighborhood</HeaderLogoTitle>
 			</HeaderLogoWrapper>
 		</HeaderWrapper>
 	);

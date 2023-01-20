@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import en from './locales/en.json';
 import ua from './locales/ua.json';
 
-const language = localStorage.getItem('lang') || 'ua';
+const language = localStorage.getItem('lang') || 'en';
 
 i18n.use(initReactI18next).init({
 	resources: {
