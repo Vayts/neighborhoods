@@ -1,63 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAppSelector } from '@src/hooks/hooks';
-import { selectUserMain } from '@src/store/user/selectors';
-import { DebtStatStateItem } from '@src/pages/Main/DebtStat/types';
 import { useTranslation } from 'react-i18next';
 import {
 	DebtStatSubTitle,
 	DebtStatValue,
 	DebtStatWrapper,
-} from '@src/pages/Main/DebtStat/style';
+} from '@src/pages/Main/StatActivityRow/DebtStat/style';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import { InfoLine } from '@src/components/InfoLine/InfoLine';
-import { generateState } from '@helpers/stat.helper';
 import { BlockMenuSlider } from '@src/components/BlockMenuSlider/BlockMenuSlider';
+import { selectDashboardStatActivity } from '@src/store/dashboard/selectors';
+import { getPercentageNumberFromNumber } from '@helpers/number.helper';
 
 export const DebtStat: React.FC = () => {
-	const [state, setState] = useState<DebtStatStateItem[]>([]);
+	const stats = useAppSelector(selectDashboardStatActivity).stats;
 	const [active, setActive] = useState<number>(0);
-	const user = useAppSelector(selectUserMain);
 	const { t } = useTranslation();
 	
-	useEffect(() => {
-		const baseState = generateState(user);
-		
-		setState([...baseState]);
-	}, []);
-	
 	return (
-		state.length ? (
+		stats.length ? (
 			<DebtStatWrapper>
 				<BlockMenuSlider
-					title={state[active].title}
+					title={t(stats[active].titleKey)}
 					active={active}
 					setActive={setActive}
-					length={state.length}
+					length={stats.length}
 				/>
-				<div style={{ width: '60%', margin: '0 auto 35px', textAlign: 'center', position: 'relative' }}>
+				<div style={{ width: '64%', margin: '0 auto 35px', textAlign: 'center', position: 'relative' }}>
 					<CircularProgressbarWithChildren
-						value={state[active].value}
+						value={getPercentageNumberFromNumber(stats[active].returnedDebts, stats[active].receivedDebts)}
 						strokeWidth={12}
 						styles={buildStyles(
 							{
 								strokeLinecap: 'round',
-								pathColor: state[active].color,
+								pathColor: stats[active].color,
 								trailColor: '#EFF2F4',
 								backgroundColor: '#3e98c7',
 								pathTransitionDuration: 0.5,
 							},
 						)}
 					>
-						<DebtStatValue>{`${state[active].value}%`}</DebtStatValue>
+						<DebtStatValue>{`${getPercentageNumberFromNumber(stats[active].returnedDebts, stats[active].receivedDebts)}%`}</DebtStatValue>
 						<DebtStatSubTitle>{t('debt')}</DebtStatSubTitle>
 					</CircularProgressbarWithChildren>
 				</div>
 				<InfoLine
-					value={state[active].totalValue}
-					color={state[active].color}
+					value={stats[active].returnedDebts}
+					color={stats[active].color}
 					title={t('debtsRepaid')}
 					icon='icon-event'
-					subTitle={state[active].title}
+					subTitle={t(stats[active].titleKey)}
 				/>
 			</DebtStatWrapper>
 		) : null
