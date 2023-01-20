@@ -37,9 +37,9 @@ export const SmallIcon = styled.div<SmallIconInterface>`
 
 export const SmallTitle = styled.h3`
   font-weight: 400;
-  font-size: 16px;
-	min-height: 40px;
-	margin: 25px 0 15px;
+  font-size: 14px;
+	min-height: 30px;
+	margin: 15px 0 15px;
 	letter-spacing: 1px;
   color: ${({ theme }) => theme.subTxtColor};
   cursor: default;
@@ -47,8 +47,8 @@ export const SmallTitle = styled.h3`
 
 export const SmallValue = styled.h2`
   font-weight: 600;
-  font-size: 30px;
-	margin: 15px 0 5px;
+	margin: 5px 0 5px;
+	font-size: 25px;
 `;
 
 export const SmallSubTitle = styled.p`

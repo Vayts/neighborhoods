@@ -15,7 +15,7 @@ export const StatBlock: React.FC<StatBlockProps> = ({ percentage, max, current }
 		<StatBlockWrapper>
 			<StatBlockTitle>{t('debtReturn')}</StatBlockTitle>
 			<SemiCircleProgressBar
-				diameter={370}
+				diameter={300}
 				percentage={percentage}
 				strokeWidth={40}
 				showPercentValue={false}
