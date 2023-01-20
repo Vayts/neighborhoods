@@ -24,6 +24,7 @@ export const StatBlockValue = styled.h4`
 	font-weight: 500;
   position: relative;
 	bottom: 30px;
+	font-size: 20px;
 	cursor: default;
 	user-select: none;
 `;

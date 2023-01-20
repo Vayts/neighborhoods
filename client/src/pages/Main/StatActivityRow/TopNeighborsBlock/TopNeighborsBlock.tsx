@@ -1,16 +1,17 @@
 import React from 'react';
 import { AvatarFiller } from '@src/components/AvatarFiller/AvatarFiller';
 import { useAppSelector } from '@src/hooks/hooks';
-import { selectUserMain } from '@src/store/user/selectors';
 import {
+	TopNeighborhoodName,
 	TopNeighborInfoItem,
 	TopNeighborInfoList,
 	TopNeighborItem, TopNeighborName,
 	TopNeighborsList,
-} from '@src/pages/Main/TopNeighborsBlock/style';
+} from '@src/pages/Main/StatActivityRow/TopNeighborsBlock/style';
+import { selectDashboardStatActivity } from '@src/store/dashboard/selectors';
 
 export const TopNeighborsBlock: React.FC = () => {
-	const topNeighbors = useAppSelector(selectUserMain).topNeighbors;
+	const topNeighbors = useAppSelector(selectDashboardStatActivity).topNeighbors;
 	
 	return (
 		<TopNeighborsList>
@@ -23,7 +24,10 @@ export const TopNeighborsBlock: React.FC = () => {
 								<TopNeighborName>{item.nickname}</TopNeighborName>
 							</TopNeighborInfoItem>
 							<TopNeighborInfoItem>
-								{item.neighborhoodName}
+								<TopNeighborhoodName>
+									<span className='icon-home'/>
+									{item.neighborhoodName}
+								</TopNeighborhoodName>
 							</TopNeighborInfoItem>
 							<TopNeighborInfoItem>
 								{`${item.debtsValue} ₴`}
