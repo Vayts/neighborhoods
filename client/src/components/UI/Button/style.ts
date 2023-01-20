@@ -27,5 +27,6 @@ export const ButtonItem = styled.button<IButtonStyle>`
 	
 	&:disabled {
 		background-color: ${({ theme }) => theme.disabledBg};
+		cursor: default;
 	}
 `;
