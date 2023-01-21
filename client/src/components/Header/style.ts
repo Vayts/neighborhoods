@@ -18,7 +18,7 @@ export const HeaderLogoImg = styled.img`
 
 export const HeaderLogoTitle = styled.h2`
 	font-weight: 500;
-	font-size: 24px;
+	font-size: 18px;
 	margin: 0;
 	text-transform: uppercase;
 `;

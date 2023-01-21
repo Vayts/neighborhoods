@@ -1,4 +1,4 @@
-export interface AuthState {
+export interface IAuthState {
 	user: null | {
 		_id: string,
 		login: string,
@@ -19,7 +19,7 @@ export interface AuthState {
 	}
 }
 
-export interface ISetRegisterPayload {
+export interface ISetAuthPayload {
 	name: string,
 	value: string,
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-	RegisterContentHolder,
+	RegisterContentHolder, RegisterForm,
 	RegisterFormDivider, RegisterFormLinkItem, RegisterFormLinkText, RegisterFormLinkWrapper,
 	RegisterLogo, RegisterLogoWrapper,
-	RegisterPageWrapper, RegisterSubTitle, RegisterTitle, RegisterTitleWrapper,
+	RegisterPageWrapper, RegisterSubDivider, RegisterSubTitle, RegisterTitle, RegisterTitleWrapper,
 } from '@src/pages/RegisterPage/style';
 import { Input } from '@src/components/UI/Input/Input';
 import { Button } from '@src/components/UI/Button/Button';
@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
 import { selectRegister } from '@src/store/auth/selectors';
 import { authSlice } from '@src/store/auth/reducer';
+import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
 
 export const RegisterPage: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -33,79 +34,115 @@ export const RegisterPage: React.FC = () => {
 					<RegisterTitle>{t('signUp')}</RegisterTitle>
 					<RegisterSubTitle>{t('signUpTitle')}</RegisterSubTitle>
 				</RegisterTitleWrapper>
-				<RegisterFormDivider>
+				<RegisterForm>
+					<RegisterFormDivider>
+						<RegisterSubDivider>
+							<Input
+								id='firstName'
+								name='firstName'
+								padding='8px 15px'
+								margin='8px 0'
+								value={values.firstName}
+								onChange={(e) => {
+									changeHandler(e, 'firstName');
+								}}
+								width='200px'
+								placeholder={t('firstName')}
+								label={t('firstName')}
+							/>
+							<ErrorMsg
+								show={values.errors.firstName && values.touched.firstName}
+								msg={values.errors.firstName}
+							/>
+						</RegisterSubDivider>
+						<RegisterSubDivider>
+							<Input
+								id='lastName'
+								name='lastName'
+								padding='8px 15px'
+								margin='8px 0'
+								value={values.lastName}
+								onChange={(e) => {
+									changeHandler(e, 'lastName');
+								}}
+								width='200px'
+								placeholder={t('lastName')}
+								label={t('lastName')}
+							/>
+							<ErrorMsg
+								show={values.errors.lastName && values.touched.lastName}
+								msg={values.errors.lastName}
+							/>
+						</RegisterSubDivider>
+					</RegisterFormDivider>
 					<Input
-						id='firstName'
-						name='firstName'
-						value={values.firstName}
+						id='login'
+						name='login'
+						padding='8px 15px'
+						margin='8px 0'
+						value={values.login}
 						onChange={(e) => {
-							changeHandler(e, 'firstName');
+							changeHandler(e, 'login');
 						}}
-						width='200px'
-						placeholder={t('firstName')}
-						label={t('firstName')}
+						width='100%'
+						placeholder={t('login')}
+						label={t('login')}
+					/>
+					<ErrorMsg
+						show={values.errors.login && values.touched.login}
+						msg={values.errors.login}
 					/>
 					<Input
-						id='lastName'
-						name='lastName'
-						value={values.lastName}
+						id='password'
+						name='password'
+						padding='8px 15px'
+						margin='8px 0'
+						value={values.password}
 						onChange={(e) => {
-							changeHandler(e, 'lastName');
+							changeHandler(e, 'password');
 						}}
-						width='200px'
-						placeholder={t('lastName')}
-						label={t('lastName')}
+						width='100%'
+						placeholder={t('password')}
+						label={t('password')}
+						type='password'
+						secure
 					/>
-				</RegisterFormDivider>
-				<Input
-					id='login'
-					name='login'
-					value={values.login}
-					onChange={(e) => {
-						changeHandler(e, 'login');
-					}}
-					width='100%'
-					placeholder={t('login')}
-					label={t('login')}
-				/>
-				<Input
-					id='password'
-					name='password'
-					value={values.password}
-					onChange={(e) => {
-						changeHandler(e, 'password');
-					}}
-					width='100%'
-					placeholder={t('password')}
-					label={t('password')}
-					type='password'
-					secure
-				/>
-				<Input
-					id='confirmPassword'
-					name='confirmPassword'
-					value={values.confirmPassword}
-					onChange={(e) => {
-						changeHandler(e, 'confirmPassword');
-					}}
-					width='100%'
-					placeholder={t('confirmPassword')}
-					label={t('confirmPassword')}
-					type='password'
-					secure
-				/>
-				<Button
-					onClick={() => {
-						return 'set';
-					}}
-					type='submit'
-					width='100%'
-					title={t('signUp')}
-					fz='18px'
-					margin='50px 0 10px'
-					padding='15px'
-					isDisabled={!Object.keys(values.touched).length || !!Object.keys(values.errors).length}
-				/>
+					<ErrorMsg
+						show={values.errors.password && values.touched.password}
+						msg={values.errors.password}
+					/>
+					<Input
+						id='confirmPassword'
+						name='confirmPassword'
+						padding='8px 15px'
+						margin='8px 0'
+						value={values.confirmPassword}
+						onChange={(e) => {
+							changeHandler(e, 'confirmPassword');
+						}}
+						width='100%'
+						placeholder={t('confirmPassword')}
+						label={t('confirmPassword')}
+						type='password'
+						secure
+					/>
+					<ErrorMsg
+						show={values.errors.confirmPassword && values.touched.confirmPassword}
+						msg={values.errors.confirmPassword}
+					/>
+					<Button
+						onClick={() => {
+							console.log('test');
+						}}
+						type='submit'
+						width='100%'
+						title={t('signUp')}
+						fz='18px'
+						margin='30px 0 10px'
+						padding='15px'
+						isDisabled={!Object.keys(values.touched).length || !!Object.keys(values.errors).length}
+					/>
+				</RegisterForm>
 				<RegisterFormLinkWrapper>
 					<RegisterFormLinkText>{t('alreadyHaveAnAccount')}</RegisterFormLinkText>
 					<RegisterFormLinkItem to='/login'>{t('loginNow')}</RegisterFormLinkItem>

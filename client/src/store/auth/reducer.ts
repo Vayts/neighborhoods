@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { AuthState, ISetRegisterPayload } from '@src/store/auth/types';
+import { IAuthState, ISetAuthPayload } from '@src/store/auth/types';
+import { totalRegisterValidate } from '@helpers/validation';
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
 	user: null,
 	register: {
 		firstName: '',
@@ -30,12 +31,19 @@ export const authSlice = createSlice({
 		setAuth: (state, action: PayloadAction<{_id: string, login: string, token: string}>) => {
 			state.user = action.payload;
 		},
-		setRegister: (state, action: PayloadAction<ISetRegisterPayload>) => {
+		setRegister: (state, action: PayloadAction<ISetAuthPayload>) => {
 			state.register[action.payload.name] = action.payload.value;
+			state.register.errors = totalRegisterValidate({
+				...state.register,
+				[action.payload.name]: action.payload.value,
+			});
 			state.register.touched = {
 				...state.register.touched,
 				[action.payload.name]: true,
 			};
+		},
+		setLogin: (state, action: PayloadAction<ISetAuthPayload>) => {
+			state.loginIn[action.payload.name] = action.payload.value;
 		},
 	},
 });

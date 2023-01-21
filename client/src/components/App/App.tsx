@@ -9,6 +9,7 @@ import { Main } from '@src/pages/Main/Main';
 import { NeighborhoodsPage } from '@src/pages/NeighborhoodsPage/NeighborhoodsPage';
 import { NotificationsPage } from '@src/pages/NotificationsPage/NotificationsPage';
 import { RegisterPage } from '@src/pages/RegisterPage/RegisterPage';
+import { LoginPage } from '@src/pages/LoginPage/LoginPage';
 import { AppWrapper } from './style';
 
 export const App: React.FC = () => {
@@ -19,12 +20,13 @@ export const App: React.FC = () => {
 			<AppWrapper>
 				<Routes>
 					<Route path='/' element={<RegisterPage/>}/>
+					<Route path='/login' element={<LoginPage/>}/>
+					<Route path='/register' element={<RegisterPage/>}/>
 					<Route path='/' element={<Layout/>}>
 						{/*<Route path='/' element={<Main/>}/>*/}
 						<Route path='/dashboard' element={<Main/>}/>
 						<Route path='/neighborhoods' element={<NeighborhoodsPage/>}/>
 						<Route path='/notification' element={<NotificationsPage/>}/>
-						<Route path='/register' element={<RegisterPage/>}/>
 					</Route>
 				</Routes>
 			</AppWrapper>

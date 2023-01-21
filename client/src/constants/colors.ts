@@ -10,6 +10,7 @@ export const THEMES = {
 		linkColor: '#2C80FF',
 		disabledBg: '#8d8d8d',
 		disabledTxt: '#6b6969',
+		errorColor: '#cc4c4c',
 	},
 	dark: {
 		txtColor: '#2E3A59',
@@ -22,5 +23,6 @@ export const THEMES = {
 		linkColor: '#2C80FF',
 		disabledBg: '#424242',
 		disabledTxt: '#6b6969',
+		errorColor: '#cc4c4c',
 	},
 };
