@@ -63,7 +63,7 @@ export const TopNeighborhoodName = styled.div`
   display: flex;
   justify-content: center;
 	align-items: center;
-  background-color: ${({ theme }) => theme.primary};
+  background-color: ${({ theme }) => `${theme.secondColor}90`};
   color: #fff;
   margin: 0;
   padding: 0 5px;
@@ -74,7 +74,7 @@ export const TopNeighborhoodName = styled.div`
 	letter-spacing: 1px;
 	
 	&:hover {
-		background-color: ${({ theme }) => theme.hover};
+		background-color: ${({ theme }) => theme.secondHover};
 		transition: all 0.2s;
 	}
 

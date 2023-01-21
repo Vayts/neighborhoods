@@ -6,22 +6,11 @@ export interface IButton {
     onClick: (e: React.MouseEvent<Element, MouseEvent>) => void;
     value?: string;
     type?: 'submit' | 'reset' | 'button';
-    title?: string;
-    borderRadius?: string;
+    title: string;
     isDisabled?: boolean;
-    color?: string;
-    fontSize?: string;
-    fontWeight?: string;
-    bgColor?: string;
-    bgColorHover?: string;
+    fz?: string;
     height?: string;
     width?: string;
     padding?: string;
     margin?: string;
-    content?: string;
-    transition?: string;
-    focusColor?: string;
-    bgColorDisabled?: string;
-    position?: string;
-    right?:string;
 }
