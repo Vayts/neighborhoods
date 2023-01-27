@@ -5,6 +5,7 @@ import * as bcrypt from 'bcryptjs'
 import { UserDocument } from '../schemas/user.schema';
 import { TokenService } from './token.service';
 import { ERRORS } from '../../constants/errors';
+import { SimpleUserDto } from '../dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,11 +20,11 @@ export class AuthService {
 	
 	async login(res, dto) {
 		const user = await this.validateUser(dto);
-		console.log(user);
 		const tokens = this.tokenService.generateTokens(user);
-		await this.tokenService.setToken(user._id, tokens.refresh);
-		res.cookie('arvalesa', tokens.refresh, {httpOnly: true});
-		return tokens.access;
+		await this.tokenService.updateToken(user._id, tokens.refresh);
+		res.cookie('arvalesa', tokens.refresh, {httpOnly: true, maxAge: 3600 * 24 * 30});
+		const userDTO = new SimpleUserDto(user);
+		return {...userDTO, token: tokens.access};
 	}
 	
 	async register(candidate) {
@@ -33,7 +34,8 @@ export class AuthService {
 		const user: UserDocument[] = await this.userService.createUser({...candidate, password: hashPassword});
 		const tokens = this.tokenService.generateTokens(user[0])
 		await this.tokenService.setToken(user[0]._id, tokens.refresh);
-		return tokens.access;
+		const userDTO = new SimpleUserDto(user[0]);
+		return {...userDTO, token: tokens.access};
 	}
 	
 	async validateUser(dto) {
@@ -46,27 +48,37 @@ export class AuthService {
 		throw new UnauthorizedException({message: 'WRONG_LOGIN_PASSWORD'});
 	}
 	
-	async logout() {
-		return null
+	async logout(req, res) {
+		// const jwtToken = req.cookies.arvalesa;
+		// if (!jwtToken) return null;
+		//
+		// const tokenCheck = await this.tokenService.getTokenByToken(jwtToken);
+		// if (!tokenCheck) return null;
+		//
+		// await this.tokenService.removeToken(jwtToken);
+		res.clearCookie('arvalesa', {httpOnly: true, secure: true, sameSite: true});
 	}
 	
 	async refresh(req) {
 		const jwtToken = req.cookies.arvalesa;
-		if (!jwtToken) throw new HttpException(ERRORS.NOT_AUTHORIZED, HttpStatus.UNAUTHORIZED);
+		if (!jwtToken) return null;
 
 		const tokenCheck = await this.tokenService.getTokenByToken(jwtToken);
-		if (!tokenCheck) throw new HttpException(ERRORS.NOT_AUTHORIZED, HttpStatus.UNAUTHORIZED);
+		if (!tokenCheck) throw new HttpException(ERRORS.UNDEFINED_TOKEN, HttpStatus.UNAUTHORIZED);
 
 		try {
 			const user: UserDocument | null = this.jwtService.verify(jwtToken);
 			const newTokens = this.tokenService.generateTokens(user);
 
 			if (user._id !== tokenCheck.user_id.toString()) {
-				return Promise.reject('UNAUTHORIZED');
+				return Promise.reject(ERRORS.UNDEFINED_TOKEN);
 			}
 
 			return {...user, token: newTokens.access}
 		} catch (e) {
+			if (e === 'ERRORS.UNDEFINED_TOKEN') {
+				throw new HttpException(ERRORS.TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED);
+			}
 			throw new HttpException(ERRORS.NOT_AUTHORIZED, HttpStatus.UNAUTHORIZED);
 		}
 	}

@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
 	background-color: #fff;
-	padding: 15px 35px;
+	padding: 0 30px 0 35px;
+	display: flex;
+	justify-content: space-between;
+  position: relative;
+	box-sizing: border-box;
 `;
 
 export const HeaderLogoWrapper = styled.div`

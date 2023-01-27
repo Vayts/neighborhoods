@@ -36,12 +36,17 @@ export class TokenService {
 		return this.tokenModel.create({user_id, token});
 	}
 	
-	updateToken(user_id, token) {
-		return this.tokenModel.findOneAndUpdate({user_id}, {token});
+	async updateToken(user_id, token) {
+		const isToken = await this.getTokenByUserId(user_id);
+		if (isToken) {
+			return this.tokenModel.findOneAndUpdate({user_id}, {token}).exec();
+		} else {
+			return this.setToken(user_id, token);
+		}
 	}
 	
-	refreshToken() {
-	
+	async removeToken(token) {
+		return this.tokenModel.findOneAndDelete({token: token}, {token}).exec();
 	}
 	
 }

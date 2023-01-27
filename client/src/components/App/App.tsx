@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from '@hoc/Layout/Layout';
 import { ThemeProvider } from 'styled-components';
-import { useAppSelector } from '@src/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
 import { selectTheme } from '@src/store/base/selectors';
 import { THEMES } from '@constants/colors';
 import { Main } from '@src/pages/Main/Main';
@@ -10,25 +10,57 @@ import { NeighborhoodsPage } from '@src/pages/NeighborhoodsPage/NeighborhoodsPag
 import { NotificationsPage } from '@src/pages/NotificationsPage/NotificationsPage';
 import { RegisterPage } from '@src/pages/RegisterPage/RegisterPage';
 import { LoginPage } from '@src/pages/LoginPage/LoginPage';
+import RequireAuth from '@hoc/RequireAuth/RequireAuth';
+import { refreshUser } from '@src/store/auth/actions';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Loader } from '@src/components/Loader/Loader';
 import { AppWrapper } from './style';
 
 export const App: React.FC = () => {
 	const currentTheme: string = useAppSelector(selectTheme);
+	const [isLoading, setLoading] = useState(true);
+	const dispatch = useAppDispatch();
+	
+	useEffect(() => {
+		const controller = new AbortController();
+		
+		dispatch(refreshUser(setLoading, controller));
+		
+		return () => {
+			controller.abort();
+		};
+	}, []);
 	
 	return (
 		<ThemeProvider theme={THEMES[currentTheme]}>
 			<AppWrapper>
-				<Routes>
-					<Route path='/' element={<RegisterPage/>}/>
-					<Route path='/login' element={<LoginPage/>}/>
-					<Route path='/register' element={<RegisterPage/>}/>
-					<Route path='/' element={<Layout/>}>
-						{/*<Route path='/' element={<Main/>}/>*/}
-						<Route path='/dashboard' element={<Main/>}/>
-						<Route path='/neighborhoods' element={<NeighborhoodsPage/>}/>
-						<Route path='/notification' element={<NotificationsPage/>}/>
-					</Route>
-				</Routes>
+				{isLoading 
+					? <Loader size={100}/>
+					: (
+						<Routes>
+							<Route path='/login' element={<LoginPage/>}/>
+							<Route path='/register' element={<RegisterPage/>}/>
+							<Route path='/' element={<RequireAuth/>}>
+								<Route path='/' element={<Layout/>}>
+									<Route path='/' element={<Main/>}/>
+									<Route path='/dashboard' element={<Main/>}/>
+									<Route path='/neighborhoods' element={<NeighborhoodsPage/>}/>
+									<Route path='/notification' element={<NotificationsPage/>}/>
+								</Route>
+							</Route>
+						</Routes>
+					)}
+				<ToastContainer
+					position="top-right"
+					autoClose={5000}
+					hideProgressBar
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					draggable={false}
+					theme="colored"
+				/>
 			</AppWrapper>
 		</ThemeProvider>
 	);
