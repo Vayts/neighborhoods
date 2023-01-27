@@ -1,6 +1,7 @@
 import React from 'react';
 import { IButton } from '@src/components/UI/Button/types';
 import { ButtonItem } from '@src/components/UI/Button/style';
+import { Loader } from '@src/components/Loader/Loader';
 
 export const Button: React.FC<IButton> = ({
 	value,
@@ -14,6 +15,7 @@ export const Button: React.FC<IButton> = ({
 	isDisabled,
 	type,
 	width,
+	isLoading,
 	onClick,
 }) => {
 	return (
@@ -27,10 +29,10 @@ export const Button: React.FC<IButton> = ({
 			name={name}
 			id={id}
 			type={type}
-			disabled={isDisabled}
+			disabled={isDisabled || isLoading}
 			width={width}
 		>
-			{title}
+			{isLoading ? <Loader size={30}/> : title}
 		</ButtonItem>
 	);
 };

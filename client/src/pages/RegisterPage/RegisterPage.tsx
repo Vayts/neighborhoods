@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	RegisterContentHolder, RegisterForm,
 	RegisterFormDivider, RegisterFormLinkItem, RegisterFormLinkText, RegisterFormLinkWrapper,
@@ -9,19 +9,38 @@ import { Input } from '@src/components/UI/Input/Input';
 import { Button } from '@src/components/UI/Button/Button';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectRegister } from '@src/store/auth/selectors';
+import { selectRegister, selectUser } from '@src/store/auth/selectors';
 import { authSlice } from '@src/store/auth/reducer';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
+import { totalRegisterValidate } from '@helpers/validation';
+import { registerRequest } from '@src/store/auth/actions';
+import { useNavigate } from 'react-router-dom';
 
 export const RegisterPage: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { setRegister } = authSlice.actions;
 	const values = useAppSelector(selectRegister);
+	const user = useAppSelector(selectUser);
+	const [isLoading, setLoading] = useState(false);
+	const navigate = useNavigate();
 	const { t } = useTranslation();
+	
+	useEffect(() => {
+		if (user) {
+			navigate('/');
+		}
+	}, [user]);
 	
 	const changeHandler = (e: React.ChangeEvent, name) => {
 		const target = e.target as HTMLInputElement;
 		dispatch(setRegister({ name, value: target.value }));
+	};
+	
+	const submitHandler = (e:React.MouseEvent<Element, MouseEvent>) => {
+		e.preventDefault();
+		if (!Object.keys(totalRegisterValidate(values)).length) {
+			dispatch(registerRequest(values, setLoading));
+		}
 	};
 	
 	return (
@@ -131,16 +150,16 @@ export const RegisterPage: React.FC = () => {
 						msg={values.errors.confirmPassword}
 					/>
 					<Button
-						onClick={() => {
-							console.log('test');
-						}}
+						onClick={(e) => submitHandler(e)}
 						type='submit'
 						width='100%'
 						title={t('signUp')}
 						fz='18px'
+						height='50px'
 						margin='30px 0 10px'
 						padding='15px'
 						isDisabled={!Object.keys(values.touched).length || !!Object.keys(values.errors).length}
+						isLoading={isLoading}
 					/>
 				</RegisterForm>
 				<RegisterFormLinkWrapper>

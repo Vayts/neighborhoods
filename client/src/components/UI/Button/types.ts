@@ -13,4 +13,5 @@ export interface IButton {
     width?: string;
     padding?: string;
     margin?: string;
+		isLoading?: boolean;
 }

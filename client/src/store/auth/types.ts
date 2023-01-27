@@ -2,7 +2,10 @@ export interface IAuthState {
 	user: null | {
 		_id: string,
 		login: string,
+		firstName: string,
+		lastName: string,
 		token: string,
+		avatar: string | null,
 	},
 	register: {
 		firstName: string,
