@@ -1,5 +1,6 @@
 export const THEMES = {
 	light: {
+		bgColor: '#F9F8F8',
 		txtColor: '#2E3A59',
 		subTxtColor: '#B6B6B6',
 		primary: '#6C5DD3',
@@ -13,6 +14,7 @@ export const THEMES = {
 		errorColor: '#cc4c4c',
 	},
 	dark: {
+		bgColor: '#F9F8F8',
 		txtColor: '#2E3A59',
 		subTxtColor: '#B6B6B6',
 		primary: '#f6b146',

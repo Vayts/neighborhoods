@@ -6,7 +6,7 @@ import { getNotification } from '@src/notification/notifications';
 import { Dispatch } from 'react';
 import i18n from '../../i18n';
 
-export const refreshUser = (setLoading: (state: boolean) => void, controller: AbortController): Dispatch<AppDispatch> => {
+export const refreshUser = (setLoading: (state: boolean) => void, controller: AbortController) => {
 	return async (dispatch: AppDispatch) => {
 		const t = i18n.t;
 		
@@ -18,11 +18,11 @@ export const refreshUser = (setLoading: (state: boolean) => void, controller: Ab
 			if (response.data) {
 				dispatch(authSlice.actions.setAuth(response.data));
 			}
+			return response.data;
 		} catch (e) {
 			if (e.response.data.message === 'UNDEFINED_TOKEN') {
 				getNotification(t('smtWntWrng'), 'error');
 			}
-			console.log(e);
 		} finally {
 			setLoading(false);
 		}

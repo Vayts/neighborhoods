@@ -5,7 +5,11 @@ export const PageBarWrapper = styled.div`
 	padding: 35px 0 35px 35px;
 	background-color: #fff;
 	height: calc(100vh - 72px);
-  width: 250px;
+  min-width: 250px;
+	max-width: 250px;
+	position: sticky;
+	top: 72px;
+	flex-grow: 1;
 `;
 
 export const PageLink = styled(NavLink)`
@@ -14,8 +18,8 @@ export const PageLink = styled(NavLink)`
 	display: flex;
 	align-items: center;
 	font-weight: 500;
-	padding: 5px 0;
-	margin: 15px 0;
+	padding: 10px 5px;
+	margin: 0;
 	
 	&:hover {
 		transition: all 0.2s, border 0s;
@@ -23,6 +27,7 @@ export const PageLink = styled(NavLink)`
 	}
 	
 	&.active {
+    transition: all 0.2s, border 0s;
 		color: ${({ theme }) => theme.primary};
     border-right: 3px solid ${({ theme }) => theme.primary};
 		

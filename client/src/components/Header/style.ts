@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
-	background-color: #fff;
-	padding: 0 30px 0 35px;
-	display: flex;
-	justify-content: space-between;
-  position: relative;
-	box-sizing: border-box;
+  background-color: #fff;
+  padding: 0 30px 0 35px;
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px #e5e5e5;
 `;
 
 export const HeaderLogoWrapper = styled.div`

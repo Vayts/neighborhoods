@@ -19,6 +19,10 @@ export const ButtonItem = styled.button<IButtonStyle>`
 	color: #fff;
 	border-radius: 5px;
 	cursor: pointer;
+  position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	
 	&:hover {
 		transition: all 0.2s;
