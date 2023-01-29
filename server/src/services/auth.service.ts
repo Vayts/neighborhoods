@@ -21,8 +21,9 @@ export class AuthService {
 	async login(res, dto) {
 		const user = await this.validateUser(dto);
 		const tokens = this.tokenService.generateTokens(user);
+		console.log(tokens);
 		await this.tokenService.updateToken(user._id, tokens.refresh);
-		res.cookie('arvalesa', tokens.refresh, {httpOnly: true, maxAge: 3600 * 24 * 30});
+		res.cookie('arvalesa', tokens.refresh, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 30});
 		const userDTO = new SimpleUserDto(user);
 		return {...userDTO, token: tokens.access};
 	}
@@ -67,7 +68,9 @@ export class AuthService {
 		if (!tokenCheck) throw new HttpException(ERRORS.UNDEFINED_TOKEN, HttpStatus.UNAUTHORIZED);
 
 		try {
-			const user: UserDocument | null = this.jwtService.verify(jwtToken);
+			const user: UserDocument | null = this.jwtService.verify(jwtToken, {
+				secret: process.env.JWT_REFRESH_SECRET || 'refresh'
+			});
 			const newTokens = this.tokenService.generateTokens(user);
 
 			if (user._id !== tokenCheck.user_id.toString()) {

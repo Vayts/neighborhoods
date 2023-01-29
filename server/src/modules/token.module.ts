@@ -11,7 +11,6 @@ import { JwtModule } from '@nestjs/jwt';
 		MongooseModule.forFeature([{name: Token.name, schema: TokenSchema}]),
 		TokenModule,
 		JwtModule.register({
-			secret: process.env.SECRET_KEY || 'secret',
 			signOptions: {
 				expiresIn: '24h'
 			}
