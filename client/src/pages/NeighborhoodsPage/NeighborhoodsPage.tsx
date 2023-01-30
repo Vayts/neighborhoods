@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ViewMenu } from '@src/components/ViewMenu/ViewMenu';
 import {
+	NeighborhoodAddButton, NeighborhoodAddIcon,
 	NeighborhoodsControls,
 	NeighborhoodsPageWrapper,
 	NeighborhoodsTitle,
@@ -37,6 +38,9 @@ export const NeighborhoodsPage: React.FC = () => {
 					<>
 						<NeighborhoodsControls>
 							<ViewMenu mode={mode} setMode={setMode}/>
+							<NeighborhoodAddButton>
+								<NeighborhoodAddIcon className='icon-cancel'/>
+							</NeighborhoodAddButton>
 						</NeighborhoodsControls>
 						<NeighborhoodsTitle>{`Neighborhoods ( ${neighborhoods.length}/9 )`}</NeighborhoodsTitle>
 						{mode === 'table' && <NeighborhoodsTable/>}
