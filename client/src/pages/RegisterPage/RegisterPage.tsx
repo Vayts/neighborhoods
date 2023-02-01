@@ -29,6 +29,10 @@ export const RegisterPage: React.FC = () => {
 		if (user) {
 			navigate('/');
 		}
+		
+		return () => {
+			dispatch(authSlice.actions.resetRegister());
+		};
 	}, [user]);
 	
 	const changeHandler = (e: React.ChangeEvent, name) => {

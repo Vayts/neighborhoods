@@ -15,6 +15,7 @@ import { refreshUser } from '@src/store/auth/actions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Loader } from '@src/components/Loader/Loader';
+import { NeighborhoodCurrentPage } from '@src/pages/NeighborhoodCurrentPage/NeighborhoodCurrentPage';
 import { AppWrapper } from './style';
 
 export const App: React.FC = () => {
@@ -47,6 +48,7 @@ export const App: React.FC = () => {
 									<Route path='/dashboard' element={<Main/>}/>
 									<Route path='/neighborhoods' element={<NeighborhoodsPage/>}/>
 									<Route path='/notification' element={<NotificationsPage/>}/>
+									<Route path='neighborhood/:id' element={<NeighborhoodCurrentPage/>}/>
 								</Route>
 							</Route>
 						</Routes>

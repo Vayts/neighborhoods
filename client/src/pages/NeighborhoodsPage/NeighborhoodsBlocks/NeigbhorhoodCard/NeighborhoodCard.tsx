@@ -9,13 +9,17 @@ import {
 import { UserList } from '@src/components/UserList/UserList';
 import { Button } from '@src/components/UI/Button/Button';
 import { INeighborhood } from '@src/types/neighborhood.types';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 interface ICard extends INeighborhood{
 	index: number,
 }
 
-export const NeighborhoodCard: React.FC<ICard> = ({ users, index, title, type, description }) => {
+export const NeighborhoodCard: React.FC<ICard> = ({ users, index, title, type, description, _id }) => {
 	const [shown, setShown] = useState<boolean>(false);
+	const { t } = useTranslation();
+	const navigate = useNavigate();
 	
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -39,7 +43,7 @@ export const NeighborhoodCard: React.FC<ICard> = ({ users, index, title, type, d
 					</NCardTitleWrapper>
 					<NCardDescription>{description.length > 60 ? `${description.slice(0, 57)}...` : description}</NCardDescription>
 					<NCardBottomContent>
-						<Button onClick={() => {}} title='Visit' width='100px' height='30px'/>
+						<Button onClick={() => navigate(`/neighborhood/${_id}`)} title={t('visit')} width='100px' height='30px'/>
 						<UserList size={35} userArr={users}/>
 					</NCardBottomContent>
 				</NCardContent>

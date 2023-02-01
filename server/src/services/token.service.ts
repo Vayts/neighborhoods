@@ -22,7 +22,7 @@ export class TokenService {
 		const payload = {_id: user._id, login: user.login, firstName: user.firstName, lastName: user.lastName}
 		return {
 			access: this.jwtService.sign(payload, {
-				'expiresIn': '5s',
+				'expiresIn': '15m',
 				privateKey: process.env.JWT_ACCESS_SECRET || 'access'
 			}),
 			refresh: this.jwtService.sign(payload, {

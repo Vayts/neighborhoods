@@ -13,6 +13,7 @@ export const NeighborhoodsBlocks: React.FC = () => {
 				return (
 					<NeighborhoodCard
 						key={item._id}
+						_id={item._id}
 						title={item.title}
 						description={item.description}
 						type={item.type}

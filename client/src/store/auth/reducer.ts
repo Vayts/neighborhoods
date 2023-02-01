@@ -45,5 +45,8 @@ export const authSlice = createSlice({
 		setLogin: (state, action: PayloadAction<ISetAuthPayload>) => {
 			state.loginIn[action.payload.name] = action.payload.value;
 		},
+		resetRegister: (state) => {
+			state.register = initialState.register;
+		},
 	},
 });
