@@ -22,7 +22,54 @@ export function userNeighborhoodsRequest(
 			if (e.response?.data?.message !== 'NOT_AUTHORIZED') {
 				getNotification(t('smtWntWrng'), 'error');
 			}
-			console.log(e);
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function userDebtsRequest(
+	axiosPrivate: Axios,
+	controller: AbortController,
+	setLoading: (state: boolean) => void,
+	id: string,
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		setLoading(true);
+		try {
+			const response = await axiosPrivate.get(`neighborhood/debts/${id}`, {
+				signal: controller.signal,
+			});
+			dispatch(neighborhoodsSlice.actions.setCurrentDebts(response.data));
+		} catch (e) {
+			if (e.response?.data?.message !== 'NOT_AUTHORIZED') {
+				getNotification(t('smtWntWrng'), 'error');
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function neighborhoodRequest(
+	axiosPrivate: Axios,
+	controller: AbortController,
+	setLoading: (state: boolean) => void,
+	id: string,
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		setLoading(true);
+		try {
+			const response = await axiosPrivate.get(`neighborhood/${id}`, {
+				signal: controller.signal,
+			});
+			dispatch(neighborhoodsSlice.actions.setCurrentNeighborhood(response.data[0]));
+		} catch (e) {
+			if (e.response?.data?.message !== 'NOT_AUTHORIZED') {
+				getNotification(t('smtWntWrng'), 'error');
+			}
 		} finally {
 			setLoading(false);
 		}

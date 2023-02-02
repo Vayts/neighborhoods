@@ -8,7 +8,3 @@ export const NCurrentPageWrapper = styled.div`
   position: relative;
   height: 100%;
 `;
-
-export const NCurrentControls = styled.div`
-	display: flex;
-`;

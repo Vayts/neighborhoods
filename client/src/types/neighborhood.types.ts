@@ -22,7 +22,7 @@ export interface IDebt {
 	creationDate: number,
 	expDate: number | null,
 	status: boolean,
-	photo: File[] | null,
+	photo: string | null,
 	author?: IUserInNeighborhood,
 	debtor?: IUserInNeighborhood,
 }

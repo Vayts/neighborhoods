@@ -10,6 +10,13 @@ export const PageBarWrapper = styled.div`
 	position: sticky;
 	top: 72px;
 	flex-grow: 1;
+	
+	h3 {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-right: 20px;
+	}
 `;
 
 export const PageLink = styled(NavLink)`

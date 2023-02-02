@@ -8,15 +8,23 @@ import {
 	Neighborhood_UserSchema,
 } from '../schemas/neighborhood_user.schema';
 import { JwtModule } from '@nestjs/jwt';
+import { DebtService } from '../services/debt.service';
+import { Debt, DebtSchema } from '../schemas/debt.schema';
 
 @Module({
 	controllers: [NeighborhoodController],
-	providers: [NeighborhoodService],
+	providers: [NeighborhoodService, DebtService],
 	imports: [
 		JwtModule,
-		MongooseModule.forFeature([{name: Neighborhood.name, schema: NeighborhoodSchema}]),
-		MongooseModule.forFeature([{name: Neighborhood_Users.name, schema: Neighborhood_UserSchema}]),
+		MongooseModule.forFeature([
+			{name: Neighborhood.name, schema: NeighborhoodSchema},
+			{name: Neighborhood_Users.name, schema: Neighborhood_UserSchema},
+			{name: Debt.name, schema: DebtSchema}
+		]),
 		NeighborhoodModule,
 	],
+	exports: [
+		NeighborhoodService
+	]
 })
 export class NeighborhoodModule {}

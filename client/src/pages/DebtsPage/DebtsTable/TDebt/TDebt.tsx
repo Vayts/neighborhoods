@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { IDebtItem } from '@src/pages/NeighborhoodCurrentPage/types';
+import { useTranslation } from 'react-i18next';
+import { AvatarFiller } from '@src/components/AvatarFiller/AvatarFiller';
+import AnimateHeight from 'react-animate-height';
+import { format } from 'date-fns';
+import { Button } from '@src/components/UI/Button/Button';
 import {
 	TDebtBottomContent,
 	TDebtControls,
@@ -17,12 +22,7 @@ import {
 	TDebtUserName,
 	TDebtValue,
 	TDebtWrapper,
-} from '@src/pages/NeighborhoodCurrentPage/DebtsTable/TDebt/style';
-import { useTranslation } from 'react-i18next';
-import { AvatarFiller } from '@src/components/AvatarFiller/AvatarFiller';
-import AnimateHeight from 'react-animate-height';
-import { format } from 'date-fns';
-import { Button } from '@src/components/UI/Button/Button';
+} from './style';
 
 export const TDebt: React.FC<IDebtItem> = (
 	{
@@ -45,7 +45,7 @@ export const TDebt: React.FC<IDebtItem> = (
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setShown(true);
-		}, index * 60);
+		}, index * 60 > 1000 ? 1000 : index * 60);
 		
 		return () => {
 			clearTimeout(timeout);
@@ -68,9 +68,9 @@ export const TDebt: React.FC<IDebtItem> = (
 						<AvatarFiller text={author.login} size={35} fz={14}/>
 						<p>{`${author.firstName} ${author.lastName.slice(0, 1)}.`}</p>
 					</li>
-					<li>Today</li>
+					<li>{format(new Date(creationDate), 'dd/MM/yyyy')}</li>
 					<li>
-						<TDebtStatusIcon status={status} className={status ? 'icon-check-done' : 'icon-cancel-circle'}/>
+						<TDebtStatusIcon status={status} className={status ? 'icon-check-done' : 'icon-priority'}/>
 					</li>
 				</TDebtShortContent>
 				{isOpen && (
@@ -93,12 +93,16 @@ export const TDebt: React.FC<IDebtItem> = (
 								<TDebtDates>
 									<div>
 										<span className='icon-calendar'/>
-										<p>{format(new Date(creationDate), 'MM/dd/yyyy')}</p>
+										<p>{format(new Date(creationDate), 'dd/MM/yyyy')}</p>
 									</div>
 									<span className='icon-right'/>
 									<div>
-										<span className='icon-calendar'/>
-										<p>{format(new Date(expDate), 'MM/dd/yyyy')}</p>
+										{expDate ? (
+											<>
+												<span className='icon-calendar'/>
+												<p>{format(new Date(expDate), 'dd/MM/yyyy')}</p>
+											</>
+										) : <span>...</span>}
 									</div>
 								</TDebtDates>
 							</TDebtMainInfo>
@@ -112,7 +116,7 @@ export const TDebt: React.FC<IDebtItem> = (
 								<TDebtSmallTitle>{t('amountOfDebt')}</TDebtSmallTitle>
 								<TDebtValue>{`${value} ₴`}</TDebtValue>
 								<TDebtBottomContent>
-									<Button onClick={() => {}} title='Close' height='35px' fz='14px'/>
+									<Button onClick={() => {}} title={t('close')} height='35px' fz='14px'/>
 								</TDebtBottomContent>
 							</TDebtInfoWrapper>
 						</TDebtSubContent>

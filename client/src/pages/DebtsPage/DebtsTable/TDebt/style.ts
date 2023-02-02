@@ -14,7 +14,8 @@ const appear = keyframes`
 export const TDebtWrapper = styled.li`
   background-color: #fff;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-  border-radius: 10px;
+  border-radius: 5px;
+  border: 1px solid #f1f1f1;
   position: relative;
   animation: ${appear} 0.2s linear;
   margin-top: 15px;
@@ -167,7 +168,7 @@ export const TDebtInfoWrapper = styled.div`
 `;
 
 export const TDebtDescription = styled.p`
-	color: ${({ theme }) => theme.subTxtColor};
+	//color: ${({ theme }) => theme.subTxtColor};
 	margin: 0 0 5px;
 	font-size: 16px;
 `;
@@ -248,12 +249,11 @@ export const TDebtBottomContent = styled.div`
 `;
 
 export const TDebtStatus = styled.p<ITableDebtStatus>`
-	color: ${({ status }) => (status ? 'green' : 'red')};
+  color: ${({ theme }) => theme.subTxtColor};
 	margin: 0 0 5px;
 `;
 
 export const TDebtValue = styled.span`
-	font-size: 20px;
-	font-weight: 500;
-  color: ${({ theme }) => theme.subTxtColor};
+	font-size: 22px;
+	font-weight: 600;
 `;

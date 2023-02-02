@@ -55,4 +55,43 @@ export class NeighborhoodService {
 			}
 		])
 	}
+	
+	async getUserInNeighborhood(req, id) {
+		return this.neighborhood_UserModel.findOne({
+			neighborhood_id: id,
+			user_id: req.user._id,
+		});
+	}
+	
+	async getUserNeighborhood(req) {
+		const { id } = req.params;
+
+		return  this.neighborhoodModel.aggregate([
+			{$match: {_id: new mongoose.Types.ObjectId(id) }},
+			{
+				$lookup: {
+					from: "neighborhood_users",
+					localField: "_id",
+					foreignField: "neighborhood_id",
+					as: "usersInNeighborhoods"
+				}
+			},
+			{
+				$lookup: {
+					from: "users",
+					localField: "usersInNeighborhoods.user_id",
+					foreignField: "_id",
+					as: "users"
+				}
+			},
+			{
+				$project: {
+					usersInNeighborhoods: 0,
+					users: {
+						password: 0,
+					},
+				}
+			}
+		])
+	}
 }

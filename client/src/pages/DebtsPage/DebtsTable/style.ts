@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
 export const DebtsTableList = styled.ul`
-	margin: 20px 0;
+	margin: 0;
 	padding: 0;
 	list-style: none;
-	max-width: 1200px;
+	flex-basis: 75%;
+	
+	li:first-child {
+		margin-top: 0;
+	}
 `;
