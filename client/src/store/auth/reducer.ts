@@ -48,5 +48,8 @@ export const authSlice = createSlice({
 		resetRegister: (state) => {
 			state.register = initialState.register;
 		},
+		resetLogin: (state) => {
+			state.register = initialState.register;
+		},
 	},
 });

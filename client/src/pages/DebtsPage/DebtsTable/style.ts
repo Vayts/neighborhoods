@@ -1,12 +1,19 @@
 import styled from 'styled-components';
 
-export const DebtsTableList = styled.ul`
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	flex-basis: 75%;
+export const DebtsTableWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+  flex-basis: 78%;
+`;
+
+export const DebtsTableList = styled.table`
+  border-collapse: collapse;
+	border-spacing: 0;
+  table-layout: fixed;
+	width: 100%;
 	
 	li:first-child {
 		margin-top: 0;
 	}
+	
 `;

@@ -15,5 +15,6 @@ export const DebtsControls = styled.div`
 `;
 
 export const DebtsContent = styled.div`
-	display: flex;
+  display: flex;
+  justify-content: space-between;
 `;

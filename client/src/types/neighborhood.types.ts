@@ -19,10 +19,10 @@ export interface IDebt {
 	title: string,
 	description: string | null,
 	value: number,
-	creationDate: number,
-	expDate: number | null,
+	creationDate: string | Date,
+	expDate: null | string | Date,
 	status: boolean,
-	photo: string | null,
+	photo?: string | null,
 	author?: IUserInNeighborhood,
 	debtor?: IUserInNeighborhood,
 }
