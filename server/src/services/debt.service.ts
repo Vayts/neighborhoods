@@ -4,6 +4,7 @@ import mongoose, { Model } from 'mongoose';
 import { Neighborhood, NeighborhoodDocument } from '../schemas/neighborhood.schema';
 import { Neighborhood_UserDocument, Neighborhood_Users } from '../schemas/neighborhood_user.schema';
 import { Debt, DebtDocument } from '../schemas/debt.schema';
+import { parseDebtAuthorQuery, parseDebtStatusQuery } from '../helpers/debtQuery.helper';
 
 @Injectable()
 export class DebtService {
@@ -16,10 +17,17 @@ export class DebtService {
 	
 	getUserDebtsInNeighborhood(req) {
 		const id = req.params.id;
+		const authors = parseDebtAuthorQuery(req.query);
+		const status = parseDebtStatusQuery(req.query);
+		console.log(req.query);
 		
 		return this.debtModel.aggregate(
 			[
 				{$match: {debtor: new mongoose.Types.ObjectId(req.user._id), neighborhood: new mongoose.Types.ObjectId(id)}},
+				{$match: {author: authors.length ? {'$in': [...authors]} : {$exists: true}}},
+				{$match: {status: status.length ? {'$in': [...status]} : {'$in': [false]}}},
+				{$match: {value: req.query.min ? { $gt: Number(req.query.min)} : {$exists: true}}},
+				{$match: {value: req.query.max ? { $lt: Number(req.query.max)} : {$exists: true}}},
 				{
 					$lookup: {
 						from: "users",
@@ -35,7 +43,8 @@ export class DebtService {
 							password: 0
 						}
 					}
-				}
+				},
+				{ $sort: { creationDate: 1 } },
 			]
 		)
 	}
