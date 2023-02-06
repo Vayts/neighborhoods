@@ -2,13 +2,11 @@ import React from 'react';
 import { IDebtContent } from '@src/pages/DebtsPage/DebtsTable/types';
 import AnimateHeight from 'react-animate-height';
 import {
-	TableDebtBottomContent,
 	TableDebtControl, TableDebtDates, TableDebtDescription,
 	TableDebtFullContent, TableDebtInfoWrapper, TableDebtMainInfo, TableDebtSmallTitle, TableDebtStatus,
 	TableDebtSubContent, TableDebtUserName, TableDebtValue, TableFullContentRow,
 } from '@src/pages/DebtsPage/DebtsTable/TableDebt/style';
 import { AvatarFiller } from '@src/components/AvatarFiller/AvatarFiller';
-import { Button } from '@src/components/UI/Button/Button';
 import { useTranslation } from 'react-i18next';
 import { DatesTimeline } from '@src/components/DatesTimeline/DatesTimeline';
 import { Menu } from '@src/components/UI/Menu/Menu';
@@ -62,15 +60,6 @@ export const TableDebtFull: React.FC<IDebtContent> = ({
 								<TableDebtStatus status={status}>{status ? t('closed') : t('actual')}</TableDebtStatus>
 								<TableDebtSmallTitle>{t('amountOfDebt')}</TableDebtSmallTitle>
 								<TableDebtValue>{`${value} ₴`}</TableDebtValue>
-								<TableDebtBottomContent>
-									<Button
-										onClick={() => {
-										}}
-										title={t('close')}
-										height="35px"
-										fz="14px"
-									/>
-								</TableDebtBottomContent>
 							</TableDebtInfoWrapper>
 						</TableDebtSubContent>
 					</TableDebtFullContent>

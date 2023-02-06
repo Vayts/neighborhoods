@@ -164,6 +164,7 @@ export const TableDebtUserName = styled.p`
 `;
 
 export const TableDebtInfoWrapper = styled.div`
+	padding-bottom: 20px;
 	margin-top: 15px;
 `;
 
@@ -186,14 +187,6 @@ export const TableDebtSmallTitle = styled.h6`
 	font-size: 16px;
 	margin: 10px 0 5px;
 	font-weight: 500;
-`;
-
-export const TableDebtBottomContent = styled.div`
-	flex-basis: 100%;
-  display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	margin: 10px 0;
 `;
 
 export const TableDebtStatus = styled.p<ITableDebtStatus>`
