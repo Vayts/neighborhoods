@@ -15,7 +15,8 @@ export const Input: React.FC<IInput> = (
 		name,
 		id,
 		secure,
-		type = 'string',
+		disabled,
+		type = 'text',
 	}: IInput) => {
 	const [show, setShow] = useState(false);
 	
@@ -33,6 +34,7 @@ export const Input: React.FC<IInput> = (
 					width={width}
 					fz={fz}
 					type={show ? 'text' : type}
+					disabled={disabled}
 				/>
 				{secure 
 					? (

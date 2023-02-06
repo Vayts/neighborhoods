@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const DebtsTableWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-  flex-basis: 78%;
+  position: relative;
 `;
 
 export const DebtsTableList = styled.table`

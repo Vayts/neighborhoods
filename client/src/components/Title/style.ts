@@ -6,4 +6,5 @@ export const TitleItem = styled.h3<ITitle>`
   font-size: ${({ fz = '19px' }) => fz};
 	margin: ${({ margin = '15px 0' }) => margin};
 	color: ${({ color = 'inherit' }) => color};
+	height: ${({ height = 'auto' }) => height};
 `;

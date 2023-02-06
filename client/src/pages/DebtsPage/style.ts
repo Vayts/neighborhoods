@@ -12,9 +12,16 @@ export const DebtsWrapper = styled.div`
 export const DebtsControls = styled.div`
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 20px;
 `;
 
 export const DebtsContent = styled.div`
+	margin-top: 20px;
   display: flex;
   justify-content: space-between;
+`;
+
+export const DebtsRightWrapper = styled.div`
+  flex-basis: 78%;
+	height: 100%;
 `;
