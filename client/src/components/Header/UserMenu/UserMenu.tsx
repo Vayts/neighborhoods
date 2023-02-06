@@ -29,7 +29,7 @@ export const UserMenu: React.FC = () => {
 	useOutsideClick(menuRef, () => setOpen(false));
 	
 	return (
-		<UserMenuWrapper ref={menuRef}>
+		<UserMenuWrapper ref={menuRef} isOpen={isOpen}>
 			<UserMenuButtonWrapper>
 				{user.avatar ? null : <AvatarFiller text={user.login} size={48}/>}
 				<UserMenuInfo>

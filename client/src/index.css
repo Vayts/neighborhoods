@@ -4,6 +4,7 @@ body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
 }
 
 code {
@@ -40,6 +41,20 @@ code {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-accept:before {
+  content: "\e93a";
+}
+
+.icon-minus:before {
+  content: "\e90b";
+}
+.icon-refresh:before {
+  content: "\e938";
+}
+.icon-plus:before {
+  content: "\e939";
 }
 
 .icon-comment:before {

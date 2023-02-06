@@ -11,12 +11,11 @@ import { TokenModule } from './token.module';
 	imports: [
 		UserModule,
 		TokenModule,
-		JwtModule.register({
-			secret: process.env.SECRET_KEY || 'secret',
-			signOptions: {
-				expiresIn: '24h'
-			}
-		})
+		JwtModule.register({})
+	],
+	exports: [
+		AuthService,
+		JwtModule,
 	]
 })
 export class AuthModule {}

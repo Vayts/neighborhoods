@@ -29,6 +29,10 @@ export const LoginPage: React.FC = () => {
 		if (user) {
 			navigate('/');
 		}
+		
+		return () => {
+			dispatch(authSlice.actions.resetLogin());
+		};
 	}, [user]);
 	
 	const changeHandler = (e: React.ChangeEvent, name) => {

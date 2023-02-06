@@ -13,4 +13,5 @@ export interface IInput {
 	label?: string,
 	secure?: boolean,
 	type?: string,
+	disabled?: boolean,
 }
