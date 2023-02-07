@@ -9,12 +9,13 @@ import { Title } from '@src/components/Title/Title';
 import { FilterBlock } from '@src/components/FiltersBlock/FilterBlock';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectCurrentDebtsFilters, selectCurrentNeighborhood } from '@src/store/neighborhoods/selectors';
+import { selectCurrentNeighborhood } from '@src/store/neighborhoods/selectors';
 import { Checkbox } from '@src/components/UI/Checkbox/Checkbox';
 import { selectUser } from '@src/store/auth/selectors';
-import { addAuthorToDebtFilter, addStatusToDebtFilter, addValueToDebtFilter } from '@src/store/neighborhoods/actions';
-import { neighborhoodsSlice } from '@src/store/neighborhoods/reducer';
 import { Input } from '@src/components/UI/Input/Input';
+import { selectCurrentDebtsFilters } from '@src/store/debts/selectors';
+import { addAuthorToDebtFilter, addStatusToDebtFilter, addValueToDebtFilter } from '@src/store/debts/actions';
+import { debtsSlice } from '@src/store/debts/reducer';
 
 export const DebtsFilters: React.FC<IDebtsFilters> = ({ title, isLoading }) => {
 	const neighborhood = useAppSelector(selectCurrentNeighborhood);
@@ -25,7 +26,7 @@ export const DebtsFilters: React.FC<IDebtsFilters> = ({ title, isLoading }) => {
 	
 	useEffect(() => {
 		return () => {
-			dispatch(neighborhoodsSlice.actions.resetDebtFilters);
+			dispatch(debtsSlice.actions.resetDebtFilters);
 		};
 	});
 	

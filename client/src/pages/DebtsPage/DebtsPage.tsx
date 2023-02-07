@@ -3,16 +3,16 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import {
-	selectCurrentDebts,
-	selectCurrentDebtsFilters,
 	selectCurrentNeighborhood,
 } from '@src/store/neighborhoods/selectors';
 import { useTranslation } from 'react-i18next';
-import { neighborhoodRequest, userDebtsRequest } from '@src/store/neighborhoods/actions';
+import { neighborhoodRequest } from '@src/store/neighborhoods/actions';
 import { DebtsContent, DebtsControls, DebtsRightWrapper, DebtsWrapper } from '@src/pages/DebtsPage/style';
 import { ViewMenu } from '@src/components/ViewMenu/ViewMenu';
 import { DebtsTable } from '@src/pages/DebtsPage/DebtsTable/DebtsTable';
 import { DebtsFilters } from '@src/pages/DebtsPage/DebtsFilters/DebtsFilters';
+import { selectCurrentDebts, selectCurrentDebtsFilters } from '@src/store/debts/selectors';
+import { userDebtsRequest } from '@src/store/debts/actions';
 
 export const DebtsPage: React.FC = () => {
 	const [isLoading, setLoading] = useState<boolean>(true);
