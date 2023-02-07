@@ -1,5 +1,15 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { NavLink } from 'react-router-dom';
+
+const appear = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const PageBarWrapper = styled.div`
 	padding: 35px 0 35px 35px;
@@ -57,4 +67,8 @@ export const PageLinkIcon = styled.span`
 export const PageLinkText = styled.p`
 	margin: 0;
 	font-size: 14px;
+`;
+
+export const SubPageBar = styled.div`
+  animation: ${appear} 0.2s linear;
 `;

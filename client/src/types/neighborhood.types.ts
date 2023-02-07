@@ -13,16 +13,3 @@ export interface IUserInNeighborhood {
 	avatar: string,
 	login: string,
 }
-
-export interface IDebt {
-	_id?: string,
-	title: string,
-	description: string | null,
-	value: number,
-	creationDate: string | Date,
-	expDate: null | string | Date,
-	status: boolean,
-	photo?: string | null,
-	author?: IUserInNeighborhood,
-	debtor?: IUserInNeighborhood,
-}
