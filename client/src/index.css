@@ -43,6 +43,13 @@ code {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-debtors:before {
+  content: "\e93c";
+}
+.icon-debts:before {
+  content: "\e93b";
+}
+
 .icon-accept:before {
   content: "\e93a";
 }

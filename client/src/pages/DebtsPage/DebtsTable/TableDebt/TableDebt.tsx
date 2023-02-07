@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { TableDebtRow } from '@src/pages/DebtsPage/DebtsTable/TableDebt/TableDebtRow/TableDebtRow';
-import { IDebtItem } from '@src/pages/DebtsPage/DebtsTable/types';
-import { TableDebtFull } from '@src/pages/DebtsPage/DebtsTable/TableDebt/TableDebtFull/TableDebtFull';
+import { TableSmallRow } from '@src/components/DebtTableItem/TableSmallRow/TableSmallRow';
+import { TableFullContent } from '@src/components/DebtTableItem/TableFullContent/TableFullContent';
+import { IDebtItem } from '@src/types/debt.types';
+import { TableDebtFull } from '@src/pages/DebtsPage/DebtsTable/TableDebtFull/TableDebtFull';
 import {
 	TableSplitter,
 } from './style';
@@ -10,13 +11,11 @@ export const TableDebt: React.FC<IDebtItem> = (
 	{
 		status,
 		description,
-		debtor,
 		expDate,
 		value,
 		title,
 		author,
 		creationDate,
-		photo,
 		index,
 	}) => {
 	const [isOpen, setOpen] = useState<boolean>(false);
@@ -36,7 +35,7 @@ export const TableDebt: React.FC<IDebtItem> = (
 		isShown ? (
 			<>
 				<TableSplitter/>
-				<TableDebtRow
+				<TableSmallRow
 					isOpen={isOpen}
 					setOpen={setOpen}
 					title={title}
@@ -47,19 +46,17 @@ export const TableDebt: React.FC<IDebtItem> = (
 					status={status}
 					author={author}
 				/>
-				<TableDebtFull
-					isOpen={isOpen}
-					setOpen={setOpen}
-					title={title}
-					description={description}
-					value={value}
-					creationDate={creationDate}
-					expDate={expDate}
-					status={status}
-					author={author}
-					debtor={debtor}
-					photo={photo}
-				/>
+				<TableFullContent isOpen={isOpen}>
+					<TableDebtFull
+						title={title}
+						description={description}
+						value={value}
+						creationDate={creationDate}
+						expDate={expDate}
+						status={status}
+						author={author}
+					/>
+				</TableFullContent>
 			</>
 		) : null
 	);
