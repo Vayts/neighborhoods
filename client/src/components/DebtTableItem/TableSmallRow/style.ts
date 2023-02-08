@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { ITableDebtStatus, ITableDebtStyle } from '@src/pages/DebtsPage/DebtsTable/TableDebt/types.ts';
+import { ITableDebtStatus, ITableDebtStyle } from '@src/components/DebtTableItem/TableDebt/types.ts';
 
 const appear = keyframes`
   0% {

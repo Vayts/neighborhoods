@@ -8,7 +8,7 @@ import {
 	SmallRowUser,
 	SmallRowWrapper,
 } from '@src/components/DebtTableItem/TableSmallRow/style';
-import { IDebtContent } from '@src/types/neighborhood.types';
+import { IDebtContent } from '@src/types/debt.types';
 
 export const TableSmallRow: React.FC<IDebtContent> = ({
 	isOpen,

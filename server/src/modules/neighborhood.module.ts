@@ -10,10 +10,11 @@ import {
 import { JwtModule } from '@nestjs/jwt';
 import { DebtService } from '../services/debt.service';
 import { Debt, DebtSchema } from '../schemas/debt.schema';
+import { DebtorService } from '../services/debtor.service';
 
 @Module({
 	controllers: [NeighborhoodController],
-	providers: [NeighborhoodService, DebtService],
+	providers: [NeighborhoodService, DebtService, DebtorService],
 	imports: [
 		JwtModule,
 		MongooseModule.forFeature([

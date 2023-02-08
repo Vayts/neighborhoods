@@ -1,4 +1,5 @@
 export interface IDebtsQuery {
-	authors: string,
+	authors?: string,
+	debtors?: string,
 	status: string
 }

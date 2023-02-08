@@ -4,6 +4,7 @@ import { NeighborhoodService } from '../services/neighborhood.service';
 import { Request } from 'express';
 import { DebtService } from '../services/debt.service';
 import { isUserInNeighborhood } from '../guards/isUserInNeighborhood.guard';
+import { DebtorService } from '../services/debtor.service';
 
 @Controller('neighborhood')
 export class NeighborhoodController {
@@ -11,6 +12,7 @@ export class NeighborhoodController {
 	constructor(
 		private neighborhoodService: NeighborhoodService,
 		private debtService: DebtService,
+		private debtorService: DebtorService,
 	) {}
 	@UseGuards(JwtAuthGuard)
 	@Get('/user_neighborhoods')
@@ -22,6 +24,12 @@ export class NeighborhoodController {
 	@Get('/debts/:id')
 	getUserDebtsInNeighborhood(@Req() request: Request) {
 		return this.debtService.getUserDebtsInNeighborhood(request);
+	}
+	
+	@UseGuards(JwtAuthGuard, isUserInNeighborhood)
+	@Get('/debtors/:id')
+	getUserDebtorsInNeighborhood(@Req() request: Request) {
+		return this.debtorService.getUserDebtorsInNeighborhood(request);
 	}
 	
 	@UseGuards(JwtAuthGuard, isUserInNeighborhood)
