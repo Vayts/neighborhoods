@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { IBaseState } from '@src/store/base/types';
 
-interface BaseState {
-  theme: string,
-	lang: string,
-}
-
-const initialState: BaseState = {
+const initialState: IBaseState = {
 	theme: 'light',
 	lang: 'ua',
+	modal: {
+		type: null,
+		content: null,
+	},
 };
 
 export const baseSlice = createSlice({
@@ -20,6 +20,13 @@ export const baseSlice = createSlice({
 		},
 		setLang: (state, action: PayloadAction<string>) => {
 			state.lang = action.payload;
+		},
+		setModal: (state, action: PayloadAction<IBaseState['modal']>) => {
+			state.modal.type = action.payload.type;
+			state.modal.content = action.payload.content || null;
+		},
+		resetModal: (state) => {
+			state.modal = initialState.modal;
 		},
 	},
 });
