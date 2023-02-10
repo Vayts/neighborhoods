@@ -6,7 +6,6 @@ import { getNotification } from '@src/notification/notifications';
 import { IDebtorsState } from '@src/store/debtors/types';
 import { debtorsSlice } from '@src/store/debtors/reducer';
 import { IDebt } from '@src/types/debt.types';
-import { baseSlice } from '@src/store/base/reducer';
 
 export function userDebtorsRequest(
 	axiosPrivate: Axios,
@@ -90,7 +89,6 @@ export function closeDebtRequest(
 				});
 				getNotification(t('debtSccssClosed'), 'success');
 				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
-				dispatch(baseSlice.actions.resetModal());
 			}
 		} catch {
 			getNotification(t('smtWntWrng'), 'error');

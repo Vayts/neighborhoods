@@ -7,13 +7,24 @@ import {
 } from '@src/store/neighborhoods/selectors';
 import { useTranslation } from 'react-i18next';
 import { neighborhoodRequest } from '@src/store/neighborhoods/actions';
-import { DebtsContent, DebtsControls, DebtsRightWrapper, DebtsWrapper } from '@src/pages/DebtsPage/style';
+import {
+	DebtPageTitleWrapper,
+	DebtsContent,
+	DebtsControls,
+	DebtsRightWrapper,
+	DebtsWrapper,
+} from '@src/pages/DebtsPage/style';
 import { ViewMenu } from '@src/components/ViewMenu/ViewMenu';
 import { DebtsTable } from '@src/pages/DebtsPage/DebtsTable/DebtsTable';
 import { DebtsFilters } from '@src/pages/DebtsPage/DebtsFilters/DebtsFilters';
-import { selectCurrentDebts, selectCurrentDebtsFilters } from '@src/store/debts/selectors';
+import {
+	selectCurrentDebts,
+	selectCurrentDebtsFilters,
+	selectDebtUpdateValue,
+} from '@src/store/debts/selectors';
 import { userDebtsRequest } from '@src/store/debts/actions';
 import { Title } from '@src/components/Title/Title';
+import { debtsSlice } from '@src/store/debts/reducer';
 
 export const DebtsPage: React.FC = () => {
 	const [isLoading, setLoading] = useState<boolean>(true);
@@ -23,8 +34,13 @@ export const DebtsPage: React.FC = () => {
 	const debts = useAppSelector(selectCurrentDebts);
 	const neighborhood = useAppSelector(selectCurrentNeighborhood);
 	const filters = useAppSelector(selectCurrentDebtsFilters);
+	const update = useAppSelector(selectDebtUpdateValue);
 	const { t } = useTranslation();
 	const { id } = useParams();
+	
+	const updateHandler = () => {
+		dispatch(debtsSlice.actions.setUpdateValue());
+	};
 	
 	useEffect(() => {
 		const controller = new AbortController();
@@ -37,11 +53,15 @@ export const DebtsPage: React.FC = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [filters]);
+	}, [filters, update]);
 	
 	return (
 		<DebtsWrapper>
-			<Title margin='5px 0' fz='20px'>{t('yourDebts')}</Title>
+			<DebtPageTitleWrapper>
+				<Title margin='5px 0' fz='20px'>{t('yourDebts')}</Title>
+				<span className='icon-refresh' onClick={() => updateHandler()}/>
+			</DebtPageTitleWrapper>
+			
 			<DebtsContent>
 				<DebtsRightWrapper>
 					<DebtsControls>

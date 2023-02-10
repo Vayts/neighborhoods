@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectCurrentDebtors, selectCurrentDebtorsFilters } from '@src/store/debtors/selectors';
-import { DebtorsContent, DebtorsControls, DebtorsRightWrapper, DebtorsWrapper } from '@src/pages/DebtorsPage/style';
+import {
+	selectCurrentDebtors,
+	selectCurrentDebtorsFilters,
+	selectDebtorsUpdateValue,
+} from '@src/store/debtors/selectors';
+import {
+	DebtorsContent,
+	DebtorsControls,
+	DebtorsPageTitleWrapper,
+	DebtorsRightWrapper,
+	DebtorsWrapper,
+} from '@src/pages/DebtorsPage/style';
 import { ViewMenu } from '@src/components/ViewMenu/ViewMenu';
 import { DebtorsFilters } from '@src/pages/DebtorsPage/DebtorsFilters/DebtorsFilters';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +22,7 @@ import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import { selectCurrentNeighborhood } from '@src/store/neighborhoods/selectors';
 import { userDebtorsRequest } from '@src/store/debtors/actions';
 import { DebtorsTable } from '@src/pages/DebtorsPage/DebtorsTable/DebtorsTable';
+import { debtorsSlice } from '@src/store/debtors/reducer';
 
 export const DebtorsPage: React.FC = () => {
 	const [isLoading, setLoading] = useState<boolean>(true);
@@ -21,8 +32,13 @@ export const DebtorsPage: React.FC = () => {
 	const filters = useAppSelector(selectCurrentDebtorsFilters);
 	const axiosPrivate = useAxiosPrivate();
 	const neighborhood = useAppSelector(selectCurrentNeighborhood);
+	const update = useAppSelector(selectDebtorsUpdateValue);
 	const { t } = useTranslation();
 	const { id } = useParams();
+	
+	const updateHandler = () => {
+		dispatch(debtorsSlice.actions.setUpdateValue());
+	};
 	
 	useEffect(() => {
 		const controller = new AbortController();
@@ -35,11 +51,14 @@ export const DebtorsPage: React.FC = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [filters]);
+	}, [filters, update]);
 	
 	return (
 		<DebtorsWrapper>
-			<Title margin='5px 0' fz='20px'>{t('yourDebtors')}</Title>
+			<DebtorsPageTitleWrapper>
+				<Title margin='5px 0' fz='20px'>{t('yourDebtors')}</Title>
+				<span className='icon-refresh' onClick={() => updateHandler()}/>
+			</DebtorsPageTitleWrapper>
 			<DebtorsContent>
 				<DebtorsRightWrapper>
 					<DebtorsControls>

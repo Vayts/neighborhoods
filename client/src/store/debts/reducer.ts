@@ -11,6 +11,7 @@ const initialState: IDebtsState = {
 		minValue: '',
 		maxValue: '',
 	},
+	updateValue: null,
 };
 
 export const debtsSlice = createSlice({
@@ -28,6 +29,9 @@ export const debtsSlice = createSlice({
 		},
 		setDebtValueFilters: (state, action: PayloadAction<IDebtValueState>) => {
 			state.filters[action.payload.key] = action.payload.value;
+		},
+		setUpdateValue: (state) => {
+			state.updateValue = Date.now();
 		},
 		resetDebtFilters: (state) => {
 			state.filters = initialState.filters;

@@ -9,6 +9,25 @@ export const DebtsWrapper = styled.div`
   height: 100%;
 `;
 
+export const DebtPageTitleWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	
+	span {
+		margin-left: 5px;
+		font-size: 20px;
+		color: ${({ theme }) => theme.subTxtColor};
+
+    &:hover {
+	    cursor: pointer;
+	    transition: all 0.2s;
+      color: ${({ theme }) => theme.primary};
+    }
+	}
+	
+
+`;
+
 export const DebtsControls = styled.div`
 	display: flex;
 	justify-content: space-between;

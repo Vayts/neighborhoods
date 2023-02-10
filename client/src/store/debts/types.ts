@@ -7,7 +7,8 @@ export interface IDebtsState {
 		status: string[],
 		minValue: number | string,
 		maxValue: number | string,
-	}
+	},
+	updateValue: number | null,
 }
 
 export interface IDebtValueState {
