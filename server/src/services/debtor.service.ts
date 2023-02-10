@@ -14,18 +14,18 @@ export class DebtorService {
 		@InjectModel(Debt.name) private debtModel: Model<DebtDocument>,
 	) {}
 	
-	async getUserDebtorsInNeighborhood(req) {
+	getUserDebtorsInNeighborhood(req) {
 		const id = req.params.id;
 		const debtors = parseDebtDebtorsQuery(req.query);
 		const status = parseDebtStatusQuery(req.query);
-		
-		const result = await this.debtModel.aggregate(
+
+		return this.debtModel.aggregate(
 			[
 				{$match: {author: new mongoose.Types.ObjectId(req.user._id), neighborhood: new mongoose.Types.ObjectId(id)}},
 				{$match: {debtor: debtors.length ? {'$in': [...debtors]} : {$exists: true}}},
 				{$match: {status: status.length ? {'$in': [...status]} : {'$in': [false]}}},
-				{$match: {value: req.query.min ? { $gt: Number(req.query.min)} : {$exists: true}}},
-				{$match: {value: req.query.max ? { $lt: Number(req.query.max)} : {$exists: true}}},
+				{$match: {value: req.query.min ? {$gt: Number(req.query.min)} : {$exists: true}}},
+				{$match: {value: req.query.max ? {$lt: Number(req.query.max)} : {$exists: true}}},
 				{
 					$lookup: {
 						from: "users",
@@ -34,7 +34,7 @@ export class DebtorService {
 						as: "debtor"
 					}
 				},
-				{ $unwind: "$debtor" },
+				{$unwind: "$debtor"},
 				{
 					$project: {
 						debtor: {
@@ -44,8 +44,13 @@ export class DebtorService {
 				},
 				{$sort: {creationDate: -1}},
 			]
-		)
-		console.log(result);
-		return result;
+		);
+
+	}
+	
+	
+	closeDebt(req) {
+		const id = req.params.id;
+		return this.debtModel.findOneAndUpdate({_id: id}, {status: true})
 	}
 }

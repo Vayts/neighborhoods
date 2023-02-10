@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from '@hoc/Layout/Layout';
 import { ThemeProvider } from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectTheme } from '@src/store/base/selectors';
+import { selectModal, selectTheme } from '@src/store/base/selectors';
 import { THEMES } from '@constants/colors';
 import { Main } from '@src/pages/Main/Main';
 import { NeighborhoodsPage } from '@src/pages/NeighborhoodsPage/NeighborhoodsPage';
@@ -23,6 +23,7 @@ import { AppWrapper } from './style';
 
 export const App: React.FC = () => {
 	const currentTheme: string = useAppSelector(selectTheme);
+	const modalType = useAppSelector(selectModal).type;
 	const [isLoading, setLoading] = useState(true);
 	const dispatch = useAppDispatch();
 	
@@ -68,7 +69,7 @@ export const App: React.FC = () => {
 					draggable={false}
 					theme="colored"
 				/>
-				<Modal/>
+				{modalType && <Modal/>}
 			</AppWrapper>
 		</ThemeProvider>
 	);

@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@src/components/UI/Button/Button';
 import { baseSlice } from '@src/store/base/reducer';
 import { useAppDispatch } from '@src/hooks/hooks';
-import { CloseDebtMenu } from '@src/components/DebtTableItem/СloseDebtMenu/CloseDebtMenu';
 import {
 	TableDebtControl, TableDebtDates, TableDebtDescription, TableDebtFullContent, TableDebtInfoWrapper,
 	TableDebtMainInfo, TableDebtSmallTitle, TableDebtStatus,
@@ -38,7 +37,7 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 	const dispatch = useAppDispatch();
 	
 	const openCloseModal = () => {
-		dispatch(baseSlice.actions.setModal({ type: 'debtCloseConfirm', content: <CloseDebtMenu title={title} value={value} _id={_id}/> }));
+		dispatch(baseSlice.actions.setModal({ type: 'closeDebtModal', content: { title, value, _id } }));
 	};
 	
 	return (

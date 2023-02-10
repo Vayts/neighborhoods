@@ -4,6 +4,7 @@ import { selectModal } from '@src/store/base/selectors';
 import { ModalBackground, ModalClose, ModalWindow } from '@src/components/Modal/style';
 import { baseSlice } from '@src/store/base/reducer';
 import { useOutsideClick } from '@src/hooks/useOutsideClick';
+import { CloseDebtModal } from '@src/components/Modal/СloseDebtModal/CloseDebtModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -16,13 +17,28 @@ export const Modal: React.FC = () => {
 	};
 	
 	useEffect(() => {
-		document.body.style.overflow = 'hidden';
+		document.body.style.overflowY = 'hidden';
 		
 		return () => {
-			document.body.style.overflow = 'unset';
+			document.body.style.overflowY = 'scroll';
 			closeModal();
 		};
 	}, []);
+	
+	const generateModalContent = () => {
+		switch (modalType) {
+		case 'closeDebtModal':
+			return (
+				<CloseDebtModal 
+					title={modalContent.title as string} 
+					value={modalContent.value as number} 
+					_id={modalContent._id as string}
+				/>
+			);
+		default:
+			return null;
+		}
+	};
 	
 	useOutsideClick(modalRef, closeModal);
 	
@@ -31,7 +47,7 @@ export const Modal: React.FC = () => {
 			<ModalBackground open={!!modalType}>
 				<ModalWindow ref={modalRef}>
 					<ModalClose className='icon-cancel' onClick={() => closeModal()}/>
-					{modalContent}
+					{generateModalContent()}
 				</ModalWindow>
 			</ModalBackground>
 		)

@@ -5,6 +5,7 @@ import { Request } from 'express';
 import { DebtService } from '../services/debt.service';
 import { isUserInNeighborhood } from '../guards/isUserInNeighborhood.guard';
 import { DebtorService } from '../services/debtor.service';
+import { DebtAuthorGuard } from '../guards/debtAuthor.guard';
 
 @Controller('neighborhood')
 export class NeighborhoodController {
@@ -30,6 +31,12 @@ export class NeighborhoodController {
 	@Get('/debtors/:id')
 	getUserDebtorsInNeighborhood(@Req() request: Request) {
 		return this.debtorService.getUserDebtorsInNeighborhood(request);
+	}
+	
+	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
+	@Get('/close_debt/:id')
+	closeUserDebt(@Req() request: Request) {
+		return this.debtorService.closeDebt(request);
 	}
 	
 	@UseGuards(JwtAuthGuard, isUserInNeighborhood)

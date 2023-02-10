@@ -18,7 +18,6 @@ export class DebtService {
 		const id = req.params.id;
 		const authors = parseDebtAuthorQuery(req.query);
 		const status = parseDebtStatusQuery(req.query);
-		console.log(req.query);
 		
 		return this.debtModel.aggregate(
 			[
@@ -46,5 +45,9 @@ export class DebtService {
 				{ $sort: { creationDate: -1 } },
 			]
 		)
+	}
+	
+	getDebtByIdAndAuthor(id: string, author: string) {
+		return this.debtModel.findOne({_id: id, author});
 	}
 }

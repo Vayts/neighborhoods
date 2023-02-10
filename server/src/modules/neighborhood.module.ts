@@ -25,7 +25,8 @@ import { DebtorService } from '../services/debtor.service';
 		NeighborhoodModule,
 	],
 	exports: [
-		NeighborhoodService
+		NeighborhoodService,
+		DebtService,
 	]
 })
 export class NeighborhoodModule {}

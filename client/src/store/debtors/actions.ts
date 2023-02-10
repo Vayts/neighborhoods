@@ -5,6 +5,8 @@ import i18n from '@src/i18n';
 import { getNotification } from '@src/notification/notifications';
 import { IDebtorsState } from '@src/store/debtors/types';
 import { debtorsSlice } from '@src/store/debtors/reducer';
+import { IDebt } from '@src/types/debt.types';
+import { baseSlice } from '@src/store/base/reducer';
 
 export function userDebtorsRequest(
 	axiosPrivate: Axios,
@@ -62,5 +64,38 @@ export function addStatusToDebtorsFilter(filters: IDebtorsState['filters'], valu
 export function addValueToDebtorsFilter(filters: IDebtorsState['filters'], key: string, value: string): Dispatch<AppDispatch> {
 	return (dispatch) => {
 		dispatch(debtorsSlice.actions.setDebtorsValueFilters({ value, key }));
+	};
+}
+
+export function closeDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	debtId: string,
+	debts: IDebt[],
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.get(`neighborhood/close_debt/${debtId}`);
+			if (response.data) {
+				const newState = debts.map((item) => {
+					if (item._id === debtId) {
+						return {
+							...item,
+							status: true,
+						};
+					}
+					return item;
+				});
+				getNotification(t('debtSccssClosed'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch {
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
 	};
 }
