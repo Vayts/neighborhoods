@@ -13,6 +13,7 @@ import { DebtsTable } from '@src/pages/DebtsPage/DebtsTable/DebtsTable';
 import { DebtsFilters } from '@src/pages/DebtsPage/DebtsFilters/DebtsFilters';
 import { selectCurrentDebts, selectCurrentDebtsFilters } from '@src/store/debts/selectors';
 import { userDebtsRequest } from '@src/store/debts/actions';
+import { Title } from '@src/components/Title/Title';
 
 export const DebtsPage: React.FC = () => {
 	const [isLoading, setLoading] = useState<boolean>(true);
@@ -40,6 +41,7 @@ export const DebtsPage: React.FC = () => {
 	
 	return (
 		<DebtsWrapper>
+			<Title margin='5px 0' fz='20px'>{t('yourDebts')}</Title>
 			<DebtsContent>
 				<DebtsRightWrapper>
 					<DebtsControls>

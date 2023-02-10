@@ -12,11 +12,6 @@ export interface IDebt {
 	author?: IUserInNeighborhood,
 	debtor?: IUserInNeighborhood,
 }
-
-export interface IDebtOpen {
-	isOpen: boolean,
-}
-
 export interface IDebtContent extends IDebt {
 	isOpen?: boolean,
 	setOpen?: (state: boolean) => void,

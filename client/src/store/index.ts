@@ -4,6 +4,7 @@ import { baseSlice } from '@src/store/base/reducer';
 import { dashboardSlice } from '@src/store/dashboard/reducer';
 import { neighborhoodsSlice } from '@src/store/neighborhoods/reducer';
 import { debtsSlice } from '@src/store/debts/reducer';
+import { debtorsSlice } from '@src/store/debtors/reducer';
 
 export const store = configureStore({
 	reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
 		dashboard: dashboardSlice.reducer,
 		neighborhoods: neighborhoodsSlice.reducer,
 		debts: debtsSlice.reducer,
+		debtors: debtorsSlice.reducer,
 	},
 });
 

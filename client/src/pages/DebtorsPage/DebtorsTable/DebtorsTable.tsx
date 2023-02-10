@@ -1,22 +1,21 @@
 import React from 'react';
+import { DebtorsTableList, DebtorsTableWrapper } from '@src/pages/DebtorsPage/DebtorsTable/style';
 import { IDebtsList } from '@src/pages/NeighborhoodCurrentPage/types';
-import { TableDebt } from '@src/components/DebtTableItem/TableDebt/TableDebt';
 import { TableHead } from '@src/components/DebtTableItem/TableHead/TableHead';
-import { DebtsTableList, DebtsTableWrapper } from './style';
+import { TableDebt } from '@src/components/DebtTableItem/TableDebt/TableDebt';
 
-export const DebtsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
+export const DebtorsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
 	return (
-		<DebtsTableWrapper>
-			<DebtsTableList >
+		<DebtorsTableWrapper>
+			<DebtorsTableList>
 				<thead>
-					<TableHead/>
+					<TableHead isDebtors/>
 				</thead>
-				{
-					isLoading ? null : (
+				{isLoading ? null
+					: (
 						<tbody>
 							{debts.map((item, index) => {
 								return (
-								
 									<TableDebt
 										photo={item.photo}
 										key={item._id}
@@ -28,14 +27,13 @@ export const DebtsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
 										creationDate={item.creationDate}
 										description={item.description}
 										_id={item._id}
-										author={item.author}
+										debtor={item.debtor}
 									/>
 								);
 							})}
 						</tbody>
-					)
-				}
-			</DebtsTableList>
-		</DebtsTableWrapper>
+					)}
+			</DebtorsTableList>
+		</DebtorsTableWrapper>
 	);
 };

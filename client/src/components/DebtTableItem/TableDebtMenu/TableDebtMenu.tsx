@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableDebtMenuItem, TableDebtMenuList } from '@src/pages/DebtsPage/DebtsTable/TableDebtMenu/style';
+import { TableDebtMenuItem, TableDebtMenuList } from '@src/components/DebtTableItem/TableDebtMenu/style';
 import { useTranslation } from 'react-i18next';
 
 export const TableDebtMenu: React.FC = () => {
