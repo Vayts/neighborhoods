@@ -8,6 +8,7 @@ export interface IDebtorsState {
 		minValue: number | string,
 		maxValue: number | string,
 	}
+	updateValue: number | null,
 }
 
 export interface IDebtorsValueState {
