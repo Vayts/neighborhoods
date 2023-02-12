@@ -17,6 +17,10 @@ export const Input: React.FC<IInput> = (
 		secure,
 		disabled,
 		type = 'text',
+		refValue,
+		height,
+		min,
+		max,
 	}: IInput) => {
 	const [show, setShow] = useState(false);
 	
@@ -25,6 +29,9 @@ export const Input: React.FC<IInput> = (
 			{label ? <InputLabel htmlFor={id}>{label}</InputLabel> : null}
 			<InputContent>
 				<InputItem
+					min={min}
+					max={max}
+					ref={refValue || null}
 					id={id}
 					name={name}
 					placeholder={placeholder}
@@ -32,6 +39,7 @@ export const Input: React.FC<IInput> = (
 					value={value}
 					padding={padding}
 					width={width}
+					height={height}
 					fz={fz}
 					type={show ? 'text' : type}
 					disabled={disabled}

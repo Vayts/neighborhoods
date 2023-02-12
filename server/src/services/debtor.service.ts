@@ -48,9 +48,22 @@ export class DebtorService {
 
 	}
 	
-	
 	closeDebt(req) {
 		const id = req.params.id;
 		return this.debtModel.findOneAndUpdate({_id: id}, {status: true})
+	}
+	
+	createDebt(req) {
+		const {_id} = req.user;
+		const id = req.params.id;
+		const values = req.body;
+		return this.debtModel.insertMany([{
+			author: new mongoose.Types.ObjectId(_id),
+			neighborhood: new mongoose.Types.ObjectId(id),
+			debtor: new mongoose.Types.ObjectId(values.debtor),
+			status: false,
+			creationDate: Date.now(),
+			...values,
+		}])
 	}
 }

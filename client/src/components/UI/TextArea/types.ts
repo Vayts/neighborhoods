@@ -1,7 +1,6 @@
-import React, { Ref } from 'react';
+import React from 'react';
 
-export interface IInput {
-	refValue?: Ref<HTMLInputElement> | null,
+export interface ITextArea {
 	name: string,
 	id: string,
 	onChange: React.ChangeEventHandler,
@@ -13,10 +12,5 @@ export interface IInput {
 	padding?: string,
 	fz?: string,
 	label?: string,
-	secure?: boolean,
-	type?: string,
 	disabled?: boolean,
-	
-	min?: number,
-	max?: number,
 }

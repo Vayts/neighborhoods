@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 
-interface IInputWrapper {
+interface ITextAreaWrapper {
 	margin?: string,
 }
-interface IInputItem {
+interface ITextAreaItem {
 	width?: string,
 	height?: string,
 	fz?: string,
 	padding?: string,
 }
 
-export const InputWrapper = styled.div<IInputWrapper>`
+export const TextAreaWrapper = styled.div<ITextAreaWrapper>`
 	margin: ${({ margin = '10px 0' }) => margin};
 	display: flex;
 	flex-direction: column;
 `;
 
-export const InputContent = styled.div`
+export const TextAreaContent = styled.div`
   width: 100%;
   position: relative;
 
@@ -35,13 +35,14 @@ export const InputContent = styled.div`
   }
 `;
 
-export const InputItem = styled.input<IInputItem>`
+export const TextAreaItem = styled.textarea<ITextAreaItem>`
   border: 1px solid rgba(23, 78, 130, 0.15);
   border-radius: 3px;
   padding: ${({ padding = '10px 15px' }) => padding};
   width: ${({ width = 'auto' }) => width};
-	height: ${({ height = 'auto' }) => height};
+  height: ${({ width = '50px' }) => width};
   font-size: ${({ fz = '15px' }) => fz};
+	resize: none;
 
   &:focus {
     outline: 1px solid rgba(29, 29, 29, 0.39);
@@ -53,7 +54,7 @@ export const InputItem = styled.input<IInputItem>`
   }
 `;
 
-export const InputLabel = styled.label`
+export const TextAreaLabel = styled.label`
   font-weight: 500;
   font-size: 13px;
 	margin-bottom: 10px;

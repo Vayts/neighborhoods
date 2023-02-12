@@ -21,7 +21,6 @@ export class AuthService {
 	async login(res, dto) {
 		const user = await this.validateUser(dto);
 		const tokens = this.tokenService.generateTokens(user);
-		console.log(tokens);
 		await this.tokenService.updateToken(user._id, tokens.refresh);
 		res.cookie('arvalesa', tokens.refresh, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 30});
 		const userDTO = new SimpleUserDto(user);

@@ -4,7 +4,7 @@ import { IBaseState } from '@src/store/base/types';
 
 const initialState: IBaseState = {
 	theme: 'light',
-	lang: 'ua',
+	lang: 'uk',
 	modal: {
 		type: null,
 		content: null,

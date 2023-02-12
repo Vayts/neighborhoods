@@ -23,6 +23,9 @@ import { selectCurrentNeighborhood } from '@src/store/neighborhoods/selectors';
 import { userDebtorsRequest } from '@src/store/debtors/actions';
 import { DebtorsTable } from '@src/pages/DebtorsPage/DebtorsTable/DebtorsTable';
 import { debtorsSlice } from '@src/store/debtors/reducer';
+import { AddButton } from '@src/components/UI/AddButton/AddButton';
+import { baseSlice } from '@src/store/base/reducer';
+import { MODALS } from '@constants/modals';
 
 export const DebtorsPage: React.FC = () => {
 	const [isLoading, setLoading] = useState<boolean>(true);
@@ -38,6 +41,10 @@ export const DebtorsPage: React.FC = () => {
 	
 	const updateHandler = () => {
 		dispatch(debtorsSlice.actions.setUpdateValue());
+	};
+	
+	const openAddDebtModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.createDebt, content: { neighborhood } }));
 	};
 	
 	useEffect(() => {
@@ -63,6 +70,7 @@ export const DebtorsPage: React.FC = () => {
 				<DebtorsRightWrapper>
 					<DebtorsControls>
 						<ViewMenu mode={mode} setMode={setMode}/>
+						<AddButton clickHandler={() => openAddDebtModal()} size='40px'/>
 					</DebtorsControls>
 					{mode === 'table' && <DebtorsTable debts={debtors} isLoading={isLoading}/>}
 				</DebtorsRightWrapper>

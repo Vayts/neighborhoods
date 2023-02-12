@@ -1,11 +1,10 @@
-import React, { Ref } from 'react';
+import React from 'react';
 
-export interface IInput {
-	refValue?: Ref<HTMLInputElement> | null,
+export interface IDatePicker {
 	name: string,
 	id: string,
 	onChange: React.ChangeEventHandler,
-	value: string | number,
+	value: Date | number,
 	placeholder?: string,
 	width?: string,
 	height?: string,
@@ -13,10 +12,5 @@ export interface IInput {
 	padding?: string,
 	fz?: string,
 	label?: string,
-	secure?: boolean,
-	type?: string,
 	disabled?: boolean,
-	
-	min?: number,
-	max?: number,
 }

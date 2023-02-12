@@ -4,7 +4,7 @@ export const THEMES = {
 		txtColor: '#2E3A59',
 		subTxtColor: '#B6B6B6',
 		primary: '#6C5DD3',
-		hover: '#5d52b2',
+		hover: '#52499b',
 		hoverLight: '#958fc4',
 		secondColor: '#FF9F38',
 		secondHover: '#f69342',

@@ -7,7 +7,7 @@ import { ERRORS } from '../constants/errors';
 import { NeighborhoodService } from '../services/neighborhood.service';
 
 @Injectable()
-export class isUserInNeighborhood implements CanActivate {
+export class UserInNeighborhoodGuard implements CanActivate {
 	
 	constructor(private neighborhoodService: NeighborhoodService) {
 	}
