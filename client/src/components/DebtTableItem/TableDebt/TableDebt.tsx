@@ -18,6 +18,8 @@ export const TableDebt: React.FC<IDebtItem> = (
 		index,
 		debtor,
 		_id,
+		initialValue,
+		neighborhood,
 	}) => {
 	const [isOpen, setOpen] = useState<boolean>(false);
 	const [isShown, setShown] = useState<boolean>(false);
@@ -47,6 +49,8 @@ export const TableDebt: React.FC<IDebtItem> = (
 					status={status}
 					author={debtor ? null : author}
 					debtor={debtor || null}
+					initialValue={initialValue}
+					neighborhood={neighborhood}
 				/>
 				<TableFullContent
 					_id={_id}
@@ -59,6 +63,8 @@ export const TableDebt: React.FC<IDebtItem> = (
 					status={status}
 					author={debtor ? null : author}
 					debtor={debtor || null}
+					initialValue={initialValue}
+					neighborhood={neighborhood}
 				/>
 			</>
 		) : null

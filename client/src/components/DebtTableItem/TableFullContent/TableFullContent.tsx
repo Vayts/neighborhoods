@@ -1,8 +1,8 @@
 import React from 'react';
 import { IDebtContent } from '@src/types/debt.types';
 import {
-	TableDebtBottomContent, TableDebtorsSign,
-	TableDebtUserNameWrapper,
+	TableDebtBottomContent, TableDebtNewValue, TableDebtorsSign,
+	TableDebtUserNameWrapper, TableDebtValueIcon, TableDebtValueWrapper,
 	TableFullRow,
 } from '@src/components/DebtTableItem/TableFullContent/style';
 import AnimateHeight from 'react-animate-height';
@@ -33,6 +33,8 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 	photo, 
 	_id,
 	title,
+	initialValue,
+	neighborhood,
 }) => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
@@ -46,7 +48,7 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 			<td colSpan={6}>
 				<AnimateHeight
 					height={isOpen ? 'auto' : 0}
-					duration={100}
+					duration={200}
 				>
 					<TableDebtFullContent>
 						<div>
@@ -54,7 +56,12 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 						</div>
 						<TableDebtControl>
 							<Menu>
-								<TableDebtMenu/>
+								<TableDebtMenu
+									debtId={_id}
+									isAuthor={!author}
+									neighborhoodId={neighborhood}
+									status={status}
+								/>
 							</Menu>
 						</TableDebtControl>
 						<TableDebtSubContent>
@@ -78,7 +85,16 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 								<TableDebtSmallTitle>{t('status')}</TableDebtSmallTitle>
 								<TableDebtStatus status={status}>{status ? t('closed') : t('actual')}</TableDebtStatus>
 								<TableDebtSmallTitle>{t('amountOfDebt')}</TableDebtSmallTitle>
-								<TableDebtValue>{`${value} ₴`}</TableDebtValue>
+								<TableDebtValueWrapper>
+									<TableDebtValue>{`${value === initialValue ? value : initialValue} ₴`}</TableDebtValue>
+									{value === initialValue ? null : (
+										<>
+											<TableDebtValueIcon className='icon-right'/>
+											<TableDebtNewValue>{`${value} ₴`}</TableDebtNewValue>
+										</>
+									)}
+								</TableDebtValueWrapper>
+								
 								{author ? null
 									: (
 										<TableDebtBottomContent>

@@ -18,7 +18,7 @@ export function userDebtorsRequest(
 		const t = i18n.t;
 		setLoading(true);
 		try {
-			const response = await axiosPrivate.get(`neighborhood/debtors/${id}?debtors=${filters.debtors.length ? filters.debtors.concat('') : ''}&status=${filters.status.length ? filters.status.concat('') : ''}&min=${filters.minValue}&max=${filters.maxValue}`, {
+			const response = await axiosPrivate.get(`debt/debtors/${id}?debtors=${filters.debtors.length ? filters.debtors.concat('') : ''}&status=${filters.status.length ? filters.status.concat('') : ''}&min=${filters.minValue}&max=${filters.maxValue}`, {
 				signal: controller.signal,
 			});
 			dispatch(debtorsSlice.actions.setCurrentDebtors(response.data));
@@ -76,7 +76,7 @@ export function closeDebtRequest(
 		const t = i18n.t;
 		try {
 			setLoading(true);
-			const response = await axiosPrivate.get(`neighborhood/close_debt/${debtId}`);
+			const response = await axiosPrivate.get(`debt/close_debt/${debtId}`);
 			if (response.data) {
 				const newState = debts.map((item) => {
 					if (item._id === debtId) {
@@ -91,6 +91,43 @@ export function closeDebtRequest(
 				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
 			}
 		} catch {
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function reduceDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	neighborhoodId: string,
+	debtId: string,
+	debtors: IDebt[],
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.post(`debt/reduce_debt/${neighborhoodId}/${debtId}`, {
+				reduceValue: 1,
+			});
+			console.log(response);
+			if (response.data._id === debtId) {
+				const newState = debtors.map((item) => {
+					if (item._id === debtId) {
+						return {
+							...item,
+							value: response.data.value,
+						};
+					}
+					return item;
+				});
+				getNotification(t('partialPaymentWasAdded'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+			}
+		} catch (e) {
+			console.log(e);
 			getNotification(t('smtWntWrng'), 'error');
 		} finally {
 			setLoading(false);

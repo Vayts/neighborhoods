@@ -28,6 +28,8 @@ export const DebtorsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
 										description={item.description}
 										_id={item._id}
 										debtor={item.debtor}
+										initialValue={item.initialValue}
+										neighborhood={item.neighborhood}
 									/>
 								);
 							})}

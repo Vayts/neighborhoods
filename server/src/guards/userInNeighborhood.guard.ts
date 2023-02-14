@@ -13,9 +13,9 @@ export class UserInNeighborhoodGuard implements CanActivate {
 	}
 	async canActivate(context: ExecutionContext): Promise<boolean> {
 		const req = context.switchToHttp().getRequest();
-		const {id} = req.params;
+		const {neighborhoodId} = req.params;
 		try {
-			const isInNeighborhood = await this.neighborhoodService.getUserInNeighborhood(req, id);
+			const isInNeighborhood = await this.neighborhoodService.getUserInNeighborhood(req, neighborhoodId);
 			if (!isInNeighborhood) return Promise.reject(ERRORS.NO_ACCESS)
 			return true;
 		} catch (e) {

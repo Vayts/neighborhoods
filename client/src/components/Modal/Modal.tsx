@@ -8,6 +8,8 @@ import { CloseDebtModal } from '@src/components/Modal/СloseDebtModal/CloseDebtM
 import { MODALS } from '@constants/modals';
 import { CreateDebtModal } from '@src/components/Modal/CreateDebtModal/CreateDebtModal';
 import { INeighborhood } from '@src/types/neighborhood.types';
+import { DebtHistoryModal } from '@src/components/Modal/DebtHistoryModal/DebtHistoryModal';
+import { IDebt } from '@src/types/debt.types';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -43,6 +45,13 @@ export const Modal: React.FC = () => {
 			return (
 				<CreateDebtModal
 					neighborhood={modalContent.neighborhood as INeighborhood}
+				/>
+			);
+		case MODALS.debtHistory:
+			return (
+				<DebtHistoryModal
+					debtId={modalContent.debtId}
+					neighborhoodId={modalContent.neighborhoodId}
 				/>
 			);
 		default:

@@ -17,7 +17,7 @@ export function userDebtsRequest(
 		const t = i18n.t;
 		setLoading(true);
 		try {
-			const response = await axiosPrivate.get(`neighborhood/debts/${id}?authors=${filters.authors.length ? filters.authors.concat('') : ''}&status=${filters.status.length ? filters.status.concat('') : ''}&min=${filters.minValue}&max=${filters.maxValue}`, {
+			const response = await axiosPrivate.get(`debt/debts/${id}?authors=${filters.authors.length ? filters.authors.concat('') : ''}&status=${filters.status.length ? filters.status.concat('') : ''}&min=${filters.minValue}&max=${filters.maxValue}`, {
 				signal: controller.signal,
 			});
 			dispatch(debtsSlice.actions.setCurrentDebts(response.data));

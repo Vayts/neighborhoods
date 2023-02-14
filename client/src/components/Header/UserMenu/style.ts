@@ -80,11 +80,12 @@ export const UserMenuItem = styled.li<IUserItemStyle>`
 	
 	&:last-child {
 		font-weight: 500;
+		color: ${({ theme }) => `${theme.errorColor}`};
 	}
 	
 	span {
     &:before {
-      color: ${({ color, theme }) => color || theme.txtColor};
+      color: ${({ color, theme }) => (color ? theme.errorColor : theme.txtColor)};
 	    font-size: 20px;
       margin-right: 5px;
     }

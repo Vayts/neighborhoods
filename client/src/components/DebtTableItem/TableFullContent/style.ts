@@ -86,9 +86,24 @@ export const TableDebtStatus = styled.p<ITableDebtStatus>`
 	margin: 0 0 5px;
 `;
 
+export const TableDebtValueWrapper = styled.div`
+	align-items: flex-end;
+`;
+
 export const TableDebtValue = styled.span`
 	font-size: 24px;
 	font-weight: 600;
+`;
+
+export const TableDebtNewValue = styled.span`
+	font-weight: 500;
+`;
+
+export const TableDebtValueIcon = styled.span`
+	font-size: 20px;
+	margin: 0 5px;
+	align-self: flex-end;
+	line-height: 0.5;
 `;
 
 export const TableDebtBottomContent = styled.div`

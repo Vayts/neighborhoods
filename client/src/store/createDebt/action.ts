@@ -17,7 +17,7 @@ export function createDebtRequest(
 		const t = i18n.t;
 		setLoading(true);
 		try {
-			await axiosPrivate.post(`neighborhood/${neighborhoodId}/create_debt`, {
+			await axiosPrivate.post(`debt/${neighborhoodId}/create_debt`, {
 				...values,
 				debtor: values.debtor.value,
 				value: Number(values.value),

@@ -5,12 +5,14 @@ export interface IDebt {
 	title: string,
 	description: string | null,
 	value: number,
+	initialValue: number,
 	creationDate: string | Date,
 	expDate: null | string | Date,
 	status: boolean,
 	photo?: string | null,
 	author?: IUserInNeighborhood,
 	debtor?: IUserInNeighborhood,
+	neighborhood: string,
 }
 export interface IDebtContent extends IDebt {
 	isOpen?: boolean,
