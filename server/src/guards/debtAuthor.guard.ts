@@ -13,10 +13,10 @@ export class DebtAuthorGuard implements CanActivate {
 	}
 	async canActivate(context: ExecutionContext): Promise<boolean> {
 		const req = context.switchToHttp().getRequest();
-		const { id } = req.params;
+		const { debtId } = req.params;
 		const user = req.user;
 		try {
-			const isAuthor = await this.debtService.getDebtByIdAndAuthor(id, user._id);
+			const isAuthor = await this.debtService.getDebtByIdAndAuthor(debtId, user._id);
 			if (!isAuthor) return Promise.reject(ERRORS.NO_ACCESS)
 			return true;
 		} catch (e) {

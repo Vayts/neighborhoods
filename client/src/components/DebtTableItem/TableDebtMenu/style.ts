@@ -1,17 +1,24 @@
 import styled from 'styled-components';
 
-export const TableDebtMenuList = styled.ul`
+interface ITableDebtMenu {
+	isLoading: boolean
+}
+
+export const TableDebtMenuList = styled.ul<ITableDebtMenu>`
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	cursor: ${({ isLoading }) => (isLoading ? 'default' : 'pointer')};
+  position: relative;
 `;
 
 export const TableDebtMenuItem = styled.li`
 	padding: 8px 10px;
+	user-select: none;
 	
 	&:hover {
 		transition: all 0.2s;
-		cursor: pointer;
+		cursor: inherit;
 		background-color: ${({ theme }) => `${theme.primary}10`};
 	}
 	
@@ -20,7 +27,6 @@ export const TableDebtMenuItem = styled.li`
 		font-weight: 500;
 
     &:hover {
-      cursor: pointer;
       background-color: ${({ theme }) => `${theme.errorColor}20`};
     }
 	}

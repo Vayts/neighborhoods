@@ -3,6 +3,6 @@ export interface IBaseState {
 	lang: string,
 	modal: {
 		type: string,
-		content: Record<string, string|number> | null,
+		content: Record<string, string|number> | null | unknown | any,
 	}
 }

@@ -1,6 +1,7 @@
 import { RefObject, useEffect } from 'react';
+import { useAppSelector } from '@src/hooks/hooks';
 
-export function useOutsideClick(ref: RefObject<HTMLElement>, func: () => void): void {
+export function useOutsideClick(ref: RefObject<HTMLElement>, func: () => void, spectate = null): void {
 	useEffect(() => {
 		function handleClick(event) {
 			if (ref.current && !ref.current.contains(event.target)) {
@@ -13,5 +14,5 @@ export function useOutsideClick(ref: RefObject<HTMLElement>, func: () => void): 
 		return () => {
 			document.removeEventListener('mousedown', handleClick);
 		};
-	}, [ref]);
+	}, [ref, spectate]);
 }

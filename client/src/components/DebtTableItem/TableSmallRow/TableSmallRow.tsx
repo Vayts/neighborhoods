@@ -20,6 +20,7 @@ export const TableSmallRow: React.FC<IDebtContent> = ({
 	debtor,
 	creationDate,
 	status,
+	initialValue,
 }) => {
 	const { t } = useTranslation();
 	
@@ -33,7 +34,7 @@ export const TableSmallRow: React.FC<IDebtContent> = ({
 				<span>{description || t('noDescription')}</span>
 			</td>
 			<td>
-				{`${value} ₴`}
+				{`${value === initialValue ? initialValue : value} ₴`}
 			</td>
 			<td>
 				<SmallRowUser>

@@ -40,6 +40,7 @@ export const InputItem = styled.input<IInputItem>`
   border-radius: 3px;
   padding: ${({ padding = '10px 15px' }) => padding};
   width: ${({ width = 'auto' }) => width};
+	height: ${({ height = 'auto' }) => height};
   font-size: ${({ fz = '15px' }) => fz};
 
   &:focus {

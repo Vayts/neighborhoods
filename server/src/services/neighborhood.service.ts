@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { Neighborhood, NeighborhoodDocument } from '../schemas/neighborhood.schema';
 import { Neighborhood_UserDocument, Neighborhood_Users } from '../schemas/neighborhood_user.schema';
+import { InvalidDataException } from '../exception/invalidData.exception';
+import { ERRORS } from '../constants/errors';
 
 @Injectable()
 export class NeighborhoodService {
@@ -64,10 +66,10 @@ export class NeighborhoodService {
 	}
 	
 	async getUserNeighborhood(req) {
-		const { id } = req.params;
+		const { neighborhoodId } = req.params;
 
-		return  this.neighborhoodModel.aggregate([
-			{$match: {_id: new mongoose.Types.ObjectId(id) }},
+		const result = await this.neighborhoodModel.aggregate([
+			{$match: {_id: new mongoose.Types.ObjectId(neighborhoodId) }},
 			{
 				$lookup: {
 					from: "neighborhood_users",
@@ -93,5 +95,9 @@ export class NeighborhoodService {
 				}
 			}
 		])
+		if (result.length) {
+			return result;
+		}
+		throw new InvalidDataException(ERRORS.INVALID_DATA);
 	}
 }

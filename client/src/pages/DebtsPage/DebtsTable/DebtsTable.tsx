@@ -16,7 +16,6 @@ export const DebtsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
 						<tbody>
 							{debts.map((item, index) => {
 								return (
-								
 									<TableDebt
 										photo={item.photo}
 										key={item._id}
@@ -29,6 +28,8 @@ export const DebtsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
 										description={item.description}
 										_id={item._id}
 										author={item.author}
+										initialValue={item.initialValue}
+										neighborhood={item.neighborhood}
 									/>
 								);
 							})}

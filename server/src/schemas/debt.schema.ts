@@ -16,6 +16,9 @@ export class Debt {
 	description: string | null;
 	
 	@Prop()
+	initialValue: number;
+	
+	@Prop()
 	value: number;
 	
 	@Prop({type: Date, default: Date.now()})
