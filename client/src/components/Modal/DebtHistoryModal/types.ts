@@ -3,8 +3,7 @@ import { IDebt } from '@src/types/debt.types';
 import { IUserInNeighborhood } from '@src/types/neighborhood.types';
 
 export interface IDebtHistory {
-	debtId: string;
-	neighborhoodId: string;
+	debt: IDebt;
 }
 
 export interface IDebtHistoryItem extends IUserEvent {

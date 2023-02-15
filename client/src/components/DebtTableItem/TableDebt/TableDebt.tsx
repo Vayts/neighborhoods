@@ -8,18 +8,8 @@ import {
 
 export const TableDebt: React.FC<IDebtItem> = (
 	{
-		status,
-		description,
-		expDate,
-		value,
-		title,
-		author,
-		creationDate,
 		index,
-		debtor,
-		_id,
-		initialValue,
-		neighborhood,
+		debt,
 	}) => {
 	const [isOpen, setOpen] = useState<boolean>(false);
 	const [isShown, setShown] = useState<boolean>(false);
@@ -41,30 +31,11 @@ export const TableDebt: React.FC<IDebtItem> = (
 				<TableSmallRow
 					isOpen={isOpen}
 					setOpen={setOpen}
-					title={title}
-					description={description}
-					value={value}
-					creationDate={creationDate}
-					expDate={expDate}
-					status={status}
-					author={debtor ? null : author}
-					debtor={debtor || null}
-					initialValue={initialValue}
-					neighborhood={neighborhood}
+					debt={debt}
 				/>
 				<TableFullContent
-					_id={_id}
 					isOpen={isOpen}
-					title={title}
-					description={description}
-					value={value}
-					creationDate={creationDate}
-					expDate={expDate}
-					status={status}
-					author={debtor ? null : author}
-					debtor={debtor || null}
-					initialValue={initialValue}
-					neighborhood={neighborhood}
+					debt={debt}
 				/>
 			</>
 		) : null

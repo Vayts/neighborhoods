@@ -23,24 +23,20 @@ import {
 
 export const TableFullContent: React.FC<IDebtContent> = ({
 	isOpen, 
-	expDate, 
-	creationDate, 
-	status, 
-	author, 
-	debtor, 
-	description, 
-	value,
-	photo, 
-	_id,
-	title,
-	initialValue,
-	neighborhood,
+	debt,
 }) => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	
 	const openCloseModal = () => {
-		dispatch(baseSlice.actions.setModal({ type: MODALS.closeDebt, content: { title, value, _id } }));
+		dispatch(baseSlice.actions.setModal({ type: MODALS.closeDebt, content: { title: debt.title, value: debt.value, _id: debt._id } }));
+	};
+	
+	const generateName = () => {
+		if (typeof debt.author !== 'string') {
+			return `${debt.author.firstName} ${debt.author.lastName.slice(0, 1)}.`;
+		}
+		return `${debt.debtor.firstName} ${debt.debtor.lastName.slice(0, 1)}.`;
 	};
 	
 	return (
@@ -52,55 +48,51 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 				>
 					<TableDebtFullContent>
 						<div>
-							<AvatarFiller text={author?.login || debtor.login}/>
+							<AvatarFiller text={debt.author?.login || debt.debtor.login}/>
 						</div>
 						<TableDebtControl>
 							<Menu>
 								<TableDebtMenu
-									value={value}
-									debtId={_id}
-									title={title}
-									isAuthor={!author}
-									neighborhoodId={neighborhood}
-									status={status}
+									debt={debt}
+									isAuthor={!debt.author?.login}
 								/>
 							</Menu>
 						</TableDebtControl>
 						<TableDebtSubContent>
 							<TableDebtMainInfo>
 								<TableDebtUserNameWrapper>
-									<TableDebtUserName>{author ? `${author.firstName} ${author.lastName}` : `${debtor.firstName} ${debtor.lastName}`}</TableDebtUserName>
-									{author ? null : <TableDebtorsSign>{t('debtor')}</TableDebtorsSign>}
+									<TableDebtUserName>{generateName()}</TableDebtUserName>
+									{debt.author?.login ? null : <TableDebtorsSign>{t('debtor')}</TableDebtorsSign>}
 								</TableDebtUserNameWrapper>
 								<TableDebtDates>
 									<DatesTimeline
-										startDate={creationDate}
-										endDate={expDate}
+										startDate={debt.creationDate}
+										endDate={debt.expDate}
 									/>
 								</TableDebtDates>
 							</TableDebtMainInfo>
 							<TableDebtInfoWrapper>
 								<TableDebtSmallTitle>{t('description')}</TableDebtSmallTitle>
-								<TableDebtDescription>{description || t('noDescription')}</TableDebtDescription>
+								<TableDebtDescription>{debt.description || t('noDescription')}</TableDebtDescription>
 								<TableDebtSmallTitle>{t('photo')}</TableDebtSmallTitle>
-								{photo ? null : <TableDebtDescription>{t('noPhoto')}</TableDebtDescription>}
+								{debt.photo ? null : <TableDebtDescription>{t('noPhoto')}</TableDebtDescription>}
 								<TableDebtSmallTitle>{t('status')}</TableDebtSmallTitle>
-								<TableDebtStatus status={status}>{status ? t('closed') : t('actual')}</TableDebtStatus>
+								<TableDebtStatus status={debt.status}>{debt.status ? t('closed') : t('actual')}</TableDebtStatus>
 								<TableDebtSmallTitle>{t('amountOfDebt')}</TableDebtSmallTitle>
 								<TableDebtValueWrapper>
-									<TableDebtValue>{`${value === initialValue ? value : initialValue} ₴`}</TableDebtValue>
-									{value === initialValue ? null : (
+									<TableDebtValue>{`${debt.value === debt.initialValue ? debt.value : debt.initialValue} ₴`}</TableDebtValue>
+									{debt.value === debt.initialValue ? null : (
 										<>
 											<TableDebtValueIcon className='icon-right'/>
-											<TableDebtNewValue>{`${value} ₴`}</TableDebtNewValue>
+											<TableDebtNewValue>{`${debt.value} ₴`}</TableDebtNewValue>
 										</>
 									)}
 								</TableDebtValueWrapper>
 								
-								{author ? null
+								{debt.author?.login ? null
 									: (
 										<TableDebtBottomContent>
-											<Button onClick={() => openCloseModal()} title={t('close')} margin='0' isDisabled={status === true}/>
+											<Button onClick={() => openCloseModal()} title={t('close')} margin='0' isDisabled={debt.status}/>
 										</TableDebtBottomContent>
 									)}
 							</TableDebtInfoWrapper>

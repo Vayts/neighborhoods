@@ -5,8 +5,8 @@ import { Title } from '@src/components/Title/Title';
 import { useTranslation } from 'react-i18next';
 import { Input } from '@src/components/UI/Input/Input';
 
-export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt, neighborhood }) => {
-	const [value, setValue] = useState('');
+export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
+	const [value, setValue] = useState(debt.value);
 	const { t } = useTranslation();
 	
 	const onChangeHandler = (e) => {

@@ -11,14 +11,14 @@ import { Loader } from '@src/components/Loader/Loader';
 import { useTranslation } from 'react-i18next';
 import { getNotification } from '@src/notification/notifications';
 
-export const DebtHistoryModal: React.FC<IDebtHistory> = ({ debtId, neighborhoodId }) => {
+export const DebtHistoryModal: React.FC<IDebtHistory> = ({ debt }) => {
 	const [history, setHistory] = useState<IDebtHistoryItem[]>([]);
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const { t } = useTranslation();
 	const axiosPrivate = useAxiosPrivate();
 	
 	useEffect(() => {
-		axiosPrivate.get(`/debt/history/${neighborhoodId}/${debtId}`)
+		axiosPrivate.get(`/debt/history/${debt.neighborhood}/${debt._id}`)
 			.then((res) => {
 				setHistory(res.data);
 			})

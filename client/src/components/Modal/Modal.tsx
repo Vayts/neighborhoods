@@ -49,14 +49,12 @@ export const Modal: React.FC = () => {
 		case MODALS.debtHistory:
 			return (
 				<DebtHistoryModal
-					debtId={modalContent.debtId}
-					neighborhoodId={modalContent.neighborhoodId}
+					debt={modalContent.debt}
 				/>
 			);
 		case MODALS.partialPayment:
 			return (
-				<PartialPaymentModal 
-					neighborhood={modalContent.neighborhood}
+				<PartialPaymentModal
 					debt={modalContent.debt}
 				/>
 			);
