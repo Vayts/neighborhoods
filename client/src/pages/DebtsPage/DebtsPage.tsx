@@ -14,7 +14,7 @@ import {
 	DebtsRightWrapper,
 	DebtsWrapper,
 } from '@src/pages/DebtsPage/style';
-import { ViewMenu } from '@src/components/ViewMenu/ViewMenu';
+import { ViewMenu } from '@src/components/UI/ViewMenu/ViewMenu';
 import { DebtsTable } from '@src/pages/DebtsPage/DebtsTable/DebtsTable';
 import { DebtsFilters } from '@src/pages/DebtsPage/DebtsFilters/DebtsFilters';
 import {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ViewMenu } from '@src/components/ViewMenu/ViewMenu';
+import { ViewMenu } from '@src/components/UI/ViewMenu/ViewMenu';
 import {
 	NeighborhoodsControls,
 	NeighborhoodsPageWrapper,

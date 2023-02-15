@@ -7,9 +7,8 @@ import { useOutsideClick } from '@src/hooks/useOutsideClick';
 import { CloseDebtModal } from '@src/components/Modal/СloseDebtModal/CloseDebtModal';
 import { MODALS } from '@constants/modals';
 import { CreateDebtModal } from '@src/components/Modal/CreateDebtModal/CreateDebtModal';
-import { INeighborhood } from '@src/types/neighborhood.types';
 import { DebtHistoryModal } from '@src/components/Modal/DebtHistoryModal/DebtHistoryModal';
-import { IDebt } from '@src/types/debt.types';
+import { PartialPaymentModal } from '@src/components/Modal/PartialPaymentModal/PartialPaymentModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -36,15 +35,15 @@ export const Modal: React.FC = () => {
 		case MODALS.closeDebt:
 			return (
 				<CloseDebtModal 
-					title={modalContent.title as string} 
-					value={modalContent.value as number} 
-					_id={modalContent._id as string}
+					title={modalContent.title}
+					value={modalContent.value}
+					_id={modalContent._id}
 				/>
 			);
 		case MODALS.createDebt:
 			return (
 				<CreateDebtModal
-					neighborhood={modalContent.neighborhood as INeighborhood}
+					neighborhood={modalContent.neighborhood}
 				/>
 			);
 		case MODALS.debtHistory:
@@ -52,6 +51,13 @@ export const Modal: React.FC = () => {
 				<DebtHistoryModal
 					debtId={modalContent.debtId}
 					neighborhoodId={modalContent.neighborhoodId}
+				/>
+			);
+		case MODALS.partialPayment:
+			return (
+				<PartialPaymentModal 
+					neighborhood={modalContent.neighborhood}
+					debt={modalContent.debt}
 				/>
 			);
 		default:

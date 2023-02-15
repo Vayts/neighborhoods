@@ -9,7 +9,6 @@ import {
 import { DebtHistoryItem } from '@src/components/Modal/DebtHistoryModal/DebtHistoryItem/DebtHistoryItem';
 import { Loader } from '@src/components/Loader/Loader';
 import { useTranslation } from 'react-i18next';
-import { Title } from '@src/components/Title/Title';
 import { getNotification } from '@src/notification/notifications';
 
 export const DebtHistoryModal: React.FC<IDebtHistory> = ({ debtId, neighborhoodId }) => {

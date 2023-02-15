@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const DebtHistoryWrapper = styled.div`
-	padding: 0 15px 20px;
-	width: 400px;
+  padding: 0 25px 15px;
+	width: 450px;
 	height: 500px;
 	overflow: hidden;
 	position: relative;
@@ -12,7 +12,7 @@ export const DebtHistoryList = styled.ul`
   max-height: 500px;
   list-style: none;
   margin: 0;
-  padding: 15px 0 0;
+  padding: 15px 10px 0 0;
   overflow-y: scroll;
 
   /* width */

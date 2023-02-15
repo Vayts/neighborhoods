@@ -57,7 +57,9 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 						<TableDebtControl>
 							<Menu>
 								<TableDebtMenu
+									value={value}
 									debtId={_id}
+									title={title}
 									isAuthor={!author}
 									neighborhoodId={neighborhood}
 									status={status}
