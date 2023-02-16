@@ -20,13 +20,21 @@ export const Modal: React.FC = () => {
 		dispatch(baseSlice.actions.resetModal());
 	};
 	
+	const escHandler = (e) => {
+		if (e.key === 'Escape') {
+			closeModal();
+		}
+	};
+	
 	useEffect(() => {
 		document.body.style.overflowY = 'hidden';
 		document.body.style.paddingRight = 'calc(17px - (100vw - 100%))';
+		document.addEventListener('keydown', escHandler);
 		
 		return () => {
 			document.body.style.overflowY = 'scroll';
 			closeModal();
+			document.removeEventListener('keydown', escHandler);
 		};
 	}, []);
 	
