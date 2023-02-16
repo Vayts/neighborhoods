@@ -122,13 +122,13 @@ export function validatePartialPayment(value: string, debtValue: number): Record
 		return errors;
 	}
 	
-	if (Number(value) < 1) {
-		errors.value = t('mustBeGreaterThan', { value: 1 });
+	if (debtValue - Number(value) < 1) {
+		errors.value = `${t('finalAmountCantBe', { value: 1 })} ₴`;
 		return errors;
 	}
 	
-	if (debtValue - Number(value) < 1) {
-		errors.value = t('finalAmountCantBe', { value: 1 });
+	if (Number(value) < 0.1) {
+		errors.value = t('mustBeGreaterThan', { value: 0.1 });
 		return errors;
 	}
 	

@@ -6,8 +6,6 @@ import { Neighborhood_UserDocument, Neighborhood_Users } from '../schemas/neighb
 import { Debt, DebtDocument } from '../schemas/debt.schema';
 import { parseDebtDebtorsQuery, parseDebtStatusQuery } from '../helpers/debtQuery.helper';
 import { UserEvent, UserEventDocument } from '../schemas/userEvent.schema';
-import { InvalidDataException } from '../exception/invalidData.exception';
-import { ERRORS } from '../constants/errors';
 
 @Injectable()
 export class DebtorService {
@@ -62,17 +60,18 @@ export class DebtorService {
 		const {neighborhoodId} = req.params;
 		const values = req.body;
 		return this.debtModel.insertMany([{
+			...values,
 			author: new mongoose.Types.ObjectId(_id),
 			neighborhood: new mongoose.Types.ObjectId(neighborhoodId),
 			debtor: new mongoose.Types.ObjectId(values.debtor),
 			status: false,
 			creationDate: Date.now(),
-			initialValue: values.value,
-			...values,
+			initialValue: Number(values.value.toFixed(2)),
+			value: Number(values.value.toFixed(2)),
 		}])
 	}
 	
-	async reduceDebt(req, debt) {
+	async addPartialPayment(req, debt) {
 		
 		const {debtId, neighborhoodId} = req.params;
 		const {reduceValue} = req.body;
@@ -84,7 +83,7 @@ export class DebtorService {
 				content: {
 					debt: debtId,
 					message: 'partialReturn',
-					value: reduceValue,
+					value: Number(reduceValue.toFixed(2)),
 				},
 				author: new mongoose.Types.ObjectId(_id),
 				recipient: new mongoose.Types.ObjectId(debt.debtor),
@@ -93,7 +92,7 @@ export class DebtorService {
 			}
 		])
 		if (event) {
-			return this.debtModel.findOneAndUpdate({_id: debtId}, {value: debt.value - Number(reduceValue)}, { returnOriginal: false },)
+			return this.debtModel.findOneAndUpdate({_id: debtId}, {value: Number((debt.value - Number(reduceValue)).toFixed(2))}, { returnOriginal: false },)
 		}
 	}
 }

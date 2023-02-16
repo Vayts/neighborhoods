@@ -99,7 +99,7 @@ export function closeDebtRequest(
 	};
 }
 
-export function reduceDebtRequest(
+export function partialPaymentRequest(
 	axiosPrivate: Axios,
 	setLoading: (state: boolean) => void,
 	neighborhoodId: string,

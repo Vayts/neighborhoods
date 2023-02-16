@@ -7,10 +7,11 @@ import { Input } from '@src/components/UI/Input/Input';
 import { Description } from '@src/components/Description/Description';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { reduceDebtRequest } from '@src/store/debtors/actions';
+import { partialPaymentRequest } from '@src/store/debtors/actions';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import { selectCurrentDebtors } from '@src/store/debtors/selectors';
 import { validatePartialPayment } from '@helpers/debtValidation.helper';
+import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
 
 export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 	const [value, setValue] = useState('');
@@ -35,7 +36,14 @@ export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 	
 	const onSubmit = (e) => {
 		e.preventDefault();
-		dispatch(reduceDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors, Number(value)));
+		dispatch(partialPaymentRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors, Number(value)));
+	};
+	
+	const generatePlaceholder = () => {
+		if (debt.value - 1 < 0.1) {
+			return `${t('amountOfMoney')}`;
+		}
+		return `${t('amountOfMoney')}: 0.1 ₴ \u2013 ${Number((debt.value - 1).toFixed(2))} ₴`;
 	};
 	
 	return (
@@ -54,16 +62,17 @@ export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 					onChange={onChangeHandler}
 					value={value}
 					type='number'
-					placeholder={`${t('amountOfMoney')}: 1 ₴ \u2013 ${debt.value - 1} ₴`}
+					placeholder={generatePlaceholder()}
 					width='100%'
 					label={t('amountOfMoney')}
 					min={1}
 					max={debt.value - 1}
 				/>
+				<ErrorMsg show={Object.keys(errors).length > 0} msg={errors?.value}/>
 				<Button
 					onClick={onSubmit}
 					title={t('submit')}
-					margin='30px auto 0'
+					margin='20px auto 0'
 					height='40px'
 					isLoading={isLoading}
 					width='50%'

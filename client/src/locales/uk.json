@@ -3,7 +3,7 @@
   "addDebt": "Додати борг",
   "alreadyHaveAnAccount": "Вже маєте обліковий запис?",
   "amountOfDebt": "Сума боргу",
-  "amountOfMoney": "Сума грошей",
+  "amountOfMoney": "Сума грошових коштів",
   "apr": "Кві",
   "atLeast": "Не менше {{value}} символів",
   "atLeast1Number": "Не менше 1 цифри",

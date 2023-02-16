@@ -58,6 +58,6 @@ export class DebtController {
 			throw new InvalidDataException(ERRORS.NO_ACCESS)
 		}
 		
-		return this.debtorService.reduceDebt(request, debt);
+		return this.debtorService.addPartialPayment(request, debt);
 	}
 }
