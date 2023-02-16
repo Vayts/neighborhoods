@@ -6,10 +6,20 @@ import { useTranslation } from 'react-i18next';
 import { Input } from '@src/components/UI/Input/Input';
 import { Description } from '@src/components/Description/Description';
 import { Button } from '@src/components/UI/Button/Button';
+import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
+import { reduceDebtRequest } from '@src/store/debtors/actions';
+import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
+import { selectCurrentDebtors } from '@src/store/debtors/selectors';
+import { validatePartialPayment } from '@helpers/debtValidation.helper';
 
 export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 	const [value, setValue] = useState('');
+	const [errors, setErrors] = useState<Record<string, string>>({});
+	const [isLoading, setLoading] = useState<boolean>(false);
+	const axiosPrivate = useAxiosPrivate();
+	const debtors = useAppSelector(selectCurrentDebtors);
 	const paymentRef = useRef(null);
+	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
 	
 	useEffect(() => {
@@ -19,18 +29,20 @@ export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 	}, []);
 	
 	const onChangeHandler = (e) => {
+		setErrors(validatePartialPayment(e.target.value, debt.value));
 		setValue(e.target.value);
 	};
 	
-	const onSubmit = () => {
-	
+	const onSubmit = (e) => {
+		e.preventDefault();
+		dispatch(reduceDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors, Number(value)));
 	};
 	
 	return (
 		<PartialPaymentWrapper>
 			<Title margin='0 auto'>{t('partialPaymentMenu')}</Title>
 			<Description
-				margin='5px 0 20px'
+				margin='5px 0 15px'
 			>
 				{t('specifyAmountOfMoney')}
 			</Description>
@@ -52,7 +64,10 @@ export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 					onClick={onSubmit}
 					title={t('submit')}
 					margin='30px auto 0'
-					height='30px'
+					height='40px'
+					isLoading={isLoading}
+					width='50%'
+					isDisabled={Object.keys(errors).length > 0 || !value || isLoading}
 				/>
 			</form>
 		</PartialPaymentWrapper>

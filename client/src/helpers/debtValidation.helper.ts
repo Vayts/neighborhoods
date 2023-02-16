@@ -6,7 +6,7 @@ function debtTitleValidate(title: string): Record<string, string> {
 	const errors: Record<string, string> = {};
 	const t = i18n.t;
 	
-	if (title === '') {
+	if (title.trim() === '') {
 		errors.title = t('requiredField');
 		return errors;
 	}
@@ -45,7 +45,7 @@ function debtValueValidate(value): Record<string, string> {
 	const errors: Record<string, string> = {};
 	const t = i18n.t;
 	
-	if (value === '') {
+	if (value.trim() === '') {
 		errors.value = t('requiredField');
 		return errors;
 	}
@@ -106,4 +106,31 @@ export function debtCreateValidate(values: ICreateDebt['form']): Record<string, 
 		...dateCheck,
 		...descriptionCheck,
 	};
+}
+
+export function validatePartialPayment(value: string, debtValue: number): Record<string, string> {
+	const errors: Record<string, string> = {};
+	const t = i18n.t;
+	
+	if (Number.isNaN(Number(value))) {
+		errors.value = t('mustBeANumber');
+		return errors;
+	}
+	
+	if (value.trim() === '') {
+		errors.value = t('requiredField');
+		return errors;
+	}
+	
+	if (Number(value) < 1) {
+		errors.value = t('mustBeGreaterThan', { value: 1 });
+		return errors;
+	}
+	
+	if (debtValue - Number(value) < 1) {
+		errors.value = t('finalAmountCantBe', { value: 1 });
+		return errors;
+	}
+	
+	return errors;
 }

@@ -6,6 +6,7 @@ import { getNotification } from '@src/notification/notifications';
 import { IDebtorsState } from '@src/store/debtors/types';
 import { debtorsSlice } from '@src/store/debtors/reducer';
 import { IDebt } from '@src/types/debt.types';
+import { baseSlice } from '@src/store/base/reducer';
 
 export function userDebtorsRequest(
 	axiosPrivate: Axios,
@@ -104,15 +105,15 @@ export function reduceDebtRequest(
 	neighborhoodId: string,
 	debtId: string,
 	debtors: IDebt[],
+	reduceValue: number,
 ): Dispatch<AppDispatch> {
 	return async (dispatch) => {
 		const t = i18n.t;
 		try {
 			setLoading(true);
 			const response = await axiosPrivate.post(`debt/reduce_debt/${neighborhoodId}/${debtId}`, {
-				reduceValue: 1,
+				reduceValue,
 			});
-			console.log(response);
 			if (response.data._id === debtId) {
 				const newState = debtors.map((item) => {
 					if (item._id === debtId) {
@@ -125,9 +126,9 @@ export function reduceDebtRequest(
 				});
 				getNotification(t('partialPaymentWasAdded'), 'success');
 				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.setModal({ type: null, content: null }));
 			}
 		} catch (e) {
-			console.log(e);
 			getNotification(t('smtWntWrng'), 'error');
 		} finally {
 			setLoading(false);
