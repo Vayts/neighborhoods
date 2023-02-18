@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IViewMenuStyle } from '@src/components/ViewMenu/types';
+import { IViewMenuStyle } from '@src/components/UI/ViewMenu/types';
 
 export const ViewMenuWrapper = styled.div`
 	display: flex;

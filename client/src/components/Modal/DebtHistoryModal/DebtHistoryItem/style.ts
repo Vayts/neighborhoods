@@ -18,7 +18,6 @@ export const DebtHistoryItemWrapper = styled.li`
 	
 	&:last-child {
 		margin-bottom: 0;
-		padding-bottom: 0;
 	}
 `;
 

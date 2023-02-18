@@ -14,13 +14,15 @@ export interface IDebt {
 	debtor?: IUserInNeighborhood,
 	neighborhood: string,
 }
-export interface IDebtContent extends IDebt {
+export interface IDebtContent{
 	isOpen?: boolean,
+	debt: IDebt,
 	setOpen?: (state: boolean) => void,
 }
 
-export interface IDebtItem extends IDebt {
+export interface IDebtItem {
 	index: number,
+	debt: IDebt,
 }
 
 export interface ITableDebtStyle {

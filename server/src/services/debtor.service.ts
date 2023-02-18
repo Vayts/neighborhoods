@@ -6,8 +6,6 @@ import { Neighborhood_UserDocument, Neighborhood_Users } from '../schemas/neighb
 import { Debt, DebtDocument } from '../schemas/debt.schema';
 import { parseDebtDebtorsQuery, parseDebtStatusQuery } from '../helpers/debtQuery.helper';
 import { UserEvent, UserEventDocument } from '../schemas/userEvent.schema';
-import { InvalidDataException } from '../exception/invalidData.exception';
-import { ERRORS } from '../constants/errors';
 
 @Injectable()
 export class DebtorService {
@@ -52,9 +50,27 @@ export class DebtorService {
 
 	}
 	
-	closeDebt(req) {
+	async closeDebt(req) {
 		const {debtId} = req.params;
-		return this.debtModel.findOneAndUpdate({_id: debtId}, {status: true})
+		const user = req.user;
+		const debt = await this.debtModel.findOneAndUpdate({_id: debtId}, {status: true});
+		const event = await this.eventModel.insertMany([
+			{
+				type: 'debt',
+				content: {
+					debt: debtId,
+					message: 'debtWasClosed',
+					value: debt.value,
+				},
+				author: new mongoose.Types.ObjectId(user._id),
+				recipient: debt.debtor,
+				neighborhood: debt.neighborhood,
+				hasSeen: false,
+			}
+		])
+		if (event) {
+			return debt;
+		}
 	}
 	
 	createDebt(req) {
@@ -62,14 +78,54 @@ export class DebtorService {
 		const {neighborhoodId} = req.params;
 		const values = req.body;
 		return this.debtModel.insertMany([{
+			...values,
 			author: new mongoose.Types.ObjectId(_id),
 			neighborhood: new mongoose.Types.ObjectId(neighborhoodId),
 			debtor: new mongoose.Types.ObjectId(values.debtor),
 			status: false,
 			creationDate: Date.now(),
-			initialValue: values.value,
-			...values,
+			initialValue: Number(values.value.toFixed(2)),
+			value: Number(values.value.toFixed(2)),
 		}])
+	}
+	
+	async deleteDebt(req, debt) {
+		const {debtId} = req.params;
+		const deleteFromEvents = await this.eventModel.deleteMany({
+			type: 'debt',
+			'content.debt': new mongoose.Types.ObjectId(debtId)
+		});
+		const deleteFromDebts = await this.debtModel.deleteOne({
+			_id: new mongoose.Types.ObjectId(debtId)
+		})
+		if (deleteFromEvents && deleteFromDebts) {
+			return debt;
+		}
+	}
+	
+	async addPartialPayment(req, debt) {
+		
+		const {debtId, neighborhoodId} = req.params;
+		const {partialPaymentValue} = req.body;
+		const {_id} = req.user;
+		
+		const event = await this.eventModel.insertMany([
+			{
+				type: 'debt',
+				content: {
+					debt: debtId,
+					message: 'partialReturn',
+					value: Number(partialPaymentValue.toFixed(2)),
+				},
+				author: new mongoose.Types.ObjectId(_id),
+				recipient: new mongoose.Types.ObjectId(debt.debtor),
+				neighborhood: new mongoose.Types.ObjectId(neighborhoodId),
+				hasSeen: false,
+			}
+		])
+		if (event) {
+			return this.debtModel.findOneAndUpdate({_id: debtId}, {value: Number((debt.value - Number(partialPaymentValue)).toFixed(2))}, { returnOriginal: false },)
+		}
 	}
 	
 	async reduceDebt(req, debt) {
@@ -83,8 +139,8 @@ export class DebtorService {
 				type: 'debt',
 				content: {
 					debt: debtId,
-					message: 'partialReturn',
-					value: reduceValue,
+					message: 'reduceDebt',
+					value: Number(reduceValue.toFixed(2)),
 				},
 				author: new mongoose.Types.ObjectId(_id),
 				recipient: new mongoose.Types.ObjectId(debt.debtor),
@@ -93,7 +149,43 @@ export class DebtorService {
 			}
 		])
 		if (event) {
-			return this.debtModel.findOneAndUpdate({_id: debtId}, {value: debt.value - Number(reduceValue)}, { returnOriginal: false },)
+			return this.debtModel.findOneAndUpdate(
+				{_id: debtId},
+				{
+					value: Number((debt.value - Number(reduceValue)).toFixed(2)),
+					initialValue: Number((debt.initialValue - Number(reduceValue)).toFixed(2))
+				},
+				{ returnOriginal: false },)
+		}
+	}
+	
+	async increaseDebt(req, debt) {
+		const {debtId, neighborhoodId} = req.params;
+		const {increaseValue} = req.body;
+		const {_id} = req.user;
+		
+		const event = await this.eventModel.insertMany([
+			{
+				type: 'debt',
+				content: {
+					debt: debtId,
+					message: 'increaseDebt',
+					value: Number(increaseValue.toFixed(2)),
+				},
+				author: new mongoose.Types.ObjectId(_id),
+				recipient: new mongoose.Types.ObjectId(debt.debtor),
+				neighborhood: new mongoose.Types.ObjectId(neighborhoodId),
+				hasSeen: false,
+			}
+		])
+		if (event) {
+			return this.debtModel.findOneAndUpdate(
+				{_id: debtId},
+				{
+					value: Number((debt.value + Number(increaseValue)).toFixed(2)),
+					initialValue: Number((debt.initialValue + Number(increaseValue)).toFixed(2))
+				},
+				{ returnOriginal: false },)
 		}
 	}
 }

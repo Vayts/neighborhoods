@@ -7,9 +7,11 @@ import { useOutsideClick } from '@src/hooks/useOutsideClick';
 import { CloseDebtModal } from '@src/components/Modal/СloseDebtModal/CloseDebtModal';
 import { MODALS } from '@constants/modals';
 import { CreateDebtModal } from '@src/components/Modal/CreateDebtModal/CreateDebtModal';
-import { INeighborhood } from '@src/types/neighborhood.types';
 import { DebtHistoryModal } from '@src/components/Modal/DebtHistoryModal/DebtHistoryModal';
-import { IDebt } from '@src/types/debt.types';
+import { PartialPaymentModal } from '@src/components/Modal/PartialPaymentModal/PartialPaymentModal';
+import { ReduceDebtModal } from '@src/components/Modal/ReduceDebtModal/ReduceDebtModal';
+import { IncreaseDebtModal } from '@src/components/Modal/IncreaseDebtModal/IncreaseDebtModal';
+import { DeleteDebtModal } from '@src/components/Modal/DeleteDebtModal/DeleteDebtModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -21,13 +23,21 @@ export const Modal: React.FC = () => {
 		dispatch(baseSlice.actions.resetModal());
 	};
 	
+	const escHandler = (e) => {
+		if (e.key === 'Escape') {
+			closeModal();
+		}
+	};
+	
 	useEffect(() => {
 		document.body.style.overflowY = 'hidden';
 		document.body.style.paddingRight = 'calc(17px - (100vw - 100%))';
+		document.addEventListener('keydown', escHandler);
 		
 		return () => {
 			document.body.style.overflowY = 'scroll';
 			closeModal();
+			document.removeEventListener('keydown', escHandler);
 		};
 	}, []);
 	
@@ -36,22 +46,45 @@ export const Modal: React.FC = () => {
 		case MODALS.closeDebt:
 			return (
 				<CloseDebtModal 
-					title={modalContent.title as string} 
-					value={modalContent.value as number} 
-					_id={modalContent._id as string}
+					title={modalContent.title}
+					value={modalContent.value}
+					_id={modalContent._id}
 				/>
 			);
 		case MODALS.createDebt:
 			return (
 				<CreateDebtModal
-					neighborhood={modalContent.neighborhood as INeighborhood}
+					neighborhood={modalContent.neighborhood}
 				/>
 			);
 		case MODALS.debtHistory:
 			return (
 				<DebtHistoryModal
-					debtId={modalContent.debtId}
-					neighborhoodId={modalContent.neighborhoodId}
+					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.partialPayment:
+			return (
+				<PartialPaymentModal
+					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.reduceDebt:
+			return (
+				<ReduceDebtModal
+					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.increaseDebt:
+			return (
+				<IncreaseDebtModal
+					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.deleteDebt:
+			return (
+				<DeleteDebtModal
+					debt={modalContent.debt}
 				/>
 			);
 		default:

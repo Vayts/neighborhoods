@@ -17,19 +17,9 @@ export const DebtorsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
 							{debts.map((item, index) => {
 								return (
 									<TableDebt
-										photo={item.photo}
 										key={item._id}
 										index={index}
-										expDate={item.expDate}
-										status={item.status}
-										value={item.value}
-										title={item.title}
-										creationDate={item.creationDate}
-										description={item.description}
-										_id={item._id}
-										debtor={item.debtor}
-										initialValue={item.initialValue}
-										neighborhood={item.neighborhood}
+										debt={item}
 									/>
 								);
 							})}

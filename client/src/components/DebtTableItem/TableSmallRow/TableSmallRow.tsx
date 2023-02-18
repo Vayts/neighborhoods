@@ -13,40 +13,40 @@ import { IDebtContent } from '@src/types/debt.types';
 export const TableSmallRow: React.FC<IDebtContent> = ({
 	isOpen,
 	setOpen,
-	title,
-	description,
-	value,
-	author,
-	debtor,
-	creationDate,
-	status,
-	initialValue,
+	debt,
 }) => {
 	const { t } = useTranslation();
+	
+	const generateName = () => {
+		if (typeof debt.author !== 'string') {
+			return `${debt.author.firstName} ${debt.author.lastName.slice(0, 1)}.`;
+		}
+		return `${debt.debtor.firstName} ${debt.debtor.lastName.slice(0, 1)}.`;
+	};
 	
 	return (
 		<SmallRowWrapper shown={isOpen}>
 			<td>
 				<SmallRowOpenIcon shown={isOpen} className="icon-drop-down" onClick={() => setOpen(!isOpen)}/>
-				<span>{title}</span>
+				<span>{debt.title}</span>
 			</td>
 			<td>
-				<span>{description || t('noDescription')}</span>
+				<span>{debt.description || t('noDescription')}</span>
 			</td>
 			<td>
-				{`${value === initialValue ? initialValue : value} ₴`}
+				{`${debt.value === debt.initialValue || debt.status ? debt.initialValue : debt.value} ₴`}
 			</td>
 			<td>
 				<SmallRowUser>
-					<AvatarFiller text={author ? author.login : debtor.login} size={35} fz={14}/>
-					<p>{`${author ? author.firstName : debtor.firstName} ${author ? author.lastName.slice(0, 1) : debtor.lastName.slice(0, 1)}.`}</p>
+					<AvatarFiller text={debt?.author?.login ? debt.author.login : debt.debtor.login} size={35} fz={14}/>
+					<p>{generateName()}</p>
 				</SmallRowUser>
 			</td>
 			<td>
-				<span>{format(new Date(creationDate), 'dd/MM/yyyy')}</span>
+				<span>{format(new Date(debt.creationDate), 'dd/MM/yyyy')}</span>
 			</td>
 			<td>
-				<SmallRowStatusIcon status={status} className={status ? 'icon-check-done' : 'icon-priority'}/>
+				<SmallRowStatusIcon status={debt.status} className={debt.status ? 'icon-check-done' : 'icon-priority'}/>
 			</td>
 		</SmallRowWrapper>
 	);

@@ -6,6 +6,7 @@ import { getNotification } from '@src/notification/notifications';
 import { IDebtorsState } from '@src/store/debtors/types';
 import { debtorsSlice } from '@src/store/debtors/reducer';
 import { IDebt } from '@src/types/debt.types';
+import { baseSlice } from '@src/store/base/reducer';
 
 export function userDebtorsRequest(
 	axiosPrivate: Axios,
@@ -98,21 +99,21 @@ export function closeDebtRequest(
 	};
 }
 
-export function reduceDebtRequest(
+export function partialPaymentRequest(
 	axiosPrivate: Axios,
 	setLoading: (state: boolean) => void,
 	neighborhoodId: string,
 	debtId: string,
 	debtors: IDebt[],
+	partialPaymentValue: number,
 ): Dispatch<AppDispatch> {
 	return async (dispatch) => {
 		const t = i18n.t;
 		try {
 			setLoading(true);
-			const response = await axiosPrivate.post(`debt/reduce_debt/${neighborhoodId}/${debtId}`, {
-				reduceValue: 1,
+			const response = await axiosPrivate.post(`debt/partial_payment/${neighborhoodId}/${debtId}`, {
+				partialPaymentValue,
 			});
-			console.log(response);
 			if (response.data._id === debtId) {
 				const newState = debtors.map((item) => {
 					if (item._id === debtId) {
@@ -125,9 +126,116 @@ export function reduceDebtRequest(
 				});
 				getNotification(t('partialPaymentWasAdded'), 'success');
 				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
 			}
 		} catch (e) {
-			console.log(e);
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function reduceDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	neighborhoodId: string,
+	debtId: string,
+	debtors: IDebt[],
+	reduceValue: number,
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.post(`debt/reduce_debt/${neighborhoodId}/${debtId}`, {
+				reduceValue,
+			});
+			if (response.data._id === debtId) {
+				const newState = debtors.map((item) => {
+					if (item._id === debtId) {
+						return {
+							...item,
+							initialValue: response.data.initialValue,
+							value: response.data.value,
+						};
+					}
+					return item;
+				});
+				getNotification(t('reduceDebtNotification'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch (e) {
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function increaseDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	neighborhoodId: string,
+	debtId: string,
+	debtors: IDebt[],
+	increaseValue: number,
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.post(`debt/increase_debt/${neighborhoodId}/${debtId}`, {
+				increaseValue,
+			});
+			if (response.data._id === debtId) {
+				const newState = debtors.map((item) => {
+					if (item._id === debtId) {
+						return {
+							...item,
+							initialValue: response.data.initialValue,
+							value: response.data.value,
+						};
+					}
+					return item;
+				});
+				getNotification(t('increaseDebtNotification'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch (e) {
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function deleteDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	neighborhoodId: string,
+	debtId: string,
+	debtors: IDebt[],
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.delete(`debt/delete_debt/${neighborhoodId}/${debtId}`);
+			if (response.data._id === debtId) {
+				const newState = debtors.filter((item) => {
+					if (item._id !== debtId) {
+						return item;
+					}
+					return null;
+				});
+				getNotification(t('deleteDebtNotification'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch (e) {
 			getNotification(t('smtWntWrng'), 'error');
 		} finally {
 			setLoading(false);

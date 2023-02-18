@@ -12,22 +12,20 @@ export const TableDebtMenuList = styled.ul<ITableDebtMenu>`
   position: relative;
 `;
 
-export const TableDebtMenuItem = styled.li`
+interface IDebtMenuStyle {
+	isDelete?: boolean;
+}
+
+export const TableDebtMenuItem = styled.li<IDebtMenuStyle>`
 	padding: 8px 10px;
 	user-select: none;
+  font-weight: ${({ isDelete }) => (isDelete ? '500' : '400')};
+	color: ${({ isDelete, theme }) => (isDelete ? `${theme.errorColor}` : 'inherit')};;
 	
 	&:hover {
 		transition: all 0.2s;
 		cursor: inherit;
-		background-color: ${({ theme }) => `${theme.primary}10`};
-	}
-	
-	&:last-child {
-		color: ${({ theme }) => theme.errorColor};
-		font-weight: 500;
-
-    &:hover {
-      background-color: ${({ theme }) => `${theme.errorColor}20`};
-    }
+		color: ${({ isDelete, theme }) => (isDelete ? theme.errorColor : 'inherit')};
+		background-color: ${({ theme, isDelete }) => (isDelete ? `${theme.errorColor}10` : `${theme.primary}10`)};
 	}
 `;

@@ -1,40 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TableDebtMenuItem, TableDebtMenuList } from '@src/components/DebtTableItem/TableDebtMenu/style';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { reduceDebtRequest } from '@src/store/debtors/actions';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
-import { selectCurrentDebtors } from '@src/store/debtors/selectors';
+import { useAppDispatch } from '@src/hooks/hooks';
 import { baseSlice } from '@src/store/base/reducer';
+import { MODALS } from '@constants/modals';
+import { IDebt } from '@src/types/debt.types';
 
 interface ITableDebtMenu {
 	isAuthor: boolean,
-	neighborhoodId: string,
-	debtId: string,
-	status: boolean,
+	debt: IDebt,
 }
 
-export const TableDebtMenu: React.FC<ITableDebtMenu> = ({ isAuthor, neighborhoodId, debtId, status }) => {
+export const TableDebtMenu: React.FC<ITableDebtMenu> = ({ isAuthor, debt }) => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
-	const axiosPrivate = useAxiosPrivate();
-	const debtors = useAppSelector(selectCurrentDebtors);
-	const [isLoading, setLoading] = useState<boolean>(false);
 	
-	const reduceValue = () => {
-		dispatch(reduceDebtRequest(axiosPrivate, setLoading, neighborhoodId, debtId, debtors));
+	const openPartialPayment = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.partialPayment, content: { debt } }));
 	};
 	
 	const openDebtHistory = () => {
-		dispatch(baseSlice.actions.setModal({ type: 'debtHistory', content: { debtId, neighborhoodId } }));
+		dispatch(baseSlice.actions.setModal({ type: MODALS.debtHistory, content: { debt } }));
+	};
+	
+	const openReduceModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.reduceDebt, content: { debt } }));
+	};
+	
+	const openIncreaseModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.increaseDebt, content: { debt } }));
+	};
+	
+	const deleteDebtModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.deleteDebt, content: { debt } }));
 	};
 	
 	return (
-		<TableDebtMenuList isLoading={isLoading}>
-			{isAuthor && !status && <TableDebtMenuItem onClick={isLoading ? null : () => reduceValue()}>{t('partialPaymentMenu')}</TableDebtMenuItem>}
-			<TableDebtMenuItem onClick={isLoading ? null : () => openDebtHistory()}>{t('debtHistory')}</TableDebtMenuItem>
+		<TableDebtMenuList isLoading={false}>
+			{isAuthor && !debt.status
+				&& (
+					<>
+						<TableDebtMenuItem onClick={() => openPartialPayment()}>{t('partialPaymentMenu')}</TableDebtMenuItem>
+						<TableDebtMenuItem onClick={() => openReduceModal()}>{t('reduceDebtTitle')}</TableDebtMenuItem>
+						<TableDebtMenuItem onClick={() => openIncreaseModal()}>{t('increaseDebtTitle')}</TableDebtMenuItem>
+					</>
+				)}
+			<TableDebtMenuItem onClick={() => openDebtHistory()}>{t('debtHistory')}</TableDebtMenuItem>
 			<TableDebtMenuItem>{t('edit')}</TableDebtMenuItem>
-			<TableDebtMenuItem>{t('delete')}</TableDebtMenuItem>
+			{isAuthor && <TableDebtMenuItem isDelete onClick={() => deleteDebtModal()}>{t('delete')}</TableDebtMenuItem>}
 		</TableDebtMenuList>
 	);
 };

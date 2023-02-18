@@ -12,7 +12,7 @@ import {
 	DebtorsRightWrapper,
 	DebtorsWrapper,
 } from '@src/pages/DebtorsPage/style';
-import { ViewMenu } from '@src/components/ViewMenu/ViewMenu';
+import { ViewMenu } from '@src/components/UI/ViewMenu/ViewMenu';
 import { DebtorsFilters } from '@src/pages/DebtorsPage/DebtorsFilters/DebtorsFilters';
 import { useTranslation } from 'react-i18next';
 import { Title } from '@src/components/Title/Title';

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const CloseDebtMenuWrapper = styled.div`
-	padding: 0 25px 15px;
+  padding: 0 25px 15px;
 `;
 
 export const CloseDebtSubTitle = styled.h3`
