@@ -9,6 +9,9 @@ import { MODALS } from '@constants/modals';
 import { CreateDebtModal } from '@src/components/Modal/CreateDebtModal/CreateDebtModal';
 import { DebtHistoryModal } from '@src/components/Modal/DebtHistoryModal/DebtHistoryModal';
 import { PartialPaymentModal } from '@src/components/Modal/PartialPaymentModal/PartialPaymentModal';
+import { ReduceDebtModal } from '@src/components/Modal/ReduceDebtModal/ReduceDebtModal';
+import { IncreaseDebtModal } from '@src/components/Modal/IncreaseDebtModal/IncreaseDebtModal';
+import { DeleteDebtModal } from '@src/components/Modal/DeleteDebtModal/DeleteDebtModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -63,6 +66,24 @@ export const Modal: React.FC = () => {
 		case MODALS.partialPayment:
 			return (
 				<PartialPaymentModal
+					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.reduceDebt:
+			return (
+				<ReduceDebtModal
+					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.increaseDebt:
+			return (
+				<IncreaseDebtModal
+					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.deleteDebt:
+			return (
+				<DeleteDebtModal
 					debt={modalContent.debt}
 				/>
 			);

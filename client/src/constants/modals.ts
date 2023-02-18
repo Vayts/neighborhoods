@@ -3,4 +3,7 @@ export const MODALS = {
 	createDebt: 'createDebt',
 	debtHistory: 'debtHistory',
 	partialPayment: 'partialPayment',
+	reduceDebt: 'reduceDebt',
+	increaseDebt: 'increaseDebt',
+	deleteDebt: 'deleteDEbt',
 };

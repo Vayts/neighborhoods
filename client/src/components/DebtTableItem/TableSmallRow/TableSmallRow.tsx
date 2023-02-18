@@ -34,7 +34,7 @@ export const TableSmallRow: React.FC<IDebtContent> = ({
 				<span>{debt.description || t('noDescription')}</span>
 			</td>
 			<td>
-				{`${debt.value === debt.initialValue ? debt.initialValue : debt.value} ₴`}
+				{`${debt.value === debt.initialValue || debt.status ? debt.initialValue : debt.value} ₴`}
 			</td>
 			<td>
 				<SmallRowUser>

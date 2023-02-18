@@ -23,12 +23,31 @@ export const TableDebtMenu: React.FC<ITableDebtMenu> = ({ isAuthor, debt }) => {
 		dispatch(baseSlice.actions.setModal({ type: MODALS.debtHistory, content: { debt } }));
 	};
 	
+	const openReduceModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.reduceDebt, content: { debt } }));
+	};
+	
+	const openIncreaseModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.increaseDebt, content: { debt } }));
+	};
+	
+	const deleteDebtModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.deleteDebt, content: { debt } }));
+	};
+	
 	return (
 		<TableDebtMenuList isLoading={false}>
-			{isAuthor && !debt.status && <TableDebtMenuItem onClick={() => openPartialPayment()}>{t('partialPaymentMenu')}</TableDebtMenuItem>}
+			{isAuthor && !debt.status
+				&& (
+					<>
+						<TableDebtMenuItem onClick={() => openPartialPayment()}>{t('partialPaymentMenu')}</TableDebtMenuItem>
+						<TableDebtMenuItem onClick={() => openReduceModal()}>{t('reduceDebtTitle')}</TableDebtMenuItem>
+						<TableDebtMenuItem onClick={() => openIncreaseModal()}>{t('increaseDebtTitle')}</TableDebtMenuItem>
+					</>
+				)}
 			<TableDebtMenuItem onClick={() => openDebtHistory()}>{t('debtHistory')}</TableDebtMenuItem>
 			<TableDebtMenuItem>{t('edit')}</TableDebtMenuItem>
-			<TableDebtMenuItem>{t('delete')}</TableDebtMenuItem>
+			{isAuthor && <TableDebtMenuItem isDelete onClick={() => deleteDebtModal()}>{t('delete')}</TableDebtMenuItem>}
 		</TableDebtMenuList>
 	);
 };

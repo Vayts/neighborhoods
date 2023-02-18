@@ -89,7 +89,46 @@ export class DebtorService {
 		}])
 	}
 	
+	async deleteDebt(req, debt) {
+		const {debtId} = req.params;
+		const deleteFromEvents = await this.eventModel.deleteMany({
+			type: 'debt',
+			'content.debt': new mongoose.Types.ObjectId(debtId)
+		});
+		const deleteFromDebts = await this.debtModel.deleteOne({
+			_id: new mongoose.Types.ObjectId(debtId)
+		})
+		if (deleteFromEvents && deleteFromDebts) {
+			return debt;
+		}
+	}
+	
 	async addPartialPayment(req, debt) {
+		
+		const {debtId, neighborhoodId} = req.params;
+		const {partialPaymentValue} = req.body;
+		const {_id} = req.user;
+		
+		const event = await this.eventModel.insertMany([
+			{
+				type: 'debt',
+				content: {
+					debt: debtId,
+					message: 'partialReturn',
+					value: Number(partialPaymentValue.toFixed(2)),
+				},
+				author: new mongoose.Types.ObjectId(_id),
+				recipient: new mongoose.Types.ObjectId(debt.debtor),
+				neighborhood: new mongoose.Types.ObjectId(neighborhoodId),
+				hasSeen: false,
+			}
+		])
+		if (event) {
+			return this.debtModel.findOneAndUpdate({_id: debtId}, {value: Number((debt.value - Number(partialPaymentValue)).toFixed(2))}, { returnOriginal: false },)
+		}
+	}
+	
+	async reduceDebt(req, debt) {
 		
 		const {debtId, neighborhoodId} = req.params;
 		const {reduceValue} = req.body;
@@ -100,7 +139,7 @@ export class DebtorService {
 				type: 'debt',
 				content: {
 					debt: debtId,
-					message: 'partialReturn',
+					message: 'reduceDebt',
 					value: Number(reduceValue.toFixed(2)),
 				},
 				author: new mongoose.Types.ObjectId(_id),
@@ -110,7 +149,43 @@ export class DebtorService {
 			}
 		])
 		if (event) {
-			return this.debtModel.findOneAndUpdate({_id: debtId}, {value: Number((debt.value - Number(reduceValue)).toFixed(2))}, { returnOriginal: false },)
+			return this.debtModel.findOneAndUpdate(
+				{_id: debtId},
+				{
+					value: Number((debt.value - Number(reduceValue)).toFixed(2)),
+					initialValue: Number((debt.initialValue - Number(reduceValue)).toFixed(2))
+				},
+				{ returnOriginal: false },)
+		}
+	}
+	
+	async increaseDebt(req, debt) {
+		const {debtId, neighborhoodId} = req.params;
+		const {increaseValue} = req.body;
+		const {_id} = req.user;
+		
+		const event = await this.eventModel.insertMany([
+			{
+				type: 'debt',
+				content: {
+					debt: debtId,
+					message: 'increaseDebt',
+					value: Number(increaseValue.toFixed(2)),
+				},
+				author: new mongoose.Types.ObjectId(_id),
+				recipient: new mongoose.Types.ObjectId(debt.debtor),
+				neighborhood: new mongoose.Types.ObjectId(neighborhoodId),
+				hasSeen: false,
+			}
+		])
+		if (event) {
+			return this.debtModel.findOneAndUpdate(
+				{_id: debtId},
+				{
+					value: Number((debt.value + Number(increaseValue)).toFixed(2)),
+					initialValue: Number((debt.initialValue + Number(increaseValue)).toFixed(2))
+				},
+				{ returnOriginal: false },)
 		}
 	}
 }

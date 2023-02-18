@@ -134,3 +134,57 @@ export function validatePartialPayment(value: string, debtValue: number): Record
 	
 	return errors;
 }
+
+export function validateReduceDebt(value: string, debtValue: number): Record<string, string> {
+	const errors: Record<string, string> = {};
+	const t = i18n.t;
+	
+	if (Number.isNaN(Number(value))) {
+		errors.value = t('mustBeANumber');
+		return errors;
+	}
+	
+	if (value.trim() === '') {
+		errors.value = t('requiredField');
+		return errors;
+	}
+	
+	if (debtValue - Number(value) < 1) {
+		errors.value = `${t('finalAmountCantBe', { value: 1 })} ₴`;
+		return errors;
+	}
+	
+	if (Number(value) < 0.1) {
+		errors.value = t('mustBeGreaterThan', { value: 0.1 });
+		return errors;
+	}
+	
+	return errors;
+}
+
+export function validateIncreaseDebt(value: string): Record<string, string> {
+	const errors: Record<string, string> = {};
+	const t = i18n.t;
+	
+	if (Number.isNaN(Number(value))) {
+		errors.value = t('mustBeANumber');
+		return errors;
+	}
+	
+	if (value.trim() === '') {
+		errors.value = t('requiredField');
+		return errors;
+	}
+	
+	if (Number(value) < 0.1) {
+		errors.value = t('mustBeGreaterThan', { value: 0.1 });
+		return errors;
+	}
+	
+	if (Number(value) >= 1000000) {
+		errors.value = t('mustBeLessThan', { value: 1000000 });
+		return errors;
+	}
+	
+	return errors;
+}

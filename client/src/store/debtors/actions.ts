@@ -105,6 +105,43 @@ export function partialPaymentRequest(
 	neighborhoodId: string,
 	debtId: string,
 	debtors: IDebt[],
+	partialPaymentValue: number,
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.post(`debt/partial_payment/${neighborhoodId}/${debtId}`, {
+				partialPaymentValue,
+			});
+			if (response.data._id === debtId) {
+				const newState = debtors.map((item) => {
+					if (item._id === debtId) {
+						return {
+							...item,
+							value: response.data.value,
+						};
+					}
+					return item;
+				});
+				getNotification(t('partialPaymentWasAdded'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch (e) {
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function reduceDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	neighborhoodId: string,
+	debtId: string,
+	debtors: IDebt[],
 	reduceValue: number,
 ): Dispatch<AppDispatch> {
 	return async (dispatch) => {
@@ -119,14 +156,84 @@ export function partialPaymentRequest(
 					if (item._id === debtId) {
 						return {
 							...item,
+							initialValue: response.data.initialValue,
 							value: response.data.value,
 						};
 					}
 					return item;
 				});
-				getNotification(t('partialPaymentWasAdded'), 'success');
+				getNotification(t('reduceDebtNotification'), 'success');
 				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
-				dispatch(baseSlice.actions.setModal({ type: null, content: null }));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch (e) {
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function increaseDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	neighborhoodId: string,
+	debtId: string,
+	debtors: IDebt[],
+	increaseValue: number,
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.post(`debt/increase_debt/${neighborhoodId}/${debtId}`, {
+				increaseValue,
+			});
+			if (response.data._id === debtId) {
+				const newState = debtors.map((item) => {
+					if (item._id === debtId) {
+						return {
+							...item,
+							initialValue: response.data.initialValue,
+							value: response.data.value,
+						};
+					}
+					return item;
+				});
+				getNotification(t('increaseDebtNotification'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch (e) {
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function deleteDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	neighborhoodId: string,
+	debtId: string,
+	debtors: IDebt[],
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.delete(`debt/delete_debt/${neighborhoodId}/${debtId}`);
+			if (response.data._id === debtId) {
+				const newState = debtors.filter((item) => {
+					if (item._id !== debtId) {
+						return item;
+					}
+					return null;
+				});
+				getNotification(t('deleteDebtNotification'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
 			}
 		} catch (e) {
 			getNotification(t('smtWntWrng'), 'error');
