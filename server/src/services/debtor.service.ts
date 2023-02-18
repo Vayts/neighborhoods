@@ -50,9 +50,27 @@ export class DebtorService {
 
 	}
 	
-	closeDebt(req) {
+	async closeDebt(req) {
 		const {debtId} = req.params;
-		return this.debtModel.findOneAndUpdate({_id: debtId}, {status: true})
+		const user = req.user;
+		const debt = await this.debtModel.findOneAndUpdate({_id: debtId}, {status: true});
+		const event = await this.eventModel.insertMany([
+			{
+				type: 'debt',
+				content: {
+					debt: debtId,
+					message: 'debtWasClosed',
+					value: debt.value,
+				},
+				author: new mongoose.Types.ObjectId(user._id),
+				recipient: debt.debtor,
+				neighborhood: debt.neighborhood,
+				hasSeen: false,
+			}
+		])
+		if (event) {
+			return debt;
+		}
 	}
 	
 	createDebt(req) {

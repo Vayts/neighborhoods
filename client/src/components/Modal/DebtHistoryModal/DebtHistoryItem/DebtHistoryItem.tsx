@@ -54,6 +54,24 @@ export const DebtHistoryItem: React.FC<IDebtHistoryItemProps> = ({ debtHistory, 
 							</DebtHistoryMainInfo>
 						</DebtHistoryContent>
 					)}
+				{debtHistory.content.message === 'debtWasClosed'
+					&& (
+						<DebtHistoryContent>
+							<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>
+							<DebtHistoryMainInfo>
+								<DebtHistoryItemTitle>
+									<Title fz='16px' margin='0'>{debtHistory.author.login}</Title>
+									<DebtHistoryDate>{format(new Date(debtHistory.timeStamp), 'dd/MM/yy HH:mm')}</DebtHistoryDate>
+								</DebtHistoryItemTitle>
+								<DebtHistorySubInfo>
+									<DebtHistoryItemText>
+										{user._id === debtHistory.author._id
+											? `${t('youClosedTheDebt', { value: debtHistory.content.value })} ₴` : `${t('authorClosedTheDebt', { author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`, value: debtHistory.content.value })} ₴`}
+									</DebtHistoryItemText>
+								</DebtHistorySubInfo>
+							</DebtHistoryMainInfo>
+						</DebtHistoryContent>
+					)}
 			</DebtHistoryItemWrapper>
 		) : null
 	);
