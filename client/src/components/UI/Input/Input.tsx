@@ -26,7 +26,7 @@ export const Input: React.FC<IInput> = (
 	
 	return (
 		<InputWrapper margin={margin}>
-			{label ? <InputLabel htmlFor={id}>{label}</InputLabel> : null}
+			{label && <InputLabel htmlFor={id}>{label}</InputLabel>}
 			<InputContent>
 				<InputItem
 					min={min}
@@ -44,16 +44,15 @@ export const Input: React.FC<IInput> = (
 					type={show ? 'text' : type}
 					disabled={disabled}
 				/>
-				{secure 
-					? (
-						<span
-							className='icon-password'
-							onMouseDown={() => setShow(!show)}
-							onMouseUp={() => setShow(!show)}
-							onTouchStart={() => setShow(!show)}
-							onTouchEnd={() => setShow(!show)}
-						/>
-					) : null}
+				{secure && (
+					<span
+						className='icon-password'
+						onMouseDown={() => setShow(!show)}
+						onMouseUp={() => setShow(!show)}
+						onTouchStart={() => setShow(!show)}
+						onTouchEnd={() => setShow(!show)}
+					/>
+				)}
 			</InputContent>
 		</InputWrapper>
 	);
