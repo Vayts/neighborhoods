@@ -127,7 +127,7 @@ export const CreateDebtModal: React.FC<ICreateDebtModal> = ({ neighborhood }) =>
 					label={t('description')}
 					placeholder={t('description')}
 				/>
-				<ErrorMsg show={!!errors.description && touched.value} msg=''/>
+				<ErrorMsg show={!!errors.description && touched.value} msg={errors.description}/>
 				<Button
 					onClick={submitHandler}
 					title={t('create')}
