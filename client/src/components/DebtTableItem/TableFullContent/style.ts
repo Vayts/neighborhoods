@@ -1,10 +1,21 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ITableDebtStyle, ITableDebtStatus } from '@src/types/debt.types';
+
+const appear = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const TableFullRow = styled.tr<ITableDebtStyle>`
 	transition: all 0.2s;
 	background-color: #fff;
 	opacity: ${({ shown }) => (shown ? '1' : '0')};
+  animation: ${appear} 0.2s linear;
   border: 1px solid #f1f1f1;
   position: relative;
 

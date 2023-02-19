@@ -6,7 +6,7 @@ export interface IDebt {
 	description: string | null,
 	value: number,
 	initialValue: number,
-	creationDate: string | Date;
+	creationDate: number | Date;
 	expDate: number | Date;
 	status: boolean;
 	photo?: string | null;
@@ -17,7 +17,7 @@ export interface IDebt {
 export interface IDebtContent{
 	isOpen?: boolean;
 	debt: IDebt;
-	setOpen?: (state: boolean) => void;
+	setOpen?: () => void;
 }
 
 export interface IDebtItem {
