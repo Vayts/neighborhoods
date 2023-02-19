@@ -20,7 +20,6 @@ export function createDebtRequest(
 			await axiosPrivate.post(`debt/${neighborhoodId}/create_debt`, {
 				...values,
 				debtor: values.debtor.value,
-				value: Number(values.value),
 			});
 			dispatch(debtorsSlice.actions.setUpdateValue());
 			dispatch(baseSlice.actions.resetModal());

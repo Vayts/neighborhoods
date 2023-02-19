@@ -1,13 +1,13 @@
-import { Controller, Delete, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { DebtService } from '../services/debt.service';
 import { DebtorService } from '../services/debtor.service';
 import { JwtAuthGuard } from '../guards/jwtAuth.guard';
 import { UserInNeighborhoodGuard } from '../guards/userInNeighborhood.guard';
 import { Request } from 'express';
-import { DebtValidateGuard } from '../guards/debtValidate.guard';
 import { DebtAuthorGuard } from '../guards/debtAuthor.guard';
 import { InvalidDataException } from '../exception/invalidData.exception';
 import { ERRORS } from '../constants/errors';
+import { DebtDto } from '../dto/debt.dto';
 
 @Controller('debt')
 export class DebtController {
@@ -35,10 +35,12 @@ export class DebtController {
 		return this.debtService.getDebtHistory(request);
 	}
 	
-	@UseGuards(JwtAuthGuard, DebtValidateGuard)
+	@UseGuards(JwtAuthGuard)
 	@Post('/:neighborhoodId/create_debt')
-	createDebt(@Req() request: Request) {
-		return this.debtorService.createDebt(request)
+	createDebt(@Req() request: Request, @Body() body: DebtDto) {
+		console.log(body);
+		return body;
+		// return this.debtorService.createDebt(request)
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
