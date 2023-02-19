@@ -7,7 +7,7 @@ export interface IDebt {
 	value: number,
 	initialValue: number,
 	creationDate: string | Date,
-	expDate: null | string | Date,
+	expDate: number | Date,
 	status: boolean,
 	photo?: string | null,
 	author?: IUserInNeighborhood,
