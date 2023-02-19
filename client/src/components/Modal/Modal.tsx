@@ -12,6 +12,7 @@ import { PartialPaymentModal } from '@src/components/Modal/PartialPaymentModal/P
 import { ReduceDebtModal } from '@src/components/Modal/ReduceDebtModal/ReduceDebtModal';
 import { IncreaseDebtModal } from '@src/components/Modal/IncreaseDebtModal/IncreaseDebtModal';
 import { DeleteDebtModal } from '@src/components/Modal/DeleteDebtModal/DeleteDebtModal';
+import { EditDebtModal } from '@src/components/Modal/EditDebtModal/EditDebtModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -45,7 +46,7 @@ export const Modal: React.FC = () => {
 		switch (modalType) {
 		case MODALS.closeDebt:
 			return (
-				<CloseDebtModal 
+				<CloseDebtModal
 					title={modalContent.title}
 					value={modalContent.value}
 					_id={modalContent._id}
@@ -87,6 +88,12 @@ export const Modal: React.FC = () => {
 					debt={modalContent.debt}
 				/>
 			);
+		case MODALS.editDebt:
+			return (
+				<EditDebtModal
+					debt={modalContent.debt}
+				/>
+			);
 		default:
 			return null;
 		}
@@ -98,7 +105,7 @@ export const Modal: React.FC = () => {
 		modalType && (
 			<ModalBackground open={!!modalType}>
 				<ModalWindow ref={modalRef}>
-					<ModalClose className='icon-cancel' onClick={() => closeModal()}/>
+					<ModalClose className="icon-cancel" onClick={() => closeModal()}/>
 					{generateModalContent()}
 				</ModalWindow>
 			</ModalBackground>

@@ -88,6 +88,11 @@ export class DebtorService {
 		}])
 	}
 	
+	editDebt(req, values) {
+		const {debtId} = req.params;
+		return this.debtModel.findOneAndUpdate({_id: debtId}, {...values}, {returnOriginal: false})
+	}
+	
 	async deleteDebt(req, debt) {
 		const {debtId} = req.params;
 		const deleteFromEvents = await this.eventModel.deleteMany({

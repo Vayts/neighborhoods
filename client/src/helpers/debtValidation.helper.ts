@@ -1,6 +1,7 @@
 import { ICreateDebt } from '@src/store/createDebt/types';
 import i18n from '@src/i18n';
 import { DEFAULT_REGEX_EXP } from '@constants/regex';
+import { IEditDebtState } from '@src/types/debt.types';
 
 function debtTitleValidate(title: string): Record<string, string> {
 	const errors: Record<string, string> = {};
@@ -75,7 +76,7 @@ function debtDebtorValidate(debtor): Record<string, string> {
 	return errors;
 }
 
-function debtDateValidate(date: number) {
+function debtDateValidate(date: number | Date) {
 	const errors: Record<string, string> = {};
 	const t = i18n.t;
 	const dayStart = new Date();
@@ -187,4 +188,16 @@ export function validateIncreaseDebt(value: string): Record<string, string> {
 	}
 	
 	return errors;
+}
+
+export function validateEditDebt(values: IEditDebtState): Record<string, string> {
+	const titleCheck = debtTitleValidate(values.title);
+	const descriptionCheck = debtDescriptionValidate(values.description);
+	const dateCheck = debtDateValidate(values.expDate);
+	
+	return {
+		...titleCheck,
+		...descriptionCheck,
+		...dateCheck,
+	};
 }

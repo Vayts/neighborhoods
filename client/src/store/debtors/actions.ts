@@ -5,7 +5,7 @@ import i18n from '@src/i18n';
 import { getNotification } from '@src/notification/notifications';
 import { IDebtorsState } from '@src/store/debtors/types';
 import { debtorsSlice } from '@src/store/debtors/reducer';
-import { IDebt } from '@src/types/debt.types';
+import { IDebt, IEditDebtState } from '@src/types/debt.types';
 import { baseSlice } from '@src/store/base/reducer';
 
 export function userDebtorsRequest(
@@ -237,6 +237,47 @@ export function deleteDebtRequest(
 			}
 		} catch (e) {
 			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function updateDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	values: IEditDebtState,
+	neighborhoodId: string,
+	debtId: string,
+	debtors: IDebt[],
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		setLoading(true);
+		try {
+			const response = await axiosPrivate.post(`debt/edit_debt/${neighborhoodId}/${debtId}`, {
+				...values,
+			});
+			if (response.data._id === debtId) {
+				const newState = debtors.map((item) => {
+					if (item._id === debtId) {
+						return {
+							...item,
+							title: response.data.title,
+							description: response.data.description,
+							expDate: response.data.expDate,
+						};
+					}
+					return item;
+				});
+				getNotification(t('editDebtNotification'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch (e) {
+			if (e.response?.data?.message !== 'NOT_AUTHORIZED') {
+				getNotification(t('smtWntWrng'), 'error');
+			}
 		} finally {
 			setLoading(false);
 		}

@@ -127,13 +127,14 @@ export const CreateDebtModal: React.FC<ICreateDebtModal> = ({ neighborhood }) =>
 					label={t('description')}
 					placeholder={t('description')}
 				/>
-				<ErrorMsg show={!!errors.description && touched.value} msg=''/>
+				<ErrorMsg show={!!errors.description && touched.description} msg={errors.description}/>
 				<Button
 					onClick={submitHandler}
 					title={t('create')}
 					width='50%'
 					height='35px'
 					margin='20px auto 10px'
+					isLoading={isLoading}
 					isDisabled={Object.keys(errors).length > 0 || Object.keys(touched).length === 0 || isLoading}
 				/>
 			</CreateDebtForm>
