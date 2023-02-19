@@ -134,6 +134,7 @@ export const CreateDebtModal: React.FC<ICreateDebtModal> = ({ neighborhood }) =>
 					width='50%'
 					height='35px'
 					margin='20px auto 10px'
+					isLoading={isLoading}
 					isDisabled={Object.keys(errors).length > 0 || Object.keys(touched).length === 0 || isLoading}
 				/>
 			</CreateDebtForm>

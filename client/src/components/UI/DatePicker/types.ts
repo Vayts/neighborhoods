@@ -13,4 +13,5 @@ export interface IDatePicker {
 	fz?: string,
 	label?: string,
 	disabled?: boolean,
+	initialValue?: Date | number,
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Calendar from 'react-calendar';
 import './calendar.css';
 import {
@@ -28,17 +28,18 @@ export const DatePicker: React.FC<IDatePicker> = (
 		name,
 		id,
 		width,
+		initialValue,
 	},
 ) => {
 	const lang = useAppSelector(selectLang);
 	const calendarRef = useRef<HTMLDivElement>(null);
 	const [isOpen, setOpen] = useState<boolean>(false);
-	const [current, setCurrent] = useState(null);
+	const [current, setCurrent] = useState(initialValue);
 	
-	const change = (value) => {
+	const change = useCallback((value) => {
 		onChange(value);
 		setCurrent(value);
-	};
+	}, [value]);
 	
 	useOutsideClick(calendarRef, () => setOpen(false));
 	

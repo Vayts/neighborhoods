@@ -8,6 +8,7 @@ import { DebtAuthorGuard } from '../guards/debtAuthor.guard';
 import { InvalidDataException } from '../exception/invalidData.exception';
 import { ERRORS } from '../constants/errors';
 import { DebtDto } from '../dto/debt.dto';
+import { EditDebtDto } from '../dto/edit-debt.dto';
 
 @Controller('debt')
 export class DebtController {
@@ -94,5 +95,11 @@ export class DebtController {
 		const {debtId} = request.params;
 		const debt = await this.debtService.getDebtByIdAndAuthor(debtId, request.user._id);
 		return this.debtorService.deleteDebt(request, debt);
+	}
+	
+	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard, DebtAuthorGuard)
+	@Post('/edit_debt/:neighborhoodId/:debtId')
+	async editDebt(@Req() request: Request, @Body() editValues: EditDebtDto) {
+		return this.debtorService.editDebt(request, editValues);
 	}
 }
