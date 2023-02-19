@@ -38,9 +38,7 @@ export class DebtController {
 	@UseGuards(JwtAuthGuard)
 	@Post('/:neighborhoodId/create_debt')
 	createDebt(@Req() request: Request, @Body() body: DebtDto) {
-		console.log(body);
-		return body;
-		// return this.debtorService.createDebt(request)
+		return this.debtorService.createDebt(request, body)
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)

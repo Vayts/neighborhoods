@@ -11,7 +11,7 @@ export class DebtDto {
 	readonly description: string;
 	
 	@IsNotEmpty()
-	@Transform((value) => Number(value.value))
+	@Transform((value) => Number(Number(value.value).toFixed(2)))
 	@IsInt()
 	@Min(0.1)
 	@Max(20000)

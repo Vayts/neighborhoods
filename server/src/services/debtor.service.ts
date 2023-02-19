@@ -73,19 +73,18 @@ export class DebtorService {
 		}
 	}
 	
-	createDebt(req) {
+	createDebt(req, debt) {
 		const {_id} = req.user;
 		const {neighborhoodId} = req.params;
-		const values = req.body;
 		return this.debtModel.insertMany([{
-			...values,
+			...debt,
 			author: new mongoose.Types.ObjectId(_id),
 			neighborhood: new mongoose.Types.ObjectId(neighborhoodId),
-			debtor: new mongoose.Types.ObjectId(values.debtor),
+			debtor: new mongoose.Types.ObjectId(debt.debtor),
 			status: false,
 			creationDate: Date.now(),
-			initialValue: Number(values.value.toFixed(2)),
-			value: Number(values.value.toFixed(2)),
+			initialValue: debt.value,
+			value: debt.value,
 		}])
 	}
 	
