@@ -7,4 +7,5 @@ export const TitleItem = styled.h3<ITitle>`
 	margin: ${({ margin = '15px 0' }) => margin};
 	color: ${({ color = 'inherit' }) => color};
 	height: ${({ height = 'auto' }) => height};
+	text-align: ${({ align = 'left' }) => align};
 `;

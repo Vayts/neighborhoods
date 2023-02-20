@@ -27,7 +27,7 @@ export const TableSmallRow: React.FC<IDebtContent> = ({
 	return (
 		<SmallRowWrapper shown={isOpen}>
 			<td>
-				<SmallRowOpenIcon shown={isOpen} className="icon-drop-down" onClick={() => setOpen(!isOpen)}/>
+				<SmallRowOpenIcon shown={isOpen} className="icon-drop-down" onClick={() => setOpen()}/>
 				<span>{debt.title}</span>
 			</td>
 			<td>

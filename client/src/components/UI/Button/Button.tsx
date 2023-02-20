@@ -32,7 +32,7 @@ export const Button: React.FC<IButton> = ({
 			disabled={isDisabled || isLoading}
 			width={width}
 		>
-			{isLoading ? <Loader size={30}/> : title}
+			{isLoading ? <Loader size={25} color='#ececec'/> : title}
 		</ButtonItem>
 	);
 };

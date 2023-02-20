@@ -38,6 +38,10 @@ export const TableDebtMenu: React.FC<ITableDebtMenu> = ({ isAuthor, debt }) => {
 		dispatch(baseSlice.actions.setModal({ type: MODALS.editDebt, content: { debt } }));
 	};
 	
+	const reopenDebtModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.reopenDebt, content: { debt } }));
+	};
+	
 	return (
 		<TableDebtMenuList isLoading={false}>
 			{isAuthor && !debt.status
@@ -50,6 +54,7 @@ export const TableDebtMenu: React.FC<ITableDebtMenu> = ({ isAuthor, debt }) => {
 					</>
 				)}
 			<TableDebtMenuItem onClick={() => openDebtHistory()}>{t('debtHistory')}</TableDebtMenuItem>
+			{isAuthor && debt.status && <TableDebtMenuItem onClick={() => reopenDebtModal()}>{t('reopenDebt')}</TableDebtMenuItem>}
 			{isAuthor && <TableDebtMenuItem isDelete onClick={() => deleteDebtModal()}>{t('delete')}</TableDebtMenuItem>}
 		</TableDebtMenuList>
 	);

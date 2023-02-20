@@ -11,20 +11,19 @@ export const DebtorsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
 				<thead>
 					<TableHead isDebtors/>
 				</thead>
-				{isLoading ? null
-					: (
-						<tbody>
-							{debts.map((item, index) => {
-								return (
-									<TableDebt
-										key={item._id}
-										index={index}
-										debt={item}
-									/>
-								);
-							})}
-						</tbody>
-					)}
+				{!isLoading && (
+					<tbody>
+						{debts.map((item, index) => {
+							return (
+								<TableDebt
+									key={item._id}
+									index={index}
+									debt={item}
+								/>
+							);
+						})}
+					</tbody>
+				)}
 			</DebtorsTableList>
 		</DebtorsTableWrapper>
 	);

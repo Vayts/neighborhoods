@@ -13,6 +13,7 @@ import { ReduceDebtModal } from '@src/components/Modal/ReduceDebtModal/ReduceDeb
 import { IncreaseDebtModal } from '@src/components/Modal/IncreaseDebtModal/IncreaseDebtModal';
 import { DeleteDebtModal } from '@src/components/Modal/DeleteDebtModal/DeleteDebtModal';
 import { EditDebtModal } from '@src/components/Modal/EditDebtModal/EditDebtModal';
+import { ReopenDebtModal } from '@src/components/Modal/ReopenDebtModal/ReopenDebtModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -47,9 +48,7 @@ export const Modal: React.FC = () => {
 		case MODALS.closeDebt:
 			return (
 				<CloseDebtModal
-					title={modalContent.title}
-					value={modalContent.value}
-					_id={modalContent._id}
+					debt={modalContent.debt}
 				/>
 			);
 		case MODALS.createDebt:
@@ -91,6 +90,12 @@ export const Modal: React.FC = () => {
 		case MODALS.editDebt:
 			return (
 				<EditDebtModal
+					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.reopenDebt:
+			return (
+				<ReopenDebtModal
 					debt={modalContent.debt}
 				/>
 			);
