@@ -7,4 +7,5 @@ export const MODALS = {
 	increaseDebt: 'increaseDebt',
 	deleteDebt: 'deleteDEbt',
 	editDebt: 'editDebt',
+	reopenDebt: 'reopenDebt',
 };

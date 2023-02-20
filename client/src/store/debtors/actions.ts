@@ -77,7 +77,7 @@ export function closeDebtRequest(
 		const t = i18n.t;
 		try {
 			setLoading(true);
-			const response = await axiosPrivate.get(`debt/close_debt/${debtId}`);
+			const response = await axiosPrivate.post(`debt/close_debt/${debtId}`);
 			if (response.data) {
 				const newState = debts.map((item) => {
 					if (item._id === debtId) {
@@ -90,6 +90,40 @@ export function closeDebtRequest(
 				});
 				getNotification(t('debtSccssClosed'), 'success');
 				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
+			}
+		} catch {
+			getNotification(t('smtWntWrng'), 'error');
+		} finally {
+			setLoading(false);
+		}
+	};
+}
+
+export function reopenDebtRequest(
+	axiosPrivate: Axios,
+	setLoading: (state: boolean) => void,
+	debtId: string,
+	debts: IDebt[],
+): Dispatch<AppDispatch> {
+	return async (dispatch) => {
+		const t = i18n.t;
+		try {
+			setLoading(true);
+			const response = await axiosPrivate.post(`debt/reopen_debt/${debtId}`);
+			if (response.data) {
+				const newState = debts.map((item) => {
+					if (item._id === debtId) {
+						return {
+							...item,
+							status: false,
+						};
+					}
+					return item;
+				});
+				getNotification(t('debtSccssReopen'), 'success');
+				dispatch(debtorsSlice.actions.setCurrentDebtors(newState));
+				dispatch(baseSlice.actions.resetModal());
 			}
 		} catch {
 			getNotification(t('smtWntWrng'), 'error');

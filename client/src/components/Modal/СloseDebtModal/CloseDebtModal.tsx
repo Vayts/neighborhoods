@@ -22,7 +22,6 @@ export const CloseDebtModal: React.FC<ICloseDebtMenu> = ({ value, title, _id }) 
 	const debts = useAppSelector(selectCurrentDebtors);
 	const closeDebt = () => {
 		dispatch(closeDebtRequest(axiosPrivate, setLoading, _id, debts));
-		dispatch(baseSlice.actions.resetModal());
 	};
 	
 	const closeModal = () => {

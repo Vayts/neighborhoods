@@ -73,6 +73,29 @@ export class DebtorService {
 		}
 	}
 	
+	async reopenDebt(req) {
+		const {debtId} = req.params;
+		const user = req.user;
+		const debt = await this.debtModel.findOneAndUpdate({_id: debtId}, {status: false});
+		const event = await this.eventModel.insertMany([
+			{
+				type: 'debt',
+				content: {
+					debt: debtId,
+					message: 'debtWasReopened',
+					value: debt.value,
+				},
+				author: new mongoose.Types.ObjectId(user._id),
+				recipient: debt.debtor,
+				neighborhood: debt.neighborhood,
+				hasSeen: false,
+			}
+		])
+		if (event) {
+			return debt;
+		}
+	}
+	
 	createDebt(req, debt) {
 		const {_id} = req.user;
 		const {neighborhoodId} = req.params;

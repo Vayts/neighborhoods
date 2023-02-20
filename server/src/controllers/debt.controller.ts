@@ -43,9 +43,15 @@ export class DebtController {
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
-	@Get('/close_debt/:debtId')
+	@Post('/close_debt/:debtId')
 	closeUserDebt(@Req() request: Request) {
 		return this.debtorService.closeDebt(request);
+	}
+	
+	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
+	@Post('/reopen_debt/:debtId')
+	reopenUserDebt(@Req() request: Request) {
+		return this.debtorService.reopenDebt(request);
 	}
 	
 	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard, DebtAuthorGuard)

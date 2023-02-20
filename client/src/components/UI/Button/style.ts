@@ -12,7 +12,7 @@ export const ButtonItem = styled.button<IButtonStyle>`
 	margin: ${({ margin = '0' }) => margin};
 	padding: ${({ padding = '10px 20px' }) => padding};
 	width: ${({ width = 'auto' }) => width};
-	height: ${({ height = 'auto' }) => height};
+	height: ${({ height = '35px' }) => height};
 	font-size: ${({ fz = '14px' }) => fz};
 	background-color: ${({ theme }) => theme.primary};
 	border: none;
