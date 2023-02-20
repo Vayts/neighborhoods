@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { IDebtHistoryItem } from '@src/components/Modal/DebtHistoryModal/types';
+import { IDebtHistoryItem } from '@src/components/Modal/Debt/DebtHistoryModal/types';
 import {
 	DebtHistoryContent,
 	DebtHistoryDate,
 	DebtHistoryItemText, DebtHistoryItemTitle,
 	DebtHistoryItemWrapper, DebtHistoryMainInfo, DebtHistorySubInfo,
-} from '@src/components/Modal/DebtHistoryModal/DebtHistoryItem/style';
+} from '@src/components/Modal/Debt/DebtHistoryModal/DebtHistoryItem/style';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { AvatarFiller } from '@src/components/AvatarFiller/AvatarFiller';
@@ -46,6 +46,26 @@ export const DebtHistoryItem: React.FC<IDebtHistoryItemProps> = ({ debtHistory, 
 						<DebtHistoryItemText>
 							{user._id === debtHistory.author._id
 								? `${t('youClosedTheDebt', { value: debtHistory.content.value })} ₴` : `${t('authorClosedTheDebt', { author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`, value: debtHistory.content.value })} ₴`}
+						</DebtHistoryItemText>
+					</DebtHistorySubInfo>
+				</DebtHistoryMainInfo>
+			</DebtHistoryContent>
+		);
+	};
+	
+	const generateReopenItem = () => {
+		return (
+			<DebtHistoryContent>
+				<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>
+				<DebtHistoryMainInfo>
+					<DebtHistoryItemTitle>
+						<Title fz='16px' margin='0'>{debtHistory.author.login}</Title>
+						<DebtHistoryDate>{format(new Date(debtHistory.timeStamp), 'dd/MM/yy HH:mm')}</DebtHistoryDate>
+					</DebtHistoryItemTitle>
+					<DebtHistorySubInfo>
+						<DebtHistoryItemText>
+							{user._id === debtHistory.author._id
+								? `${t('youReopenTheDebt', { value: debtHistory.content.value })} ₴` : `${t('authorReopenedTheDebt', { author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`, value: debtHistory.content.value })} ₴`}
 						</DebtHistoryItemText>
 					</DebtHistorySubInfo>
 				</DebtHistoryMainInfo>
@@ -120,6 +140,7 @@ export const DebtHistoryItem: React.FC<IDebtHistoryItemProps> = ({ debtHistory, 
 				{debtHistory.content.message === 'debtWasClosed' && generateCloseItem()}
 				{debtHistory.content.message === 'reduceDebt' && generateReduceItem()}
 				{debtHistory.content.message === 'increaseDebt' && generateIncreaseItem()}
+				{debtHistory.content.message === 'debtWasReopened' && generateReopenItem()}
 			</DebtHistoryItemWrapper>
 		) : null
 	);

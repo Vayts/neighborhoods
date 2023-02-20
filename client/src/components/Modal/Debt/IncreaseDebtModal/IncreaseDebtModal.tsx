@@ -5,15 +5,15 @@ import { Input } from '@src/components/UI/Input/Input';
 import { Description } from '@src/components/Description/Description';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { reduceDebtRequest } from '@src/store/debtors/actions';
+import { increaseDebtRequest } from '@src/store/debtors/actions';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import { selectCurrentDebtors } from '@src/store/debtors/selectors';
-import { validateReduceDebt } from '@helpers/debtValidation.helper';
+import { validateIncreaseDebt } from '@helpers/debtValidation.helper';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
-import { ReduceDebtWrapper } from '@src/components/Modal/ReduceDebtModal/style';
-import { IReduceDebt } from '@src/components/Modal/ReduceDebtModal/types';
+import { IReduceDebt } from '@src/components/Modal/Debt/ReduceDebtModal/types';
+import { IncreaseDebtWrapper } from '@src/components/Modal/Debt/IncreaseDebtModal/style';
 
-export const ReduceDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
+export const IncreaseDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
 	const [value, setValue] = useState('');
 	const [errors, setErrors] = useState<Record<string, string>>({});
 	const [isLoading, setLoading] = useState<boolean>(false);
@@ -30,28 +30,28 @@ export const ReduceDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
 	}, []);
 	
 	const onChangeHandler = (e) => {
-		setErrors(validateReduceDebt(e.target.value, debt.value));
+		setErrors(validateIncreaseDebt(e.target.value));
 		setValue(e.target.value);
 	};
 	
 	const onSubmit = (e) => {
 		e.preventDefault();
-		dispatch(reduceDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors, Number(value)));
+		dispatch(increaseDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors, Number(value)));
 	};
 	
 	return (
-		<ReduceDebtWrapper>
-			<Title margin='0 auto'>{t('reduceDebtTitle')}</Title>
+		<IncreaseDebtWrapper>
+			<Title margin='0 auto'>{t('increaseDebtTitle')}</Title>
 			<Description
 				margin='5px 0 15px'
 			>
-				{t('reduceDebtText')}
+				{t('increaseDebtText')}
 			</Description>
 			<form>
 				<Input
 					refValue={paymentRef}
-					name='partialPayment'
-					id='partialPaymentNumber'
+					name='increaseDebt'
+					id='increaseDebt'
 					onChange={onChangeHandler}
 					value={value}
 					type='number'
@@ -72,6 +72,6 @@ export const ReduceDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
 					isDisabled={Object.keys(errors).length > 0 || !value || isLoading}
 				/>
 			</form>
-		</ReduceDebtWrapper>
+		</IncreaseDebtWrapper>
 	);
 };
