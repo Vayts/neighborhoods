@@ -42,6 +42,7 @@
   "debtsRepaid": "Debts Repaid",
   "dec": "Dec",
   "delete": "Delete",
+  "deleteDebtDescription": "The debt and its information will be wiped out completely. You will not be able to restore it",
   "deleteDebtNotification": "Debt successfully deleted",
   "description": "Description",
   "details": "Details",

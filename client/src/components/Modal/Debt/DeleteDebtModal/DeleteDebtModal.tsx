@@ -28,8 +28,8 @@ export const DeleteDebtModal: React.FC<IDeleteDebt> = ({ debt }) => {
 	
 	return (
 		<DeleteDebtWrapper>
-			<Title>{t('rlyWantToDeleteDebt')}</Title>
-			<Description fz='16px' margin='5px 0 35px'>{debt.title}</Description>
+			<Title fz='19px' margin='0' align='center'>{t('rlyWantToDeleteDebt')}</Title>
+			<Description fz='14px' margin='5px 0 35px'>{t('deleteDebtDescription')}</Description>
 			<DeleteButtons>
 				<Button
 					onClick={() => deleteDebt()}
