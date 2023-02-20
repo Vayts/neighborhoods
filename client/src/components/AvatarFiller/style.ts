@@ -15,9 +15,10 @@ export const AvatarWrapper = styled.div<IAvatarStyleBlock>`
 	font-size: ${({ fz = 20 }) => `${fz}px`};
 	color: #fff;
   margin: 0;
-  line-height: 1;
+  line-height: 0;
 	border-radius: 50%;
 	text-transform: capitalize;
 	user-select: none;
 	cursor: default;
+	vertical-align: bottom;
 `;

@@ -30,6 +30,9 @@ import {
 	setDebtsFiltersToSessionStorage,
 } from '@helpers/sessionStorage.helper';
 import { IDebtPage } from '@src/types/debt.types';
+import { AddButton } from '@src/components/UI/AddButton/AddButton';
+import { baseSlice } from '@src/store/base/reducer';
+import { MODALS } from '@constants/modals';
 
 export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	const [isLoading, setLoading] = useState<boolean>(true);
@@ -46,6 +49,10 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	
 	const updateHandler = () => {
 		dispatch(debtsSlice.actions.setUpdateValue());
+	};
+	
+	const openCreateDebtModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.createDebt, content: { neighborhood } }));
 	};
 	
 	useEffect(() => {
@@ -89,8 +96,9 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 				<DebtsRightWrapper>
 					<DebtsControls>
 						<ViewMenu mode={mode} setMode={setMode}/>
+						{isDebtors && <AddButton clickHandler={() => openCreateDebtModal()}/>}
 					</DebtsControls>
-					{mode === 'table' && <DebtsTable debts={debts} isLoading={isLoading}/>}
+					{mode === 'table' && <DebtsTable debts={debts} isLoading={isLoading} isDebtors={isDebtors}/>}
 				</DebtsRightWrapper>
 				<DebtsFilters
 					title={`${isDebtors ? t('debtors') : t('debts')} (${debts.length})`}
