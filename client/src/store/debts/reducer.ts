@@ -6,7 +6,7 @@ import { IDebt } from '@src/types/debt.types';
 const initialState: IDebtsState = {
 	list: [],
 	filters: {
-		authors: [],
+		users: [],
 		status: [],
 		minValue: '',
 		maxValue: '',
@@ -21,14 +21,17 @@ export const debtsSlice = createSlice({
 		setCurrentDebts: (state, action: PayloadAction<IDebt[]>) => {
 			state.list = action.payload;
 		},
-		setDebtAuthorFilters: (state, action: PayloadAction<IDebtsState['filters']['authors']>) => {
-			state.filters.authors = action.payload;
+		setDebtAuthorFilters: (state, action: PayloadAction<IDebtsState['filters']['users']>) => {
+			state.filters.users = action.payload;
 		},
 		setDebtStatusFilters: (state, action: PayloadAction<IDebtsState['filters']['status']>) => {
 			state.filters.status = action.payload;
 		},
 		setDebtValueFilters: (state, action: PayloadAction<IDebtValueState>) => {
 			state.filters[action.payload.key] = action.payload.value;
+		},
+		setFullFilters: (state, action: PayloadAction<IDebtsState['filters']>) => {
+			state.filters = action.payload;
 		},
 		setUpdateValue: (state) => {
 			state.updateValue = Date.now();

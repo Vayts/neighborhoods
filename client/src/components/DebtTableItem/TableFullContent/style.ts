@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { ITableDebtStyle, ITableDebtStatus } from '@src/types/debt.types';
+import { ITableDebtStyle } from '@src/types/debt.types';
 
 const appear = keyframes`
   0% {
@@ -67,15 +67,8 @@ export const TableDebtorsSign = styled.div`
 `;
 
 export const TableDebtInfoWrapper = styled.div`
-	padding-bottom: 20px;
-	margin-top: 15px;
+	margin: 10px 0;
 `;
-
-export const TableDebtDescription = styled.p`
-	margin: 0 0 5px;
-	font-size: 16px;
-`;
-
 export const TableDebtControl = styled.div`
   position: absolute;
 	top: 5px;
@@ -84,17 +77,6 @@ export const TableDebtControl = styled.div`
 
 export const TableDebtDates = styled.div`
   font-size: 16px;
-`;
-
-export const TableDebtSmallTitle = styled.h6`
-	font-size: 16px;
-	margin: 10px 0 5px;
-	font-weight: 500;
-`;
-
-export const TableDebtStatus = styled.p<ITableDebtStatus>`
-  color: ${({ theme }) => theme.subTxtColor};
-	margin: 0 0 5px;
 `;
 
 export const TableDebtValueWrapper = styled.div`

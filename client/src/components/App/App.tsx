@@ -17,7 +17,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Loader } from '@src/components/Loader/Loader';
 import { NeighborhoodCurrentPage } from '@src/pages/NeighborhoodCurrentPage/NeighborhoodCurrentPage';
 import { DebtsPage } from '@src/pages/DebtsPage/DebtsPage';
-import { DebtorsPage } from '@src/pages/DebtorsPage/DebtorsPage';
 import { Modal } from '@src/components/Modal/Modal';
 import { AppWrapper } from './style';
 
@@ -53,8 +52,8 @@ export const App: React.FC = () => {
 									<Route path='/neighborhoods' element={<NeighborhoodsPage/>}/>
 									<Route path='/notification' element={<NotificationsPage/>}/>
 									<Route path='neighborhood/:id' element={<NeighborhoodCurrentPage/>}/>
-									<Route path='neighborhood/debts/:id' element={<DebtsPage/>}/>
-									<Route path='neighborhood/debtors/:id' element={<DebtorsPage/>}/>
+									<Route path='neighborhood/debts/:id' element={<DebtsPage isDebtors={false}/>}/>
+									<Route path='neighborhood/debtors/:id' element={<DebtsPage isDebtors/>}/>
 								</Route>
 							</Route>
 						</Routes>

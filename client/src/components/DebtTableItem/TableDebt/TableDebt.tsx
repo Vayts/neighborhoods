@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TableSmallRow } from '@src/components/DebtTableItem/TableSmallRow/TableSmallRow';
 import { TableFullContent } from '@src/components/DebtTableItem/TableFullContent/TableFullContent';
 import { IDebtItem } from '@src/types/debt.types';
-import { getOpenedDebtsFromSessionStorage, openSessionStorageHandler } from '@helpers/localStorage.helper';
+import { getOpenedDebtsFromSessionStorage, openSessionStorageHandler } from '@helpers/sessionStorage.helper';
 import {
 	TableSplitter,
 } from './style';

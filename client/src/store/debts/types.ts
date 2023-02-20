@@ -3,7 +3,7 @@ import { IDebt } from '@src/types/debt.types';
 export interface IDebtsState {
 	list: IDebt[];
 	filters: {
-		authors: string[],
+		users: string[],
 		status: string[],
 		minValue: number | string,
 		maxValue: number | string,

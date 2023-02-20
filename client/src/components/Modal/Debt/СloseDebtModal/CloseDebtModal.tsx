@@ -8,18 +8,18 @@ import { ICloseDebtMenu } from '@src/components/Modal/Debt/СloseDebtModal/types
 import { Title } from '@src/components/Title/Title';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { closeDebtRequest } from '@src/store/debtors/actions';
+import { closeDebtRequest } from '@src/store/debts/actions';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import { baseSlice } from '@src/store/base/reducer';
-import { selectCurrentDebtors } from '@src/store/debtors/selectors';
 import { Description } from '@src/components/Description/Description';
+import { selectCurrentDebts } from '@src/store/debts/selectors';
 
 export const CloseDebtModal: React.FC<ICloseDebtMenu> = ({ debt }) => {
 	const [isLoading, setLoading] = useState<boolean>(false);
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	const axiosPrivate = useAxiosPrivate();
-	const debts = useAppSelector(selectCurrentDebtors);
+	const debts = useAppSelector(selectCurrentDebts);
 	const closeDebt = () => {
 		dispatch(closeDebtRequest(axiosPrivate, setLoading, debt._id, debts));
 	};

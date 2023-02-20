@@ -6,20 +6,20 @@ import { useTranslation } from 'react-i18next';
 import { Description } from '@src/components/Description/Description';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { deleteDebtRequest } from '@src/store/debtors/actions';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
-import { selectCurrentDebtors } from '@src/store/debtors/selectors';
 import { baseSlice } from '@src/store/base/reducer';
+import { deleteDebtRequest } from '@src/store/debts/actions';
+import { selectCurrentDebts } from '@src/store/debts/selectors';
+import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 
 export const DeleteDebtModal: React.FC<IDeleteDebt> = ({ debt }) => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	const axiosPrivate = useAxiosPrivate();
 	const [isLoading, setLoading] = useState(false);
-	const debtors = useAppSelector(selectCurrentDebtors);
+	const debts = useAppSelector(selectCurrentDebts);
 	
 	const deleteDebt = () => {
-		dispatch(deleteDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors));
+		dispatch(deleteDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debts));
 	};
 	
 	const closeModal = () => {

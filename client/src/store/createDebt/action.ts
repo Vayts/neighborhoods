@@ -4,8 +4,8 @@ import { AppDispatch } from '@src/store';
 import i18n from '@src/i18n';
 import { getNotification } from '@src/notification/notifications';
 import { ICreateDebt } from '@src/store/createDebt/types';
-import { debtorsSlice } from '@src/store/debtors/reducer';
 import { baseSlice } from '@src/store/base/reducer';
+import { debtsSlice } from '@src/store/debts/reducer';
 
 export function createDebtRequest(
 	axiosPrivate: Axios,
@@ -21,7 +21,7 @@ export function createDebtRequest(
 				...values,
 				debtor: values.debtor.value,
 			});
-			dispatch(debtorsSlice.actions.setUpdateValue());
+			dispatch(debtsSlice.actions.setUpdateValue());
 			dispatch(baseSlice.actions.resetModal());
 			getNotification(t('debtHasBeenCreated'), 'success');
 		} catch (e) {

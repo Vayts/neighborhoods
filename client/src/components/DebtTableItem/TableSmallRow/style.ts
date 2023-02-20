@@ -25,7 +25,7 @@ export const SmallRowWrapper = styled.tr<ITableDebtStyle>`
     overflow: hidden;
     position: relative;
 	  transition: all 0.2s, border 0s;
-	  padding: 0 10px;
+	  padding: 5px 10px;
 	  
 
     span {
@@ -64,6 +64,11 @@ export const SmallRowWrapper = styled.tr<ITableDebtStyle>`
     &:nth-child(4) {
       width: 15%;
 	    text-align: left;
+	    
+	    p {
+		    margin: 0 0 0 10px;
+	    }
+	    
     }
 
     &:nth-child(5) {

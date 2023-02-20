@@ -15,9 +15,11 @@ import { Button } from '@src/components/UI/Button/Button';
 import { baseSlice } from '@src/store/base/reducer';
 import { useAppDispatch } from '@src/hooks/hooks';
 import { MODALS } from '@constants/modals';
+import { Description } from '@src/components/Description/Description';
+import { Title } from '@src/components/Title/Title';
 import {
-	TableDebtControl, TableDebtDates, TableDebtDescription, TableDebtFullContent, TableDebtInfoWrapper,
-	TableDebtMainInfo, TableDebtSmallTitle, TableDebtStatus,
+	TableDebtControl, TableDebtDates, TableDebtFullContent, TableDebtInfoWrapper,
+	TableDebtMainInfo,
 	TableDebtSubContent, TableDebtUserName, TableDebtValue,
 } from './style';
 
@@ -72,16 +74,16 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 								</TableDebtDates>
 							</TableDebtMainInfo>
 							<TableDebtInfoWrapper>
-								<TableDebtSmallTitle>{t('description')}</TableDebtSmallTitle>
-								<TableDebtDescription>{debt.description || t('noDescription')}</TableDebtDescription>
-								<TableDebtSmallTitle>{t('photo')}</TableDebtSmallTitle>
-								{debt.photo ? null : <TableDebtDescription>{t('noPhoto')}</TableDebtDescription>}
-								<TableDebtSmallTitle>{t('status')}</TableDebtSmallTitle>
-								<TableDebtStatus status={debt.status}>{debt.status ? t('closed') : t('actual')}</TableDebtStatus>
-								<TableDebtSmallTitle>{t('amountOfDebt')}</TableDebtSmallTitle>
+								<Title fz='16px' margin='5px 0'>{t('description')}</Title>
+								<Description fz='15px' margin='5px 0'>{debt.description || t('noDescription')}</Description>
+								<Title fz='16px' margin='5px 0'>{t('photo')}</Title>
+								<Description fz='15px' margin='5px 0'>{t('noPhoto') || 'TODO'}</Description>
+								<Title fz='16px' margin='5px 0'>{t('status')}</Title>
+								<Description fz='15px' margin='5px 0'>{debt.status ? t('closed') : t('actual')}</Description>
+								<Title fz='16px' margin='5px 0'>{t('amountOfDebt')}</Title>
 								<TableDebtValueWrapper>
 									<TableDebtValue>{`${debt.value === debt.initialValue ? debt.value : debt.initialValue} ₴`}</TableDebtValue>
-									{debt.value === debt.initialValue ? null : (
+									{debt.value !== debt.initialValue && (
 										<>
 											<TableDebtValueIcon className='icon-right'/>
 											<TableDebtNewValue>{`${debt.value} ₴`}</TableDebtNewValue>
@@ -92,7 +94,7 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 								{debt.author?.login ? null
 									: (
 										<TableDebtBottomContent>
-											<Button onClick={() => openCloseModal()} title={t('close')} margin='0' isDisabled={debt.status}/>
+											<Button onClick={() => openCloseModal()} title={t('close')} margin='0' isDisabled={debt.status} height='30px' fz='14px'/>
 										</TableDebtBottomContent>
 									)}
 							</TableDebtInfoWrapper>
