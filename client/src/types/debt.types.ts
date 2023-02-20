@@ -14,6 +14,10 @@ export interface IDebt {
 	debtor?: IUserInNeighborhood;
 	neighborhood: string;
 }
+
+export interface IDebtPage {
+	isDebtors?: boolean;
+}
 export interface IDebtContent{
 	isOpen?: boolean;
 	debt: IDebt;

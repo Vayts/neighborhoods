@@ -5,20 +5,20 @@ import { Input } from '@src/components/UI/Input/Input';
 import { Description } from '@src/components/Description/Description';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { increaseDebtRequest } from '@src/store/debtors/actions';
+import { increaseDebtRequest } from '@src/store/debts/actions';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
-import { selectCurrentDebtors } from '@src/store/debtors/selectors';
 import { validateIncreaseDebt } from '@helpers/debtValidation.helper';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
 import { IReduceDebt } from '@src/components/Modal/Debt/ReduceDebtModal/types';
 import { IncreaseDebtWrapper } from '@src/components/Modal/Debt/IncreaseDebtModal/style';
+import { selectCurrentDebts } from '@src/store/debts/selectors';
 
 export const IncreaseDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
 	const [value, setValue] = useState('');
 	const [errors, setErrors] = useState<Record<string, string>>({});
 	const [isLoading, setLoading] = useState<boolean>(false);
 	const axiosPrivate = useAxiosPrivate();
-	const debtors = useAppSelector(selectCurrentDebtors);
+	const debts = useAppSelector(selectCurrentDebts);
 	const paymentRef = useRef(null);
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
@@ -36,7 +36,7 @@ export const IncreaseDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
 	
 	const onSubmit = (e) => {
 		e.preventDefault();
-		dispatch(increaseDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors, Number(value)));
+		dispatch(increaseDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debts, Number(value)));
 	};
 	
 	return (

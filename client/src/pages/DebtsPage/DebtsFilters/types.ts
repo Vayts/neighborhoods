@@ -1,4 +1,6 @@
 export interface IDebtsFilters {
 	title: string;
-	isLoading?: boolean,
+	isLoading?: boolean;
+	
+	isDebtors: boolean;
 }

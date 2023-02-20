@@ -1,18 +1,20 @@
 import styled from 'styled-components';
 
 export const DebtHistoryWrapper = styled.div`
-  padding: 0 25px 15px;
+  padding: 0 25px 0;
 	width: 450px;
 	height: 500px;
 	overflow: hidden;
 	position: relative;
+  display: flex;
+	flex-direction: column;
 `;
 
 export const DebtHistoryList = styled.ul`
-  max-height: 500px;
   list-style: none;
   margin: 0;
-  padding: 15px 10px 0 0;
+	height: auto;
+  padding: 15px 10px 0;
   overflow-y: scroll;
   border-top: 1px solid #dedede;
 

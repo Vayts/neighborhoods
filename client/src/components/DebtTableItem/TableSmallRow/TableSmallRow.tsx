@@ -38,7 +38,7 @@ export const TableSmallRow: React.FC<IDebtContent> = ({
 			</td>
 			<td>
 				<SmallRowUser>
-					<AvatarFiller text={debt?.author?.login ? debt.author.login : debt.debtor.login} size={35} fz={14}/>
+					<AvatarFiller text={debt?.author?.login ? debt.author.login : debt.debtor.login} size={30} fz={14}/>
 					<p>{generateName()}</p>
 				</SmallRowUser>
 			</td>

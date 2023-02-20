@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import {
@@ -25,8 +25,13 @@ import {
 import { userDebtsRequest } from '@src/store/debts/actions';
 import { Title } from '@src/components/Title/Title';
 import { debtsSlice } from '@src/store/debts/reducer';
+import {
+	removeDebtsFiltersFromSessionStorage,
+	setDebtsFiltersToSessionStorage,
+} from '@helpers/sessionStorage.helper';
+import { IDebtPage } from '@src/types/debt.types';
 
-export const DebtsPage: React.FC = () => {
+export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [mode, setMode] = useState<'table' | 'blocks'>('table');
 	const dispatch = useAppDispatch();
@@ -37,28 +42,46 @@ export const DebtsPage: React.FC = () => {
 	const update = useAppSelector(selectDebtUpdateValue);
 	const { t } = useTranslation();
 	const { id } = useParams();
+	const location = useLocation();
 	
 	const updateHandler = () => {
 		dispatch(debtsSlice.actions.setUpdateValue());
 	};
 	
 	useEffect(() => {
+		setDebtsFiltersToSessionStorage({
+			_id: id,
+			filters,
+		}, isDebtors);
+	}, [filters]);
+	
+	useEffect(() => {
 		const controller = new AbortController();
-		dispatch(userDebtsRequest(axiosPrivate, controller, setLoading, id, filters));
-		
-		if (!neighborhood || neighborhood._id !== id) {
-			dispatch(neighborhoodRequest(axiosPrivate, controller, setLoading, id));
-		}
+		dispatch(userDebtsRequest(axiosPrivate, controller, setLoading, id, filters, isDebtors));
 		
 		return () => {
 			controller.abort();
 		};
-	}, [filters, update]);
+	}, [filters, update, location]);
+	
+	useEffect(() => {
+		const controller = new AbortController();
+
+		if (!neighborhood || neighborhood._id !== id) {
+			dispatch(userDebtsRequest(axiosPrivate, controller, setLoading, id, filters, isDebtors));
+			dispatch(neighborhoodRequest(axiosPrivate, controller, setLoading, id));
+			removeDebtsFiltersFromSessionStorage(isDebtors);
+		}
+
+		return () => {
+			controller.abort();
+		};
+	}, [neighborhood]);
 	
 	return (
 		<DebtsWrapper>
 			<DebtPageTitleWrapper>
-				<Title margin='5px 0' fz='20px'>{t('yourDebts')}</Title>
+				<Title margin='5px 0' fz='20px'>{isDebtors ? t('yourDebtors') : t('yourDebts')}</Title>
 				<span className='icon-refresh' onClick={() => updateHandler()}/>
 			</DebtPageTitleWrapper>
 			
@@ -69,7 +92,11 @@ export const DebtsPage: React.FC = () => {
 					</DebtsControls>
 					{mode === 'table' && <DebtsTable debts={debts} isLoading={isLoading}/>}
 				</DebtsRightWrapper>
-				<DebtsFilters title={`${t('debts')} (${debts.length})`} isLoading={isLoading}/>
+				<DebtsFilters
+					title={`${isDebtors ? t('debtors') : t('debts')} (${debts.length})`}
+					isLoading={isLoading}
+					isDebtors={isDebtors}
+				/>
 			</DebtsContent>
 		</DebtsWrapper>
 	);
