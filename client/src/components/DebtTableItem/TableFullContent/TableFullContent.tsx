@@ -29,7 +29,7 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 	const dispatch = useAppDispatch();
 	
 	const openCloseModal = () => {
-		dispatch(baseSlice.actions.setModal({ type: MODALS.closeDebt, content: { title: debt.title, value: debt.value, _id: debt._id } }));
+		dispatch(baseSlice.actions.setModal({ type: MODALS.closeDebt, content: { debt } }));
 	};
 	
 	const generateName = () => {

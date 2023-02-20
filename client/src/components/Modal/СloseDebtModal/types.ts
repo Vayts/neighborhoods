@@ -1,5 +1,5 @@
+import { IDebt } from '@src/types/debt.types';
+
 export interface ICloseDebtMenu {
-	title: string,
-	value: number,
-	_id: string,
+	debt: IDebt;
 }

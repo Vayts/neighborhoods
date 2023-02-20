@@ -14,6 +14,7 @@
   "authorIncreaseDebt": "{{author}} increased the amount of debt by {{value}}",
   "authorReduceDebt": "{{author}} reduced the amount of debt by {{value}}",
   "close": "Close",
+  "closeDebtDescription": "The debt will be closed with the amount remaining at that time. It will be considered as paid.",
   "closed": "Closed",
   "confirmPassword": "Confirm Password",
   "confirmPasswordError": "Password and confirm password must match",

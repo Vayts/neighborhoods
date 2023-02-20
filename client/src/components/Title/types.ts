@@ -3,4 +3,5 @@ export interface ITitle {
 	margin?: string,
 	color?: string,
 	height?: string,
+	align?: 'center' | 'right' | 'left',
 }

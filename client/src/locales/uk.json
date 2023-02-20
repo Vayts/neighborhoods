@@ -14,6 +14,7 @@
   "authorIncreasedDebt": "{{value}} збільшила суму боргу на {{value}}",
   "authorReduceDebt": "{{value}} зменшив суму боргу на {{value}}",
   "close": "Закрити",
+  "closeDebtDescription": "Борг буде закритий із сумою, яка залишилася на цей момент. Вона буде вважатися виплаченою.",
   "closed": "Закрито",
   "confirmPassword": "Підтвердіть пароль",
   "confirmPasswordError": "Паролі повинні співпадати",

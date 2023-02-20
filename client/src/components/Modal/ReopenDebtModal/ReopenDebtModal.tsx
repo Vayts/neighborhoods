@@ -28,7 +28,7 @@ export const ReopenDebtModal: React.FC<IDeleteDebt> = ({ debt }) => {
 	
 	return (
 		<ReopenDebtWrapper>
-			<Title margin='0 auto'>{t('rlyWantToReopenDebt')}</Title>
+			<Title margin='0' align='center'>{t('rlyWantToReopenDebt')}</Title>
 			<Description fz='14px' margin='5px 0 35px'>{t('reopenDebtDescription')}</Description>
 			<ReopenButtons>
 				<Button

@@ -48,9 +48,7 @@ export const Modal: React.FC = () => {
 		case MODALS.closeDebt:
 			return (
 				<CloseDebtModal
-					title={modalContent.title}
-					value={modalContent.value}
-					_id={modalContent._id}
+					debt={modalContent.debt}
 				/>
 			);
 		case MODALS.createDebt:
