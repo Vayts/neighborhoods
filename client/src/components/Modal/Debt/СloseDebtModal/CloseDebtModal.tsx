@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import {
 	CloseDebtButtons,
 	CloseDebtMenuWrapper,
-} from '@src/components/Modal/СloseDebtModal/style';
+} from '@src/components/Modal/Debt/СloseDebtModal/style';
 import { useTranslation } from 'react-i18next';
-import { ICloseDebtMenu } from '@src/components/Modal/СloseDebtModal/types';
+import { ICloseDebtMenu } from '@src/components/Modal/Debt/СloseDebtModal/types';
 import { Title } from '@src/components/Title/Title';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';

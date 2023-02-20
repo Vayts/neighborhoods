@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { PartialPaymentWrapper } from '@src/components/Modal/Debt/PartialPaymentModal/style';
+import { IPartialPayment } from '@src/components/Modal/Debt/PartialPaymentModal/types';
 import { Title } from '@src/components/Title/Title';
 import { useTranslation } from 'react-i18next';
 import { Input } from '@src/components/UI/Input/Input';
 import { Description } from '@src/components/Description/Description';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { increaseDebtRequest } from '@src/store/debtors/actions';
+import { partialPaymentRequest } from '@src/store/debtors/actions';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import { selectCurrentDebtors } from '@src/store/debtors/selectors';
-import { validateIncreaseDebt } from '@helpers/debtValidation.helper';
+import { validatePartialPayment } from '@helpers/debtValidation.helper';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
-import { IReduceDebt } from '@src/components/Modal/ReduceDebtModal/types';
-import { IncreaseDebtWrapper } from '@src/components/Modal/IncreaseDebtModal/style';
 
-export const IncreaseDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
+export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 	const [value, setValue] = useState('');
 	const [errors, setErrors] = useState<Record<string, string>>({});
 	const [isLoading, setLoading] = useState<boolean>(false);
@@ -30,32 +30,39 @@ export const IncreaseDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
 	}, []);
 	
 	const onChangeHandler = (e) => {
-		setErrors(validateIncreaseDebt(e.target.value));
+		setErrors(validatePartialPayment(e.target.value, debt.value));
 		setValue(e.target.value);
 	};
 	
 	const onSubmit = (e) => {
 		e.preventDefault();
-		dispatch(increaseDebtRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors, Number(value)));
+		dispatch(partialPaymentRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debtors, Number(value)));
+	};
+	
+	const generatePlaceholder = () => {
+		if (debt.value - 1 < 0.1) {
+			return `${t('amountOfMoney')}`;
+		}
+		return `${t('amountOfMoney')}: 0.1 ₴ \u2013 ${Number((debt.value - 1).toFixed(2))} ₴`;
 	};
 	
 	return (
-		<IncreaseDebtWrapper>
-			<Title margin='0 auto'>{t('increaseDebtTitle')}</Title>
+		<PartialPaymentWrapper>
+			<Title margin='0 auto'>{t('partialPaymentMenu')}</Title>
 			<Description
 				margin='5px 0 15px'
 			>
-				{t('increaseDebtText')}
+				{t('specifyAmountOfMoney')}
 			</Description>
 			<form>
 				<Input
 					refValue={paymentRef}
-					name='increaseDebt'
-					id='increaseDebt'
+					name='partialPayment'
+					id='partialPaymentNumber'
 					onChange={onChangeHandler}
 					value={value}
 					type='number'
-					placeholder={t('amountOfMoney')}
+					placeholder={generatePlaceholder()}
 					width='100%'
 					label={t('amountOfMoney')}
 					min={1}
@@ -72,6 +79,6 @@ export const IncreaseDebtModal: React.FC<IReduceDebt> = ({ debt }) => {
 					isDisabled={Object.keys(errors).length > 0 || !value || isLoading}
 				/>
 			</form>
-		</IncreaseDebtWrapper>
+		</PartialPaymentWrapper>
 	);
 };

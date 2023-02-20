@@ -3,11 +3,11 @@ import {
 	CreateDebtForm, CreateDebtIcon,
 	CreateDebtSubTitleWrapper,
 	CreateDebtWrapper,
-} from '@src/components/Modal/CreateDebtModal/style';
+} from '@src/components/Modal/Debt/CreateDebtModal/style';
 import { Input } from '@src/components/UI/Input/Input';
 import { useTranslation } from 'react-i18next';
 import { Title } from '@src/components/Title/Title';
-import { ICreateDebtModal } from '@src/components/Modal/CreateDebtModal/types';
+import { ICreateDebtModal } from '@src/components/Modal/Debt/CreateDebtModal/types';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
 import { selectDebtForm, selectDebtFormErrors, selectDebtFormTouched } from '@src/store/createDebt/selectors';
 import { createDebtSlice } from '@src/store/createDebt/reducer';

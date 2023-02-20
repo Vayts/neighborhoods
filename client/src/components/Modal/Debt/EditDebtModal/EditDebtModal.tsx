@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { IEditDebt, IEditDebtErrors, IEditDebtTouched } from '@src/components/Modal/EditDebtModal/types';
-import { EditDebtWrapper } from '@src/components/Modal/EditDebtModal/style';
+import { IEditDebt, IEditDebtErrors, IEditDebtTouched } from '@src/components/Modal/Debt/EditDebtModal/types';
+import { EditDebtWrapper } from '@src/components/Modal/Debt/EditDebtModal/style';
 import { Input } from '@src/components/UI/Input/Input';
 import { TextArea } from '@src/components/UI/TextArea/TextArea';
 import { DatePicker } from '@src/components/UI/DatePicker/DatePicker';
@@ -57,8 +57,8 @@ export const EditDebtModal: React.FC<IEditDebt> = ({ debt }) => {
 	return (
 		<EditDebtWrapper>
 			<Title
-				fz='22px'
-				margin='5px 0 10px'
+				fz='19px'
+				margin='0 0 10px'
 			>
 				{t('editing')}
 			</Title>

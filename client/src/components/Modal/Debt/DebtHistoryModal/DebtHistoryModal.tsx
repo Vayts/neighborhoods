@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { IDebtHistory, IDebtHistoryItem } from '@src/components/Modal/DebtHistoryModal/types';
+import { IDebtHistory, IDebtHistoryItem } from '@src/components/Modal/Debt/DebtHistoryModal/types';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import {
 	DebtHistoryList,
 	DebtHistoryNoContent,
 	DebtHistoryWrapper,
-} from '@src/components/Modal/DebtHistoryModal/style';
-import { DebtHistoryItem } from '@src/components/Modal/DebtHistoryModal/DebtHistoryItem/DebtHistoryItem';
+} from '@src/components/Modal/Debt/DebtHistoryModal/style';
+import { DebtHistoryItem } from '@src/components/Modal/Debt/DebtHistoryModal/DebtHistoryItem/DebtHistoryItem';
 import { Loader } from '@src/components/Loader/Loader';
 import { useTranslation } from 'react-i18next';
 import { getNotification } from '@src/notification/notifications';
+import { Title } from '@src/components/Title/Title';
 
 export const DebtHistoryModal: React.FC<IDebtHistory> = ({ debt }) => {
 	const [history, setHistory] = useState<IDebtHistoryItem[]>([]);
@@ -33,6 +34,7 @@ export const DebtHistoryModal: React.FC<IDebtHistory> = ({ debt }) => {
 		if (history.length > 0) {
 			return (
 				<>
+					<Title margin='0 0 15px' align='center'>{t('debtHistory')}</Title>
 					<DebtHistoryList>
 						{history.map((item, index) => {
 							return <DebtHistoryItem key={item._id} debtHistory={item} index={index}/>;

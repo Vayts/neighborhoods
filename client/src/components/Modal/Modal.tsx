@@ -4,16 +4,16 @@ import { selectModal } from '@src/store/base/selectors';
 import { ModalBackground, ModalClose, ModalWindow } from '@src/components/Modal/style';
 import { baseSlice } from '@src/store/base/reducer';
 import { useOutsideClick } from '@src/hooks/useOutsideClick';
-import { CloseDebtModal } from '@src/components/Modal/СloseDebtModal/CloseDebtModal';
+import { CloseDebtModal } from '@src/components/Modal/Debt/СloseDebtModal/CloseDebtModal';
 import { MODALS } from '@constants/modals';
-import { CreateDebtModal } from '@src/components/Modal/CreateDebtModal/CreateDebtModal';
-import { DebtHistoryModal } from '@src/components/Modal/DebtHistoryModal/DebtHistoryModal';
-import { PartialPaymentModal } from '@src/components/Modal/PartialPaymentModal/PartialPaymentModal';
-import { ReduceDebtModal } from '@src/components/Modal/ReduceDebtModal/ReduceDebtModal';
-import { IncreaseDebtModal } from '@src/components/Modal/IncreaseDebtModal/IncreaseDebtModal';
-import { DeleteDebtModal } from '@src/components/Modal/DeleteDebtModal/DeleteDebtModal';
-import { EditDebtModal } from '@src/components/Modal/EditDebtModal/EditDebtModal';
-import { ReopenDebtModal } from '@src/components/Modal/ReopenDebtModal/ReopenDebtModal';
+import { CreateDebtModal } from '@src/components/Modal/Debt/CreateDebtModal/CreateDebtModal';
+import { DebtHistoryModal } from '@src/components/Modal/Debt/DebtHistoryModal/DebtHistoryModal';
+import { PartialPaymentModal } from '@src/components/Modal/Debt/PartialPaymentModal/PartialPaymentModal';
+import { ReduceDebtModal } from '@src/components/Modal/Debt/ReduceDebtModal/ReduceDebtModal';
+import { IncreaseDebtModal } from '@src/components/Modal/Debt/IncreaseDebtModal/IncreaseDebtModal';
+import { DeleteDebtModal } from '@src/components/Modal/Debt/DeleteDebtModal/DeleteDebtModal';
+import { EditDebtModal } from '@src/components/Modal/Debt/EditDebtModal/EditDebtModal';
+import { ReopenDebtModal } from '@src/components/Modal/Debt/ReopenDebtModal/ReopenDebtModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;

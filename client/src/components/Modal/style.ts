@@ -41,7 +41,7 @@ export const ModalWindow = styled.div`
   border-radius: 10px;
   position: absolute;
   z-index: 100;
-	padding-top: 35px;
+	padding-top: 25px;
   animation: ${appear} 0.1s linear;
 	margin: 10px;
 	min-width: 300px;
@@ -51,6 +51,7 @@ export const ModalClose = styled.span`
   position: absolute;
 	top: 10px;
 	right: 10px;
+	z-index: 10;
 	
 	&:hover {
 		cursor: pointer;

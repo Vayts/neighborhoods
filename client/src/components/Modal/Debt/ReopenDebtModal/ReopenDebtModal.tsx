@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IDeleteDebt } from '@src/components/Modal/DeleteDebtModal/types';
+import { IDeleteDebt } from '@src/components/Modal/Debt/DeleteDebtModal/types';
 import { Title } from '@src/components/Title/Title';
 import { useTranslation } from 'react-i18next';
 import { Description } from '@src/components/Description/Description';
@@ -9,7 +9,7 @@ import { reopenDebtRequest } from '@src/store/debtors/actions';
 import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import { selectCurrentDebtors } from '@src/store/debtors/selectors';
 import { baseSlice } from '@src/store/base/reducer';
-import { ReopenButtons, ReopenDebtWrapper } from '@src/components/Modal/ReopenDebtModal/style';
+import { ReopenButtons, ReopenDebtWrapper } from '@src/components/Modal/Debt/ReopenDebtModal/style';
 
 export const ReopenDebtModal: React.FC<IDeleteDebt> = ({ debt }) => {
 	const { t } = useTranslation();

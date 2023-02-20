@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { IDeleteDebt } from '@src/components/Modal/DeleteDebtModal/types';
-import { DeleteButtons, DeleteDebtWrapper } from '@src/components/Modal/DeleteDebtModal/style';
+import { IDeleteDebt } from '@src/components/Modal/Debt/DeleteDebtModal/types';
+import { DeleteButtons, DeleteDebtWrapper } from '@src/components/Modal/Debt/DeleteDebtModal/style';
 import { Title } from '@src/components/Title/Title';
 import { useTranslation } from 'react-i18next';
 import { Description } from '@src/components/Description/Description';
@@ -28,8 +28,8 @@ export const DeleteDebtModal: React.FC<IDeleteDebt> = ({ debt }) => {
 	
 	return (
 		<DeleteDebtWrapper>
-			<Title>{t('rlyWantToDeleteDebt')}</Title>
-			<Description fz='16px' margin='5px 0 35px'>{debt.title}</Description>
+			<Title fz='19px' margin='0' align='center'>{t('rlyWantToDeleteDebt')}</Title>
+			<Description fz='14px' margin='5px 0 35px'>{t('deleteDebtDescription')}</Description>
 			<DeleteButtons>
 				<Button
 					onClick={() => deleteDebt()}

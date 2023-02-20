@@ -14,6 +14,7 @@ export const DebtHistoryList = styled.ul`
   margin: 0;
   padding: 15px 10px 0 0;
   overflow-y: scroll;
+  border-top: 1px solid #dedede;
 
   /* width */
 
@@ -30,9 +31,9 @@ export const DebtHistoryList = styled.ul`
   /* Handle */
 
   ::-webkit-scrollbar-thumb {
-	  width: 5px;
+    width: 5px;
     background: ${({ theme }) => theme.primary};
-	  border-radius: 5px;
+    border-radius: 5px;
   }
 
   /* Handle on hover */
