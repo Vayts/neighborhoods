@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect } from 'react';
 import {
 	CreateDebtForm, CreateDebtIcon,
 	CreateDebtSubTitleWrapper,
@@ -9,17 +9,21 @@ import { useTranslation } from 'react-i18next';
 import { Title } from '@src/components/Title/Title';
 import { ICreateDebtModal } from '@src/components/Modal/Debt/CreateDebtModal/types';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectDebtForm, selectDebtFormErrors, selectDebtFormTouched } from '@src/store/createDebt/selectors';
-import { createDebtSlice } from '@src/store/createDebt/reducer';
+import {
+	selectCreateDebtLoading,
+	selectDebtForm,
+	selectDebtFormErrors,
+	selectDebtFormTouched,
+} from '@src/store/createDebt/selectors';
+import { resetCreateDebt, setValueToCreateForm } from '@src/store/createDebt/reducer';
 import { TextArea } from '@src/components/UI/TextArea/TextArea';
 import { Button } from '@src/components/UI/Button/Button';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
 import { DatePicker } from '@src/components/UI/DatePicker/DatePicker';
 import { Select } from '@src/components/UI/Select/Select';
 import { generateUserSelectList } from '@helpers/user.helper';
-import { selectUser } from '@src/store/auth/selectors';
 import { createDebtRequest } from '@src/store/createDebt/action';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
+import { selectUser } from '@src/store/auth/user/selectors';
 
 export const CreateDebtModal: React.FC<ICreateDebtModal> = ({ neighborhood }) => {
 	const { t } = useTranslation();
@@ -29,8 +33,7 @@ export const CreateDebtModal: React.FC<ICreateDebtModal> = ({ neighborhood }) =>
 	const touched = useAppSelector(selectDebtFormTouched);
 	const user = useAppSelector(selectUser);
 	const inputRef = createRef<HTMLInputElement>();
-	const axiosPrivate = useAxiosPrivate();
-	const [isLoading, setLoading] = useState<boolean>(false);
+	const isLoading = useAppSelector(selectCreateDebtLoading);
 	
 	useEffect(() => {
 		if (inputRef) {
@@ -38,24 +41,24 @@ export const CreateDebtModal: React.FC<ICreateDebtModal> = ({ neighborhood }) =>
 		}
 		
 		return () => {
-			dispatch(createDebtSlice.actions.resetCreateDebt());
+			dispatch(resetCreateDebt());
 		};
 	}, []);
 	
 	const changeHandler = (e) => {
-		dispatch(createDebtSlice.actions.setValueToCreateForm({ name: e.target.name, value: e.target.value }));
+		dispatch(setValueToCreateForm({ name: e.target.name, value: e.target.value }));
 	};
 	const changeDateHandler = (value) => {
-		dispatch(createDebtSlice.actions.setValueToCreateForm({ name: 'expDate', value: new Date(value).getTime() }));
+		dispatch(setValueToCreateForm({ name: 'expDate', value: new Date(value).getTime() }));
 	};
 	
 	const changeAuthorHandler = (value) => {
-		dispatch(createDebtSlice.actions.setValueToCreateForm({ name: 'debtor', value }));
+		dispatch(setValueToCreateForm({ name: 'debtor', value }));
 	};
 	
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(createDebtRequest(axiosPrivate, setLoading, values, neighborhood._id));
+		dispatch(createDebtRequest(values, neighborhood._id));
 	};
 	
 	return (

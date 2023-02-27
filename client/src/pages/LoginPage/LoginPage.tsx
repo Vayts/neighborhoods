@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
 	LoginContentHolder, LoginPageWrapper, LoginLogo,
 	LoginLogoWrapper,
@@ -8,30 +8,32 @@ import {
 } from '@src/pages/LoginPage/style';
 import { useTranslation } from 'react-i18next';
 import { Input } from '@src/components/UI/Input/Input';
-import { authSlice } from '@src/store/auth/reducer';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectLogin, selectUser } from '@src/store/auth/selectors';
 import { Button } from '@src/components/UI/Button/Button';
 import { RegisterFormLinkItem, RegisterFormLinkText } from '@src/pages/RegisterPage/style';
-import { loginRequest } from '@src/store/auth/actions';
+import { selectLoginData, selectLoginIsLoading } from '@src/store/auth/login/selectors';
+import { loginRequest, resetLogin, setLogin } from '@src/store/auth/login/reducer';
+import { ILoginState } from '@src/store/auth/login/types';
+import { selectUser } from '@src/store/auth/user/selectors';
 import { useNavigate } from 'react-router-dom';
 
 export const LoginPage: React.FC = () => {
+	const values: ILoginState['data'] = useAppSelector(selectLoginData);
+	const isLoading: boolean = useAppSelector(selectLoginIsLoading);
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
-	const { setLogin } = authSlice.actions;
-	const [isLoading, setLoading] = useState(false);
 	const user = useAppSelector(selectUser);
+	// const user = useAppSelector(selectUser);
 	const navigate = useNavigate();
-	const values = useAppSelector(selectLogin);
+	// const values = useAppSelector(selectLogin);
 	
 	useEffect(() => {
 		if (user) {
 			navigate('/');
 		}
-		
+
 		return () => {
-			dispatch(authSlice.actions.resetLogin());
+			dispatch(resetLogin);
 		};
 	}, [user]);
 	
@@ -42,7 +44,7 @@ export const LoginPage: React.FC = () => {
 	
 	const submitHandler = (e: React.MouseEvent<Element, MouseEvent>) => {
 		e.preventDefault();
-		dispatch(loginRequest(values, setLoading));
+		dispatch(loginRequest());
 	};
 	
 	return (

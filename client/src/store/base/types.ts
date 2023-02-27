@@ -5,4 +5,5 @@ export interface IBaseState {
 		type: string,
 		content: Record<string, string|number> | null | unknown | any,
 	}
+	isLoading: boolean,
 }

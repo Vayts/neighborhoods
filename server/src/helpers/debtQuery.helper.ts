@@ -1,34 +1,19 @@
 import { IDebtsQuery } from '../types/debt.types';
 import mongoose from 'mongoose';
 
-export function parseDebtAuthorQuery (query: IDebtsQuery) {
-	if (!query.authors) {
+export function parseDebtUsersQuery (query: IDebtsQuery) {
+	if (!query.users) {
 		return [];
 	}
 	
-	const authors = query.authors.split(',').filter((item) => item);
-	if (authors.length) {
-		return authors.map((item) => {
+	const users = query.users.split(',').filter((item) => item);
+	if (users.length) {
+		return users.map((item) => {
 			return new mongoose.Types.ObjectId(item.trim());
 		});
 	}
 	return [];
 }
-
-export function parseDebtDebtorsQuery (query: IDebtsQuery) {
-	if (!query.debtors) {
-		return [];
-	}
-	
-	const debtors = query.debtors.split(',').filter((item) => item);
-	if (debtors.length) {
-		return debtors.map((item) => {
-			return new mongoose.Types.ObjectId(item.trim());
-		});
-	}
-	return [];
-}
-
 export function parseDebtStatusQuery (query: IDebtsQuery) {
 	if (!query.status) {
 		return [];

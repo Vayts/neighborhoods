@@ -1,4 +1,5 @@
 import { IUserInNeighborhood } from '@src/types/neighborhood.types';
+import { IUserEvent } from '@src/types/userEvent.types';
 
 export interface IDebt {
 	_id?: string,
@@ -41,4 +42,14 @@ export interface IEditDebtState {
 	title: string;
 	description: string;
 	expDate: Date | number;
+}
+
+export interface IDebtHistoryItem extends IUserEvent {
+	content: {
+		value: number,
+		message: string,
+		debt: string,
+	};
+	debt: IDebt;
+	debtor: IUserInNeighborhood,
 }

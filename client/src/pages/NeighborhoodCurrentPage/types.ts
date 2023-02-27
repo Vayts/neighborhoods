@@ -1,4 +1,4 @@
-import { IDebt } from '@src/types/neighborhood.types';
+import { IDebt } from '@src/types/debt.types';
 
 export interface IDebtsList {
 	debts: IDebt[],

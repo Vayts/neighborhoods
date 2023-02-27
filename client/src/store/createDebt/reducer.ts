@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ICreateDebt, ISetDebtValuePayload } from '@src/store/createDebt/types';
-import { INeighborhood } from '@src/types/neighborhood.types';
 import { debtCreateValidate } from '@helpers/debtValidation.helper';
 
 const initialState: ICreateDebt = {
@@ -12,6 +11,7 @@ const initialState: ICreateDebt = {
 		value: '',
 		description: '',
 	},
+	isLoading: false,
 	neighborhood: null,
 	errors: {},
 	touched: {},
@@ -21,12 +21,6 @@ export const createDebtSlice = createSlice({
 	name: 'createDebt',
 	initialState,
 	reducers: {
-		setCreateDebt: (state, action: PayloadAction<ICreateDebt['form']>) => {
-			state.form = action.payload;
-		},
-		setCreateDebtNeighborhood: (state, action: PayloadAction<INeighborhood>) => {
-			state.neighborhood = action.payload;
-		},
 		setValueToCreateForm: (state, action: PayloadAction<ISetDebtValuePayload>) => {
 			state.form[action.payload.name] = action.payload.value;
 			state.errors = debtCreateValidate({
@@ -44,5 +38,18 @@ export const createDebtSlice = createSlice({
 			state.errors = initialState.errors;
 			state.touched = initialState.touched;
 		},
+		createDebtRequestStart: (state) => {
+			state.isLoading = true;
+		},
+		createDebtRequestEnd: (state) => {
+			state.isLoading = false;
+		},
 	},
 });
+
+export const {
+	createDebtRequestEnd,
+	createDebtRequestStart,
+	resetCreateDebt,
+	setValueToCreateForm,
+} = createDebtSlice.actions;

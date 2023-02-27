@@ -126,6 +126,7 @@
   "topNeighbors": "Топ сусідів",
   "total": "Загалом",
   "visit": "Обрати",
+  "wrngLoginPassword": "Неправильний логін або пароль",
   "yes": "Так",
   "youClosedTheDebt": "Ви закрили борг із сумою {{value}}",
   "youIncreaseDebt": "Ви збільшили суму боргу на {{value}}",

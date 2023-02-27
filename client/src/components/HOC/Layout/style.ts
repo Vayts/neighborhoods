@@ -14,4 +14,5 @@ export const LayoutOutletWrapper = styled.div`
 	padding: 30px;
 	flex-grow: 1;
   display: flex;
+	width: auto;
 `;

@@ -9,12 +9,19 @@ const initialState: IBaseState = {
 		type: null,
 		content: null,
 	},
+	isLoading: true,
 };
 
 export const baseSlice = createSlice({
 	name: 'base',
 	initialState,
 	reducers: {
+		loadApp: (state) => {
+			state.isLoading = true;
+		},
+		appIsLoaded: (state) => {
+			state.isLoading = false;
+		},
 		setTheme: (state, action: PayloadAction<string>) => {
 			state.theme = action.payload;
 		},
@@ -30,3 +37,5 @@ export const baseSlice = createSlice({
 		},
 	},
 });
+
+export const { loadApp, appIsLoaded, setLang, resetModal, setModal, setTheme } = baseSlice.actions;

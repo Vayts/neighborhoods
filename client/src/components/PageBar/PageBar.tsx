@@ -2,8 +2,8 @@ import React from 'react';
 import { PageBarWrapper, PageLink, PageLinkIcon, PageLinkText, SubPageBar } from '@src/components/PageBar/style';
 import { useTranslation } from 'react-i18next';
 import { Title } from '@src/components/Title/Title';
+import { selectCurrentNeighborhood } from '@src/store/currentNeighborhood/selectors';
 import { useAppSelector } from '@src/hooks/hooks';
-import { selectCurrentNeighborhood } from '@src/store/neighborhoods/selectors';
 
 export const PageBar: React.FC = () => {
 	const { t } = useTranslation();
@@ -25,7 +25,7 @@ export const PageBar: React.FC = () => {
 			</PageLink>
 			{neighborhood && (
 				<SubPageBar>
-					<Title fz='16px'>{neighborhood.title}</Title>
+					<Title fz='16px' margin='10px 0 10px 10px'>{neighborhood.title}</Title>
 					<PageLink to={`neighborhood/debts/${neighborhood._id}`}>
 						<PageLinkIcon className='icon-debts'/>
 						<PageLinkText>{t('debtTitle')}</PageLinkText>

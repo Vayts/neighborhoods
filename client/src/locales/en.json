@@ -126,6 +126,7 @@
   "topNeighbors": "Top Neighbors",
   "total": "Overall",
   "visit": "Visit",
+  "wrngLoginPassword": "Wrong login or password",
   "yes": "Yes",
   "youClosedTheDebt": "You closed the debt with an amount of {{value}}",
   "youIncreaseDebt": "You have increased the debt amount by {{value}}",

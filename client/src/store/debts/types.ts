@@ -8,6 +8,8 @@ export interface IDebtsState {
 		minValue: number | string,
 		maxValue: number | string,
 	},
+	isLoading: boolean,
+	minorIsLoading: boolean,
 	updateValue: number | null,
 }
 

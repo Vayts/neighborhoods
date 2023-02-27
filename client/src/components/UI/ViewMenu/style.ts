@@ -9,7 +9,7 @@ export const ViewMenuWrapper = styled.div`
 
 export const ViewMenuItem = styled.div<IViewMenuStyle>`
 	transition: all 0.2s;
-	background-color: ${({ isActive }) => (isActive ? 'rgba(176,178,232,0.12)' : 'transparent')};
+	background-color: ${({ isActive, theme }) => (isActive ? `${theme.primary}10` : 'transparent')};
 	border: 1px solid ${({ isActive, theme }) => (isActive ? theme.primary : 'transparent')};
 	color: ${({ isActive, theme }) => (isActive ? theme.primary : theme.txtColor)};
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);

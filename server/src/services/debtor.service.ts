@@ -4,7 +4,7 @@ import { Neighborhood, NeighborhoodDocument } from '../schemas/neighborhood.sche
 import mongoose, { Model } from 'mongoose';
 import { Neighborhood_UserDocument, Neighborhood_Users } from '../schemas/neighborhood_user.schema';
 import { Debt, DebtDocument } from '../schemas/debt.schema';
-import { parseDebtDebtorsQuery, parseDebtStatusQuery } from '../helpers/debtQuery.helper';
+import { parseDebtStatusQuery, parseDebtUsersQuery } from '../helpers/debtQuery.helper';
 import { UserEvent, UserEventDocument } from '../schemas/userEvent.schema';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class DebtorService {
 	
 	getUserDebtorsInNeighborhood(req) {
 		const {neighborhoodId} = req.params;
-		const debtors = parseDebtDebtorsQuery(req.query);
+		const debtors = parseDebtUsersQuery(req.query);
 		const status = parseDebtStatusQuery(req.query);
 
 		return this.debtModel.aggregate(
@@ -26,8 +26,8 @@ export class DebtorService {
 				{$match: {author: new mongoose.Types.ObjectId(req.user._id), neighborhood: new mongoose.Types.ObjectId(neighborhoodId)}},
 				{$match: {debtor: debtors.length ? {'$in': [...debtors]} : {$exists: true}}},
 				{$match: {status: status.length ? {'$in': [...status]} : {'$in': [false]}}},
-				{$match: {value: req.query.min ? {$gt: Number(req.query.min)} : {$exists: true}}},
-				{$match: {value: req.query.max ? {$lt: Number(req.query.max)} : {$exists: true}}},
+				{$match: {value: req.query.min ? {$gt: Number(req.query.min) - 0.1} : {$exists: true}}},
+				{$match: {value: req.query.max ? {$lt: Number(req.query.max)  + 0.1} : {$exists: true}}},
 				{
 					$lookup: {
 						from: "users",

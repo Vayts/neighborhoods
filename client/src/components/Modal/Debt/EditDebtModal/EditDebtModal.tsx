@@ -10,10 +10,9 @@ import { Title } from '@src/components/Title/Title';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
 import { IEditDebtState } from '@src/types/debt.types';
 import { validateEditDebt } from '@helpers/debtValidation.helper';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { updateDebtRequest } from '@src/store/debts/actions';
-import { selectCurrentDebts } from '@src/store/debts/selectors';
+import { editDebtRequest } from '@src/store/debts/actions';
+import { selectMinorDebtIsLoading } from '@src/store/debts/selectors';
 
 export const EditDebtModal: React.FC<IEditDebt> = ({ debt }) => {
 	const [editState, setEditState] = useState<IEditDebtState>({
@@ -23,9 +22,7 @@ export const EditDebtModal: React.FC<IEditDebt> = ({ debt }) => {
 	});
 	const [errors, setErrors] = useState<IEditDebtErrors>({});
 	const [touched, setTouched] = useState<IEditDebtTouched>({});
-	const [isLoading, setLoading] = useState<boolean>(false);
-	const axiosPrivate = useAxiosPrivate();
-	const debts = useAppSelector(selectCurrentDebts);
+	const isLoading = useAppSelector(selectMinorDebtIsLoading);
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
 	
@@ -51,7 +48,7 @@ export const EditDebtModal: React.FC<IEditDebt> = ({ debt }) => {
 	
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(updateDebtRequest(axiosPrivate, setLoading, editState, debt.neighborhood, debt._id, debts));
+		dispatch(editDebtRequest(debt._id, editState));
 	};
 	
 	return (
