@@ -12,13 +12,13 @@ const appear = keyframes`
 `;
 
 export const PageBarWrapper = styled.div`
-	padding: 15px 0 35px 35px;
+	padding: 35px 0 15px 15px;
 	background-color: #fff;
 	height: calc(100vh - 72px);
   min-width: 250px;
 	max-width: 250px;
 	position: sticky;
-	top: 61px;
+	top: 62px;
 	flex-grow: 1;
 	
 	h3 {
@@ -35,18 +35,23 @@ export const PageLink = styled(NavLink)`
 	display: flex;
 	align-items: center;
 	font-weight: 500;
-	padding: 10px 5px;
-	margin: 0;
+	padding: 10px 5px 10px 25px;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+	margin: 5px 0;
 	
 	&:hover {
 		transition: all 0.2s, border 0s;
     color: ${({ theme }) => theme.hoverLight};
+		background-color: ${({theme}) => `${theme.subTxtColor}15`};
 	}
 	
 	&.active {
     transition: all 0.2s, border 0s;
 		color: ${({ theme }) => theme.primary};
     border-right: 3px solid ${({ theme }) => theme.primary};
+    background-color: ${({theme}) => `${theme.primary}20`};
+		pointer-events: none;
 		
 		&:hover {
 			cursor: default;

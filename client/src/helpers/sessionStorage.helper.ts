@@ -1,4 +1,5 @@
 import { IDebtsState } from '@src/store/debts/types';
+import { INeighborhood } from '@src/types/neighborhood.types';
 
 export function getOpenedDebtsFromSessionStorage(): string[] {
 	const actualOpen = sessionStorage.getItem('openDebt');
@@ -40,6 +41,18 @@ export function getDebtsFiltersFromSessionStorage(_id: string, isDebtors: boolea
 			return parsed.filters;
 		}
 		return null;
+	}
+	return null;
+}
+
+export function setNeighborhoodToSessionStorage(neighborhoodData: INeighborhood) {
+	sessionStorage.setItem('neighborhood', JSON.stringify(neighborhoodData));
+}
+
+export function getNeighborhoodFromSessionStorage(): INeighborhood | null {
+	const data = sessionStorage.getItem('neighborhood');
+	if (data) {
+		return JSON.parse(data);
 	}
 	return null;
 }

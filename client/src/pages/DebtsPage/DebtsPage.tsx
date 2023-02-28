@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
-import {
-	selectCurrentNeighborhood,
-} from '@src/store/neighborhoods/selectors';
 import { useTranslation } from 'react-i18next';
-import { neighborhoodRequest } from '@src/store/neighborhoods/actions';
 import {
 	DebtPageTitleWrapper,
 	DebtsContent,
@@ -19,26 +14,27 @@ import { DebtsTable } from '@src/pages/DebtsPage/DebtsTable/DebtsTable';
 import { DebtsFilters } from '@src/pages/DebtsPage/DebtsFilters/DebtsFilters';
 import {
 	selectCurrentDebts,
-	selectCurrentDebtsFilters,
+	selectCurrentDebtsFilters, selectCurrentDebtsLoading,
 	selectDebtUpdateValue,
 } from '@src/store/debts/selectors';
-import { userDebtsRequest } from '@src/store/debts/actions';
+import { getDebtsRequest } from '@src/store/debts/actions';
 import { Title } from '@src/components/Title/Title';
-import { debtsSlice } from '@src/store/debts/reducer';
+import { setUpdateValue } from '@src/store/debts/reducer';
 import {
 	removeDebtsFiltersFromSessionStorage,
 	setDebtsFiltersToSessionStorage,
 } from '@helpers/sessionStorage.helper';
 import { IDebtPage } from '@src/types/debt.types';
+import { selectCurrentNeighborhood } from '@src/store/currentNeighborhood/selectors';
+import { getNeighborhoodRequest } from '@src/store/currentNeighborhood/actions';
 import { AddButton } from '@src/components/UI/AddButton/AddButton';
-import { baseSlice } from '@src/store/base/reducer';
+import { setModal } from '@src/store/base/reducer';
 import { MODALS } from '@constants/modals';
 
 export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
-	const [isLoading, setLoading] = useState<boolean>(true);
+	const isLoading = useAppSelector(selectCurrentDebtsLoading);
 	const [mode, setMode] = useState<'table' | 'blocks'>('table');
 	const dispatch = useAppDispatch();
-	const axiosPrivate = useAxiosPrivate();
 	const debts = useAppSelector(selectCurrentDebts);
 	const neighborhood = useAppSelector(selectCurrentNeighborhood);
 	const filters = useAppSelector(selectCurrentDebtsFilters);
@@ -48,7 +44,11 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	const location = useLocation();
 	
 	const updateHandler = () => {
-		dispatch(debtsSlice.actions.setUpdateValue());
+		dispatch(setUpdateValue());
+	};
+	
+	const openCreateDebt = () => {
+		dispatch(setModal({ type: MODALS.createDebt, content: { neighborhood } }));
 	};
 	
 	const openCreateDebtModal = () => {
@@ -63,20 +63,14 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	}, [filters]);
 	
 	useEffect(() => {
-		const controller = new AbortController();
-		dispatch(userDebtsRequest(axiosPrivate, controller, setLoading, id, filters, isDebtors));
-		
-		return () => {
-			controller.abort();
-		};
+		dispatch(getDebtsRequest(id, isDebtors));
 	}, [filters, update, location]);
 	
 	useEffect(() => {
 		const controller = new AbortController();
 
 		if (!neighborhood || neighborhood._id !== id) {
-			dispatch(userDebtsRequest(axiosPrivate, controller, setLoading, id, filters, isDebtors));
-			dispatch(neighborhoodRequest(axiosPrivate, controller, setLoading, id));
+			dispatch(getNeighborhoodRequest(id));
 			removeDebtsFiltersFromSessionStorage(isDebtors);
 		}
 
@@ -96,7 +90,7 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 				<DebtsRightWrapper>
 					<DebtsControls>
 						<ViewMenu mode={mode} setMode={setMode}/>
-						{isDebtors && <AddButton clickHandler={() => openCreateDebtModal()}/>}
+						{isDebtors && <AddButton clickHandler={() => openCreateDebt()}/>}
 					</DebtsControls>
 					{mode === 'table' && <DebtsTable debts={debts} isLoading={isLoading} isDebtors={isDebtors}/>}
 				</DebtsRightWrapper>

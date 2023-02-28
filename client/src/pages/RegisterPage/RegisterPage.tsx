@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
 	RegisterContentHolder, RegisterForm,
 	RegisterFormDivider, RegisterFormLinkItem, RegisterFormLinkText, RegisterFormLinkWrapper,
@@ -9,31 +9,35 @@ import { Input } from '@src/components/UI/Input/Input';
 import { Button } from '@src/components/UI/Button/Button';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectRegister, selectUser } from '@src/store/auth/selectors';
-import { authSlice } from '@src/store/auth/reducer';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
 import { totalRegisterValidate } from '@helpers/validation';
-import { registerRequest } from '@src/store/auth/actions';
-import { useNavigate } from 'react-router-dom';
+import {
+	selectRegisterData,
+	selectRegisterErrors,
+	selectRegisterIsLoading,
+	selectRegisterTouched,
+} from '@src/store/auth/register/selectors';
+import { registerRequest, setRegister } from '@src/store/auth/register/reducer';
 
 export const RegisterPage: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const { setRegister } = authSlice.actions;
-	const values = useAppSelector(selectRegister);
-	const user = useAppSelector(selectUser);
-	const [isLoading, setLoading] = useState(false);
-	const navigate = useNavigate();
+	const values = useAppSelector(selectRegisterData);
+	const errors = useAppSelector(selectRegisterErrors);
+	const touched = useAppSelector(selectRegisterTouched);
+	// const user = useAppSelector(selectUser);
+	const isLoading = useAppSelector(selectRegisterIsLoading);
+	// const navigate = useNavigate();
 	const { t } = useTranslation();
 	
-	useEffect(() => {
-		if (user) {
-			navigate('/');
-		}
-		
-		return () => {
-			dispatch(authSlice.actions.resetRegister());
-		};
-	}, [user]);
+	// useEffect(() => {
+	// 	if (user) {
+	// 		navigate('/');
+	// 	}
+	//
+	// 	return () => {
+	// 		dispatch(authSlice.actions.resetRegister());
+	// 	};
+	// }, [user]);
 	
 	const changeHandler = (e: React.ChangeEvent, name) => {
 		const target = e.target as HTMLInputElement;
@@ -43,7 +47,7 @@ export const RegisterPage: React.FC = () => {
 	const submitHandler = (e:React.MouseEvent<Element, MouseEvent>) => {
 		e.preventDefault();
 		if (!Object.keys(totalRegisterValidate(values)).length) {
-			dispatch(registerRequest(values, setLoading));
+			dispatch(registerRequest());
 		}
 	};
 	
@@ -74,8 +78,8 @@ export const RegisterPage: React.FC = () => {
 								label={t('firstName')}
 							/>
 							<ErrorMsg
-								show={values.errors.firstName && values.touched.firstName}
-								msg={values.errors.firstName}
+								show={errors.firstName && touched.firstName}
+								msg={errors.firstName}
 							/>
 						</RegisterSubDivider>
 						<RegisterSubDivider>
@@ -93,8 +97,8 @@ export const RegisterPage: React.FC = () => {
 								label={t('lastName')}
 							/>
 							<ErrorMsg
-								show={values.errors.lastName && values.touched.lastName}
-								msg={values.errors.lastName}
+								show={errors.lastName && touched.lastName}
+								msg={errors.lastName}
 							/>
 						</RegisterSubDivider>
 					</RegisterFormDivider>
@@ -112,8 +116,8 @@ export const RegisterPage: React.FC = () => {
 						label={t('login')}
 					/>
 					<ErrorMsg
-						show={values.errors.login && values.touched.login}
-						msg={values.errors.login}
+						show={errors.login && touched.login}
+						msg={errors.login}
 					/>
 					<Input
 						id='password'
@@ -131,8 +135,8 @@ export const RegisterPage: React.FC = () => {
 						secure
 					/>
 					<ErrorMsg
-						show={values.errors.password && values.touched.password}
-						msg={values.errors.password}
+						show={errors.password && touched.password}
+						msg={errors.password}
 					/>
 					<Input
 						id='confirmPassword'
@@ -150,8 +154,8 @@ export const RegisterPage: React.FC = () => {
 						secure
 					/>
 					<ErrorMsg
-						show={values.errors.confirmPassword && values.touched.confirmPassword}
-						msg={values.errors.confirmPassword}
+						show={errors.confirmPassword && touched.confirmPassword}
+						msg={errors.confirmPassword}
 					/>
 					<Button
 						onClick={(e) => submitHandler(e)}
@@ -162,7 +166,7 @@ export const RegisterPage: React.FC = () => {
 						height='50px'
 						margin='30px 0 10px'
 						padding='15px'
-						isDisabled={!Object.keys(values.touched).length || !!Object.keys(values.errors).length}
+						isDisabled={!Object.keys(touched).length || !!Object.keys(errors).length}
 						isLoading={isLoading}
 					/>
 				</RegisterForm>

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs'
@@ -6,6 +6,7 @@ import { UserDocument } from '../schemas/user.schema';
 import { TokenService } from './token.service';
 import { ERRORS } from '../constants/errors';
 import { SimpleUserDto } from '../dto/user.dto';
+import { InvalidDataException } from '../exception/invalidData.exception';
 
 @Injectable()
 export class AuthService {
@@ -40,12 +41,15 @@ export class AuthService {
 	
 	async validateUser(dto) {
 		const user: UserDocument = await this.userService.getUserByLogin(dto.login);
-		const isPasswordCorrect = await bcrypt.compare(dto.password, user.password);
-		
-		if (user && isPasswordCorrect) {
-			return user;
+		try {
+			const isPasswordCorrect = await bcrypt.compare(dto.password, user.password);
+			if (user && isPasswordCorrect) {
+				return user;
+			}
+		} catch {
+			throw new InvalidDataException({message: ERRORS.WRONG_LOGIN_PASSWORD});
 		}
-		throw new UnauthorizedException({message: 'WRONG_LOGIN_PASSWORD'});
+		throw new InvalidDataException({message: ERRORS.WRONG_LOGIN_PASSWORD});
 	}
 	
 	async logout(req, res) {
@@ -62,24 +66,23 @@ export class AuthService {
 	async refresh(req) {
 		const jwtToken = req.cookies.arvalesa;
 		if (!jwtToken) return null;
-
 		const tokenCheck = await this.tokenService.getTokenByToken(jwtToken);
-		if (!tokenCheck) throw new HttpException(ERRORS.UNDEFINED_TOKEN, HttpStatus.UNAUTHORIZED);
+		if (!tokenCheck) throw new HttpException(`${ERRORS.UNDEFINED_TOKEN} 2`, HttpStatus.UNAUTHORIZED);
 
 		try {
 			const user: UserDocument | null = this.jwtService.verify(jwtToken, {
 				secret: process.env.JWT_REFRESH_SECRET || 'refresh'
 			});
 			const newTokens = this.tokenService.generateTokens(user);
-
+			
 			if (user._id !== tokenCheck.user_id.toString()) {
-				return Promise.reject(ERRORS.UNDEFINED_TOKEN);
+				return Promise.reject(`${ERRORS.UNDEFINED_TOKEN} 1`);
 			}
 
 			return {...user, token: newTokens.access}
 		} catch (e) {
-			if (e === 'ERRORS.UNDEFINED_TOKEN') {
-				throw new HttpException(ERRORS.TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED);
+			if (e === ERRORS.UNDEFINED_TOKEN) {
+				throw new HttpException(ERRORS.TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED );
 			}
 			throw new HttpException(ERRORS.NOT_AUTHORIZED, HttpStatus.UNAUTHORIZED);
 		}

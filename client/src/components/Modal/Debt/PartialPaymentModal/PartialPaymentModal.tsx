@@ -8,17 +8,14 @@ import { Description } from '@src/components/Description/Description';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
 import { partialPaymentRequest } from '@src/store/debts/actions';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
 import { validatePartialPayment } from '@helpers/debtValidation.helper';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
-import { selectCurrentDebts } from '@src/store/debts/selectors';
+import { selectMinorDebtIsLoading } from '@src/store/debts/selectors';
 
 export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 	const [value, setValue] = useState('');
 	const [errors, setErrors] = useState<Record<string, string>>({});
-	const [isLoading, setLoading] = useState<boolean>(false);
-	const axiosPrivate = useAxiosPrivate();
-	const debts = useAppSelector(selectCurrentDebts);
+	const isLoading = useAppSelector(selectMinorDebtIsLoading);
 	const paymentRef = useRef(null);
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
@@ -36,7 +33,7 @@ export const PartialPaymentModal: React.FC<IPartialPayment> = ({ debt }) => {
 	
 	const onSubmit = (e) => {
 		e.preventDefault();
-		dispatch(partialPaymentRequest(axiosPrivate, setLoading, debt.neighborhood, debt._id, debts, Number(value)));
+		dispatch(partialPaymentRequest(debt._id, Number(value)));
 	};
 	
 	const generatePlaceholder = () => {

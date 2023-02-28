@@ -1,4 +1,3 @@
-import { IAuthState } from '@src/store/auth/types';
 import {
 	DEFAULT_REGEX,
 	LOGIN_REGEX,
@@ -7,6 +6,7 @@ import {
 	UPPER_CASE_REGEX,
 } from '@constants/regex';
 import i18n from '../i18n';
+import { IRegisterState } from '@src/store/auth/register/types';
 
 function validateFirstName(str: string): Record<string, string> {
 	const errors: Record<string, string> = {};
@@ -141,7 +141,7 @@ function validateConfirmPassword(str: string, password: string): Record<string, 
 	return errors;
 }
 
-export function totalRegisterValidate(values: IAuthState['register']): Record<string, string> {
+export function totalRegisterValidate(values: IRegisterState['data']): Record<string, string> {
 	const checkFirstName = validateFirstName(values.firstName);
 	const checkLastName = validateLastName(values.lastName);
 	const checkLogin = validateLogin(values.login);

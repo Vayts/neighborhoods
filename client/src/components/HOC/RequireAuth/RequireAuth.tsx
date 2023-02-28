@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@src/hooks/hooks';
-import { selectUser } from '@src/store/auth/selectors';
+import { selectUser } from '@src/store/auth/user/selectors';
 
 const RequireAuth: React.FC = () => {
 	const user = useAppSelector(selectUser);

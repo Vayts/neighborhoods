@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export const getNotification = (msg: string, type: string): void => {
+export const getNotification = (msg: string, type = 'success'): void => {
 	toast[type](msg, {
 		position: 'top-center',
 		autoClose: 3000,

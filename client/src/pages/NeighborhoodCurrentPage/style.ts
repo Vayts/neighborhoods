@@ -7,4 +7,5 @@ export const NCurrentPageWrapper = styled.div`
   align-items: stretch;
   position: relative;
   height: 100%;
+	flex-grow: 1;
 `;

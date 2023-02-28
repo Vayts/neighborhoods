@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { IDebtHistoryItem } from '@src/components/Modal/Debt/DebtHistoryModal/types';
 import {
 	DebtHistoryContent,
 	DebtHistoryDate,
@@ -10,8 +9,9 @@ import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { AvatarFiller } from '@src/components/AvatarFiller/AvatarFiller';
 import { Title } from '@src/components/Title/Title';
+import { selectUser } from '@src/store/auth/user/selectors';
 import { useAppSelector } from '@src/hooks/hooks';
-import { selectUser } from '@src/store/auth/selectors';
+import { IDebtHistoryItem } from '@src/types/debt.types';
 
 interface IDebtHistoryItemProps {
 	debtHistory: IDebtHistoryItem,

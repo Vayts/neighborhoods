@@ -8,26 +8,18 @@ import {
 import { NeighborhoodsBlocks } from '@src/pages/NeighborhoodsPage/NeighborhoodsBlocks/NeighborhoodsBlocks';
 import { NeighborhoodsTable } from '@src/pages/NeighborhoodsPage/NeighborhoodsTable/NeighborhoodsTable';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectNeighborhoods } from '@src/store/neighborhoods/selectors';
-import { userNeighborhoodsRequest } from '@src/store/neighborhoods/actions';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
+import { selectIsNeighborhoodsLoading, selectNeighborhoods } from '@src/store/neighborhoods/selectors';
 import { Loader } from '@src/components/Loader/Loader';
+import { neighborhoodsRequest } from '@src/store/neighborhoods/reducer';
 
 export const NeighborhoodsPage: React.FC = () => {
-	const [isLoading, setLoading] = useState(true);
+	const isLoading = useAppSelector(selectIsNeighborhoodsLoading);
 	const [mode, setMode] = useState<'table' | 'blocks'>('blocks');
 	const neighborhoods = useAppSelector(selectNeighborhoods);
 	const dispatch = useAppDispatch();
-	const axiosPrivate = useAxiosPrivate();
 	
 	useEffect(() => {
-		const controller = new AbortController();
-		
-		dispatch(userNeighborhoodsRequest(axiosPrivate, controller, setLoading));
-		
-		return () => {
-			controller.abort();
-		};
+		dispatch(neighborhoodsRequest());
 	}, []);
 	
 	return (

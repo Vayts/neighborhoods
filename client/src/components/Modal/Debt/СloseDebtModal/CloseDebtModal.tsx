@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
 	CloseDebtButtons,
 	CloseDebtMenuWrapper,
@@ -9,23 +9,20 @@ import { Title } from '@src/components/Title/Title';
 import { Button } from '@src/components/UI/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
 import { closeDebtRequest } from '@src/store/debts/actions';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
-import { baseSlice } from '@src/store/base/reducer';
+import { resetModal } from '@src/store/base/reducer';
 import { Description } from '@src/components/Description/Description';
-import { selectCurrentDebts } from '@src/store/debts/selectors';
+import { selectMinorDebtIsLoading } from '@src/store/debts/selectors';
 
 export const CloseDebtModal: React.FC<ICloseDebtMenu> = ({ debt }) => {
-	const [isLoading, setLoading] = useState<boolean>(false);
+	const isLoading = useAppSelector(selectMinorDebtIsLoading);
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
-	const axiosPrivate = useAxiosPrivate();
-	const debts = useAppSelector(selectCurrentDebts);
 	const closeDebt = () => {
-		dispatch(closeDebtRequest(axiosPrivate, setLoading, debt._id, debts));
+		dispatch(closeDebtRequest(debt._id));
 	};
 	
 	const closeModal = () => {
-		dispatch(baseSlice.actions.resetModal());
+		dispatch(resetModal());
 	};
 	
 	return (

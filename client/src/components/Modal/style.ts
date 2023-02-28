@@ -25,12 +25,12 @@ export const ModalBackground = styled.div<IModalOpen>`
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+	right: 0;
   z-index: 100;
   bottom: 0;
   display: flex;
-	justify-content: center;
-	align-items: center;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.45);
   overflow: hidden;
   animation: ${background} 0.1s linear;

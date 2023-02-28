@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { IDebtHistory, IDebtHistoryItem } from '@src/components/Modal/Debt/DebtHistoryModal/types';
-import { useAxiosPrivate } from '@src/hooks/useAxiosPrivate';
+import React, { useEffect } from 'react';
+import { IDebtHistory } from '@src/components/Modal/Debt/DebtHistoryModal/types';
 import {
 	DebtHistoryList,
 	DebtHistoryNoContent,
@@ -9,25 +8,19 @@ import {
 import { DebtHistoryItem } from '@src/components/Modal/Debt/DebtHistoryModal/DebtHistoryItem/DebtHistoryItem';
 import { Loader } from '@src/components/Loader/Loader';
 import { useTranslation } from 'react-i18next';
-import { getNotification } from '@src/notification/notifications';
 import { Title } from '@src/components/Title/Title';
+import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
+import { selectDebtHistory, selectDebtHistoryLoading } from '@src/store/debt/selectors';
+import { getDebtHistory } from '@src/store/debt/actions';
 
 export const DebtHistoryModal: React.FC<IDebtHistory> = ({ debt }) => {
-	const [history, setHistory] = useState<IDebtHistoryItem[]>([]);
-	const [isLoading, setLoading] = useState<boolean>(true);
+	const isLoading = useAppSelector(selectDebtHistoryLoading);
+	const history = useAppSelector(selectDebtHistory);
+	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
-	const axiosPrivate = useAxiosPrivate();
 	
 	useEffect(() => {
-		axiosPrivate.get(`/debt/history/${debt.neighborhood}/${debt._id}`)
-			.then((res) => {
-				setHistory(res.data);
-			})
-			.then(() => {
-				setLoading(false);
-			}).catch(() => {
-				getNotification(t('smtWntWrng'), 'error');
-			});
+		dispatch(getDebtHistory(debt._id, debt.neighborhood));
 	}, []);
 	
 	const generateDebtHistoryContent = () => {

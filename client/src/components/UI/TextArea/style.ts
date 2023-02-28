@@ -52,6 +52,30 @@ export const TextAreaItem = styled.textarea<ITextAreaItem>`
     color: #0D3C6D80;
 		user-select: none;
   }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+
+  ::-webkit-scrollbar-thumb {
+    width: 5px;
+    background: ${({ theme }) => theme.primary};
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.hover};
+  }
 `;
 
 export const TextAreaLabel = styled.label`

@@ -11,6 +11,7 @@ export interface ICreateDebt {
 	neighborhood: INeighborhood;
 	errors: Record<string, string>,
 	touched: Record<string, boolean>,
+	isLoading: boolean,
 }
 
 export interface ISetDebtValuePayload {

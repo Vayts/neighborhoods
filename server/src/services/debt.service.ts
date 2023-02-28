@@ -4,7 +4,7 @@ import mongoose, { Model } from 'mongoose';
 import { Neighborhood, NeighborhoodDocument } from '../schemas/neighborhood.schema';
 import { Neighborhood_UserDocument, Neighborhood_Users } from '../schemas/neighborhood_user.schema';
 import { Debt, DebtDocument } from '../schemas/debt.schema';
-import { parseDebtAuthorQuery, parseDebtStatusQuery } from '../helpers/debtQuery.helper';
+import { parseDebtStatusQuery, parseDebtUsersQuery } from '../helpers/debtQuery.helper';
 import { UserEvent, UserEventDocument } from '../schemas/userEvent.schema';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class DebtService {
 	
 	getUserDebtsInNeighborhood(req) {
 		const {neighborhoodId} = req.params;
-		const authors = parseDebtAuthorQuery(req.query);
+		const authors = parseDebtUsersQuery(req.query);
 		const status = parseDebtStatusQuery(req.query);
 		
 		return this.debtModel.aggregate(
@@ -26,8 +26,8 @@ export class DebtService {
 				{$match: {debtor: new mongoose.Types.ObjectId(req.user._id), neighborhood: new mongoose.Types.ObjectId(neighborhoodId)}},
 				{$match: {author: authors.length ? {'$in': [...authors]} : {$exists: true}}},
 				{$match: {status: status.length ? {'$in': [...status]} : {'$in': [false]}}},
-				{$match: {value: req.query.min ? { $gt: Number(req.query.min)} : {$exists: true}}},
-				{$match: {value: req.query.max ? { $lt: Number(req.query.max)} : {$exists: true}}},
+				{$match: {value: req.query.min ? { $gt: Number(req.query.min) - 0.1} : {$exists: true}}},
+				{$match: {value: req.query.max ? { $lt: Number(req.query.max) + 0.1}: {$exists: true}}},
 				{
 					$lookup: {
 						from: "users",
@@ -54,9 +54,9 @@ export class DebtService {
 	}
 	
 	getDebtHistory(req) {
-		const {debtId, neighborhoodId} = req.params;
+		const {debtId} = req.params;
 		return this.eventModel.aggregate([
-			{$match: {neighborhood: new mongoose.Types.ObjectId(neighborhoodId), type: 'debt',  'content.debt': new mongoose.Types.ObjectId(debtId)}},
+			{$match: {type: 'debt',  'content.debt': new mongoose.Types.ObjectId(debtId)}},
 			{
 				$lookup: {
 					from: "users",

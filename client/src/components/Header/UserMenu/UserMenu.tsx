@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectUser } from '@src/store/auth/selectors';
 import {
 	UserMenuButtonWrapper, UserMenuDropdown,
 	UserMenuInfo, UserMenuItem,
@@ -11,8 +10,8 @@ import {
 import { AvatarFiller } from '@src/components/AvatarFiller/AvatarFiller';
 import { useOutsideClick } from '@src/hooks/useOutsideClick';
 import { useTranslation } from 'react-i18next';
-import { logoutRequest } from '@src/store/auth/actions';
-import { useNavigate } from 'react-router-dom';
+import { selectUser } from '@src/store/auth/user/selectors';
+import { logoutRequest } from '@src/store/auth/user/action';
 
 export const UserMenu: React.FC = () => {
 	const [isOpen, setOpen] = useState(false);
@@ -20,10 +19,9 @@ export const UserMenu: React.FC = () => {
 	const { t } = useTranslation();
 	const menuRef = useRef();
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate();
 	
 	const logoutHandler = () => {
-		dispatch(logoutRequest(navigate));
+		dispatch(logoutRequest());
 	};
 	
 	useOutsideClick(menuRef, () => setOpen(false));
@@ -31,7 +29,7 @@ export const UserMenu: React.FC = () => {
 	return (
 		<UserMenuWrapper ref={menuRef} isOpen={isOpen}>
 			<UserMenuButtonWrapper>
-				{user.avatar ? null : <AvatarFiller text={user.login} size={37} fz={15}/>}
+				{user.avatar ? null : <AvatarFiller text={user.login} size={38} fz={15}/>}
 				<UserMenuInfo>
 					<UserMenuName>{`${user.firstName} ${user.lastName}`}</UserMenuName>
 					<UserMenuLogin>{user.login}</UserMenuLogin>

@@ -37,7 +37,7 @@ export class DebtController {
 	}
 	
 	@UseGuards(JwtAuthGuard)
-	@Post('/:neighborhoodId/create_debt')
+	@Post('/create_debt/:neighborhoodId')
 	createDebt(@Req() request: Request, @Body() body: DebtDto) {
 		return this.debtorService.createDebt(request, body)
 	}
@@ -54,8 +54,8 @@ export class DebtController {
 		return this.debtorService.reopenDebt(request);
 	}
 	
-	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard, DebtAuthorGuard)
-	@Post('/partial_payment/:neighborhoodId/:debtId')
+	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
+	@Post('/partial_payment/:debtId')
 	async addPartialPayment(@Req() request: Request) {
 		const {debtId} = request.params;
 		const {partialPaymentValue} = request.body;
@@ -68,8 +68,8 @@ export class DebtController {
 		return this.debtorService.addPartialPayment(request, debt);
 	}
 	
-	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard, DebtAuthorGuard)
-	@Post('/reduce_debt/:neighborhoodId/:debtId')
+	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
+	@Post('/reduce_debt/:debtId')
 	async reduceUserDebt(@Req() request: Request) {
 		const {debtId} = request.params;
 		const {reduceValue} = request.body;
@@ -82,8 +82,8 @@ export class DebtController {
 		return this.debtorService.reduceDebt(request, debt);
 	}
 	
-	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard, DebtAuthorGuard)
-	@Post('/increase_debt/:neighborhoodId/:debtId')
+	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
+	@Post('/increase_debt/:debtId')
 	async increaseUserDebt(@Req() request: Request) {
 		const {debtId} = request.params;
 		const debt = await this.debtService.getDebtByIdAndAuthor(debtId, request.user._id);
@@ -95,16 +95,16 @@ export class DebtController {
 		return this.debtorService.increaseDebt(request, debt);
 	}
 	
-	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard, DebtAuthorGuard)
-	@Delete('/delete_debt/:neighborhoodId/:debtId')
+	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
+	@Delete('/delete_debt/:debtId')
 	async deleteDebt(@Req() request: Request) {
 		const {debtId} = request.params;
 		const debt = await this.debtService.getDebtByIdAndAuthor(debtId, request.user._id);
 		return this.debtorService.deleteDebt(request, debt);
 	}
 	
-	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard, DebtAuthorGuard)
-	@Post('/edit_debt/:neighborhoodId/:debtId')
+	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
+	@Post('/edit_debt/:debtId')
 	async editDebt(@Req() request: Request, @Body() editValues: EditDebtDto) {
 		return this.debtorService.editDebt(request, editValues);
 	}

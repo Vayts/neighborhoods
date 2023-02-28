@@ -9,19 +9,18 @@ import { Title } from '@src/components/Title/Title';
 import { FilterBlock } from '@src/components/FiltersBlock/FilterBlock';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectCurrentNeighborhood } from '@src/store/neighborhoods/selectors';
 import { Checkbox } from '@src/components/UI/Checkbox/Checkbox';
-import { selectUser } from '@src/store/auth/selectors';
 import { Input } from '@src/components/UI/Input/Input';
 import { selectCurrentDebtsFilters } from '@src/store/debts/selectors';
 import {
 	addStatusToDebtFilter,
 	addUserToDebtFilter,
-	addValueToDebtFilter,
 } from '@src/store/debts/actions';
-import { debtsSlice } from '@src/store/debts/reducer';
+import { setDebtValueFilters, setFullFilters } from '@src/store/debts/reducer';
 import { getDebtsFiltersFromSessionStorage } from '@helpers/sessionStorage.helper';
 import { useLocation, useParams } from 'react-router-dom';
+import { selectCurrentNeighborhood } from '@src/store/currentNeighborhood/selectors';
+import { selectUser } from '@src/store/auth/user/selectors';
 
 export const DebtsFilters: React.FC<IDebtsFilters> = ({ title, isLoading, isDebtors }) => {
 	const neighborhood = useAppSelector(selectCurrentNeighborhood);
@@ -35,23 +34,23 @@ export const DebtsFilters: React.FC<IDebtsFilters> = ({ title, isLoading, isDebt
 	useEffect(() => {
 		const savedFilters = getDebtsFiltersFromSessionStorage(id, isDebtors);
 		if (savedFilters) {
-			dispatch(debtsSlice.actions.setFullFilters(savedFilters));
+			dispatch(setFullFilters(savedFilters));
 		}
 	}, [location]);
 	
 	const authorHandler = (e) => {
-		dispatch(addUserToDebtFilter(filters, e.target.dataset.value));
+		dispatch(addUserToDebtFilter(e.target.dataset.value));
 	};
 	
 	const statusHandler = (e) => {
-		dispatch(addStatusToDebtFilter(filters, e.target.dataset.value));
+		dispatch(addStatusToDebtFilter(e.target.dataset.value));
 	};
 	
 	const valueHandler = (e) => {
 		if (Number(e.target.value) < 0) {
 			return null;
 		}
-		dispatch(addValueToDebtFilter(filters, e.target.name, e.target.value));
+		dispatch(setDebtValueFilters({ key: e.target.name, value: e.target.value }));
 	};
 	
 	return (
