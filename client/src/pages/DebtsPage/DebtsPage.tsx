@@ -51,6 +51,10 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 		dispatch(setModal({ type: MODALS.createDebt, content: { neighborhood } }));
 	};
 	
+	const openCreateDebtModal = () => {
+		dispatch(baseSlice.actions.setModal({ type: MODALS.createDebt, content: { neighborhood } }));
+	};
+	
 	useEffect(() => {
 		setDebtsFiltersToSessionStorage({
 			_id: id,

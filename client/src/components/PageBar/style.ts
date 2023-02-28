@@ -65,7 +65,7 @@ export const PageLinkIcon = styled.span`
 	margin-right: 10px;
 	
 	&:before {
-		font-size: 30px;
+		font-size: 25px;
 	}
 `;
 

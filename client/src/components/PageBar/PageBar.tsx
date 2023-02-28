@@ -11,6 +11,7 @@ export const PageBar: React.FC = () => {
 	
 	return (
 		<PageBarWrapper>
+			<Title fz='16px' margin='10px 0'>{t('main')}</Title>
 			<PageLink to='/'>
 				<PageLinkIcon className='icon-Project'/>
 				<PageLinkText>{t('mainPage')}</PageLinkText>

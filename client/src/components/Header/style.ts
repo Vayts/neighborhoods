@@ -8,9 +8,10 @@ export const HeaderWrapper = styled.div`
   position: sticky;
   z-index: 100;
   top: 0;
-	width: 100vw;
+  width: 100vw;
   box-sizing: border-box;
-  box-shadow: 0 0 10px #e5e5e5;
+  //box-shadow: 0 0 10px #e5e5e5;
+  border-bottom: 1px solid #efefef;
 `;
 
 export const HeaderLogoWrapper = styled.div`

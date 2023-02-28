@@ -20,4 +20,5 @@ export const AvatarWrapper = styled.div<IAvatarStyleBlock>`
 	text-transform: capitalize;
 	user-select: none;
 	cursor: default;
+	vertical-align: bottom;
 `;
