@@ -29,7 +29,7 @@ export const UserMenu: React.FC = () => {
 	return (
 		<UserMenuWrapper ref={menuRef} isOpen={isOpen}>
 			<UserMenuButtonWrapper>
-				{user.avatar ? null : <AvatarFiller text={user.login} size={48}/>}
+				{user.avatar ? null : <AvatarFiller text={user.login} size={38}/>}
 				<UserMenuInfo>
 					<UserMenuName>{`${user.firstName} ${user.lastName}`}</UserMenuName>
 					<UserMenuLogin>{user.login}</UserMenuLogin>

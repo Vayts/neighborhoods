@@ -18,7 +18,7 @@ export const PageBarWrapper = styled.div`
   min-width: 250px;
 	max-width: 250px;
 	position: sticky;
-	top: 72px;
+	top: 62px;
 	flex-grow: 1;
 	
 	h3 {
@@ -36,8 +36,8 @@ export const PageLink = styled(NavLink)`
 	align-items: center;
 	font-weight: 500;
 	padding: 10px 5px 10px 25px;
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
 	margin: 5px 0;
 	
 	&:hover {

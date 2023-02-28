@@ -23,7 +23,7 @@ export const AddButtonWrapper = styled.div<IAddButtonStyle>`
 	}
 
   &:active {
-    background-color: ${({ theme }) => theme.hover};
+    background-color: ${({ theme }) => `${theme.primary}95`};
     span {
       color: #fff;
     }

@@ -19,8 +19,8 @@ export const HeaderLogoWrapper = styled.div`
 `;
 
 export const HeaderLogoImg = styled.img`
-	width: 42px;
-	height: 42px;
+	width: 35px;
+	height: 35px;
 	margin-right: 10px;
 `;
 

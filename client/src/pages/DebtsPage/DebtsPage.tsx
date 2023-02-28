@@ -88,7 +88,7 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 						<ViewMenu mode={mode} setMode={setMode}/>
 						{isDebtors && <AddButton clickHandler={() => openCreateDebt()}/>}
 					</DebtsControls>
-					{mode === 'table' && <DebtsTable debts={debts} isLoading={isLoading}/>}
+					{mode === 'table' && <DebtsTable debts={debts} isLoading={isLoading} isDebtors={isDebtors}/>}
 				</DebtsRightWrapper>
 				<DebtsFilters
 					title={`${isDebtors ? t('debtors') : t('debts')} (${debts.length})`}

@@ -4,12 +4,12 @@ import { TableDebt } from '@src/components/DebtTableItem/TableDebt/TableDebt';
 import { TableHead } from '@src/components/DebtTableItem/TableHead/TableHead';
 import { DebtsTableList, DebtsTableWrapper } from './style';
 
-export const DebtsTable: React.FC<IDebtsList> = ({ debts, isLoading }) => {
+export const DebtsTable: React.FC<IDebtsList> = ({ debts, isLoading, isDebtors }) => {
 	return (
 		<DebtsTableWrapper>
 			<DebtsTableList >
 				<thead>
-					<TableHead/>
+					<TableHead isDebtors={isDebtors}/>
 				</thead>
 				{
 					isLoading ? null : (
