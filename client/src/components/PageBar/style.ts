@@ -12,13 +12,13 @@ const appear = keyframes`
 `;
 
 export const PageBarWrapper = styled.div`
-	padding: 35px 0 35px 35px;
+	padding: 15px 0 35px 35px;
 	background-color: #fff;
 	height: calc(100vh - 72px);
   min-width: 250px;
 	max-width: 250px;
 	position: sticky;
-	top: 72px;
+	top: 61px;
 	flex-grow: 1;
 	
 	h3 {
@@ -60,7 +60,7 @@ export const PageLinkIcon = styled.span`
 	margin-right: 10px;
 	
 	&:before {
-		font-size: 30px;
+		font-size: 25px;
 	}
 `;
 

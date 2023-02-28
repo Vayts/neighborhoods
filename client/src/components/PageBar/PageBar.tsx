@@ -11,6 +11,7 @@ export const PageBar: React.FC = () => {
 	
 	return (
 		<PageBarWrapper>
+			<Title fz='16px' margin='10px 0'>{t('main')}</Title>
 			<PageLink to='/'>
 				<PageLinkIcon className='icon-Project'/>
 				<PageLinkText>{t('mainPage')}</PageLinkText>
@@ -25,7 +26,7 @@ export const PageBar: React.FC = () => {
 			</PageLink>
 			{neighborhood && (
 				<SubPageBar>
-					<Title fz='16px'>{neighborhood.title}</Title>
+					<Title fz='16px' margin='10px 0'>{neighborhood.title}</Title>
 					<PageLink to={`neighborhood/debts/${neighborhood._id}`}>
 						<PageLinkIcon className='icon-debts'/>
 						<PageLinkText>{t('debtTitle')}</PageLinkText>

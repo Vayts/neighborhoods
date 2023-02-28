@@ -50,7 +50,7 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 				>
 					<TableDebtFullContent>
 						<div>
-							<AvatarFiller text={debt.author?.login || debt.debtor.login}/>
+							<AvatarFiller text={debt.author?.login || debt.debtor.login} size={40}/>
 						</div>
 						<TableDebtControl>
 							<Menu>
@@ -91,12 +91,11 @@ export const TableFullContent: React.FC<IDebtContent> = ({
 									)}
 								</TableDebtValueWrapper>
 								
-								{debt.author?.login ? null
-									: (
-										<TableDebtBottomContent>
-											<Button onClick={() => openCloseModal()} title={t('close')} margin='0' isDisabled={debt.status} height='30px' fz='14px'/>
-										</TableDebtBottomContent>
-									)}
+								{!debt.author?.login && (
+									<TableDebtBottomContent>
+										<Button onClick={() => openCloseModal()} title={t('close')} margin='0' isDisabled={debt.status} height='30px' fz='14px'/>
+									</TableDebtBottomContent>
+								)}
 							</TableDebtInfoWrapper>
 						</TableDebtSubContent>
 					</TableDebtFullContent>

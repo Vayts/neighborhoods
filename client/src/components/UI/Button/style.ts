@@ -14,10 +14,11 @@ export const ButtonItem = styled.button<IButtonStyle>`
 	width: ${({ width = 'auto' }) => width};
 	height: ${({ height = '35px' }) => height};
 	font-size: ${({ fz = '14px' }) => fz};
-	background-color: ${({ theme }) => theme.primary};
-	border: none;
-	color: #fff;
-	border-radius: 5px;
+	// background-color: ${({ theme }) => `${theme.primary}7`};
+	background-color: transparent;
+	border: 1px solid ${({ theme }) => theme.primary};
+	color: ${({ theme }) => theme.primary};
+	border-radius: 3px;
 	cursor: pointer;
   position: relative;
 	display: flex;
@@ -26,11 +27,18 @@ export const ButtonItem = styled.button<IButtonStyle>`
 	
 	&:hover {
 		transition: all 0.2s;
-		background-color: ${({ theme }) => theme.hover};
+		background-color: ${({ theme }) => theme.primary};
+    color: #fff};
 	}
 	
 	&:disabled {
-		background-color: ${({ theme }) => theme.disabledBg};
+		border-color: ${({ theme }) => `${theme.disabledBg}30`};
+		background-color: ${({ theme }) => `${theme.disabledBg}30`};
+		color: ${({ theme }) => `${theme.disabledBg}`};
 		cursor: default;
+		
+		&:hover {
+      background-color: ${({ theme }) => `${theme.disabledBg}30`};
+		}
 	}
 `;
