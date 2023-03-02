@@ -16,6 +16,8 @@ import { NeighborhoodCurrentPage } from '@src/pages/NeighborhoodCurrentPage/Neig
 import { Modal } from '@src/components/Modal/Modal';
 import { loadApp } from '@src/store/base/reducer';
 import { DebtsPage } from '@src/pages/DebtsPage/DebtsPage';
+import { NotificationsPage } from '@src/pages/NotificationsPage/NotificationsPage';
+import { DutiesPage } from '@src/pages/DutiesPage/DutiesPage';
 import { AppWrapper } from './style';
 
 export const App: React.FC = () => {
@@ -42,9 +44,10 @@ export const App: React.FC = () => {
 									<Route path='/' element={<NeighborhoodsPage/>}/>
 									<Route path='/neighborhoods' element={<NeighborhoodsPage/>}/>
 									<Route path='neighborhood/:id' element={<NeighborhoodCurrentPage/>}/>
-									{/*<Route path='/notification' element={<NotificationsPage/>}/>*/}
+									<Route path='/notification' element={<NotificationsPage/>}/>
 									<Route path='neighborhood/debts/:id' element={<DebtsPage isDebtors={false}/>}/>
 									<Route path='neighborhood/debtors/:id' element={<DebtsPage isDebtors/>}/>
+									<Route path='neighborhood/duties/:id' element={<DutiesPage/>}/>
 								</Route>
 							</Route>
 						</Routes>

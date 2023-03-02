@@ -13,7 +13,8 @@ import {
 	setCurrentNeighborhood,
 } from '@src/store/currentNeighborhood/reducer';
 import { getNeighborhoodRequest } from '@src/store/currentNeighborhood/actions';
-import { setNeighborhoodToSessionStorage } from '@helpers/sessionStorage.helper';
+import { removeDebtsFiltersFromSessionStorage, setNeighborhoodToSessionStorage } from '@helpers/sessionStorage.helper';
+import { resetDebtFilters } from '@src/store/debts/reducer';
 
 function* workerCurrentNeighborhood(action) {
 	const { _id } = action.payload;
@@ -23,6 +24,9 @@ function* workerCurrentNeighborhood(action) {
 		const axiosPrivate = generateAxiosPrivate(user);
 		const response = yield call(getRequest, `${ROUTES.currentNeighborhood}/${_id}`, axiosPrivate);
 		if (response.data[0]) {
+			yield put(resetDebtFilters());
+			removeDebtsFiltersFromSessionStorage(true);
+			removeDebtsFiltersFromSessionStorage(false);
 			yield put(setCurrentNeighborhood(response.data[0]));
 			setNeighborhoodToSessionStorage(response.data[0]);
 		}

@@ -9,6 +9,7 @@ import { watchDebts } from '@src/store/debts/sagas';
 import { watchDebt } from '@src/store/debt/sagas';
 import { watchCreateDebt } from '@src/store/createDebt/sagas';
 import { watchApp } from '@src/store/base/sagas';
+import { watchDuties } from '@src/store/duties/sagas';
 
 const sagas = [
 	watchApp,
@@ -20,6 +21,7 @@ const sagas = [
 	watchCurrentNeighborhood,
 	watchDebt,
 	watchCreateDebt,
+	watchDuties,
 ];
 
 export default function* rootSaga(): SagaIterator {

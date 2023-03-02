@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
 import { useTranslation } from 'react-i18next';
@@ -14,12 +14,12 @@ import { DebtsTable } from '@src/pages/DebtsPage/DebtsTable/DebtsTable';
 import { DebtsFilters } from '@src/pages/DebtsPage/DebtsFilters/DebtsFilters';
 import {
 	selectCurrentDebts,
-	selectCurrentDebtsFilters, selectCurrentDebtsLoading,
+	selectCurrentDebtsFilters, selectCurrentDebtsLoading, selectDebtorsFirstLoad, selectDebtsFirstLoad,
 	selectDebtUpdateValue,
 } from '@src/store/debts/selectors';
-import { getDebtsRequest } from '@src/store/debts/actions';
+import { getDebtsFirstLoad, getDebtsRequest } from '@src/store/debts/actions';
 import { Title } from '@src/components/Title/Title';
-import { setUpdateValue } from '@src/store/debts/reducer';
+import { resetDebtFilters, setUpdateValue } from '@src/store/debts/reducer';
 import {
 	removeDebtsFiltersFromSessionStorage,
 	setDebtsFiltersToSessionStorage,
@@ -34,6 +34,7 @@ import { MODALS } from '@constants/modals';
 export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	const isLoading = useAppSelector(selectCurrentDebtsLoading);
 	const [mode, setMode] = useState<'table' | 'blocks'>('table');
+	const firstLoad = useAppSelector(isDebtors ? selectDebtorsFirstLoad : selectDebtsFirstLoad);
 	const dispatch = useAppDispatch();
 	const debts = useAppSelector(selectCurrentDebts);
 	const neighborhood = useAppSelector(selectCurrentNeighborhood);
@@ -43,17 +44,12 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	const { id } = useParams();
 	const location = useLocation();
 	
-	const updateHandler = () => {
-		dispatch(setUpdateValue());
-	};
-	
-	const openCreateDebt = () => {
-		dispatch(setModal({ type: MODALS.createDebt, content: { neighborhood } }));
-	};
-	
-	const openCreateDebtModal = () => {
-		dispatch(baseSlice.actions.setModal({ type: MODALS.createDebt, content: { neighborhood } }));
-	};
+	useEffect(() => {
+		dispatch(resetDebtFilters());
+		if (firstLoad) {
+			dispatch(getDebtsFirstLoad(id, isDebtors));
+		}
+	}, [location, isDebtors]);
 	
 	useEffect(() => {
 		setDebtsFiltersToSessionStorage({
@@ -63,20 +59,23 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	}, [filters]);
 	
 	useEffect(() => {
-		dispatch(getDebtsRequest(id, isDebtors));
+		if (!firstLoad) {
+			dispatch(getDebtsRequest(id, isDebtors));
+		}
 	}, [filters, update, location]);
 	
 	useEffect(() => {
-		const controller = new AbortController();
-
 		if (!neighborhood || neighborhood._id !== id) {
 			dispatch(getNeighborhoodRequest(id));
 			removeDebtsFiltersFromSessionStorage(isDebtors);
 		}
-
-		return () => {
-			controller.abort();
-		};
+	}, [neighborhood]);
+	const updateHandler = () => {
+		dispatch(setUpdateValue());
+	};
+	
+	const openCreateDebt = useCallback(() => {
+		dispatch(setModal({ type: MODALS.createDebt, content: { neighborhood } }));
 	}, [neighborhood]);
 	
 	return (

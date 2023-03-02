@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IDebtsFilters } from '@src/pages/DebtsPage/DebtsFilters/types';
 import {
 	DebtsFiltersIcon,
@@ -16,9 +16,7 @@ import {
 	addStatusToDebtFilter,
 	addUserToDebtFilter,
 } from '@src/store/debts/actions';
-import { setDebtValueFilters, setFullFilters } from '@src/store/debts/reducer';
-import { getDebtsFiltersFromSessionStorage } from '@helpers/sessionStorage.helper';
-import { useLocation, useParams } from 'react-router-dom';
+import { setDebtValueFilters } from '@src/store/debts/reducer';
 import { selectCurrentNeighborhood } from '@src/store/currentNeighborhood/selectors';
 import { selectUser } from '@src/store/auth/user/selectors';
 
@@ -26,17 +24,8 @@ export const DebtsFilters: React.FC<IDebtsFilters> = ({ title, isLoading, isDebt
 	const neighborhood = useAppSelector(selectCurrentNeighborhood);
 	const filters = useAppSelector(selectCurrentDebtsFilters);
 	const user = useAppSelector(selectUser);
-	const location = useLocation();
 	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
-	const { id } = useParams();
-	
-	useEffect(() => {
-		const savedFilters = getDebtsFiltersFromSessionStorage(id, isDebtors);
-		if (savedFilters) {
-			dispatch(setFullFilters(savedFilters));
-		}
-	}, [location]);
 	
 	const authorHandler = (e) => {
 		dispatch(addUserToDebtFilter(e.target.dataset.value));
@@ -79,7 +68,7 @@ export const DebtsFilters: React.FC<IDebtsFilters> = ({ title, isLoading, isDebt
 								text={t('repaid')}
 							/>
 						</FilterBlock>
-						<FilterBlock title={t('author')} initialOpen>
+						<FilterBlock title={t(isDebtors ? 'debtor' : 'author')} initialOpen>
 							{neighborhood.users.map((item) => {
 								if (user._id !== item._id) {
 									return (

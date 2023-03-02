@@ -11,6 +11,8 @@ const initialState: IDebtsState = {
 		minValue: '',
 		maxValue: '',
 	},
+	debtsFirstLoad: true,
+	debtorsFirstLoad: true,
 	isLoading: true,
 	minorIsLoading: false,
 	updateValue: null,
@@ -39,13 +41,24 @@ export const debtsSlice = createSlice({
 			state.filters[action.payload.key] = action.payload.value;
 		},
 		setFullFilters: (state, action: PayloadAction<IDebtsState['filters']>) => {
-			state.filters = action.payload;
+			state.filters.status = action.payload.status;
+			state.filters.users = action.payload.users;
+			state.filters.maxValue = action.payload.maxValue;
+			state.filters.minValue = action.payload.minValue;
 		},
 		setUpdateValue: (state) => {
 			state.updateValue = Date.now();
 		},
 		resetDebtFilters: (state) => {
 			state.filters = initialState.filters;
+			state.debtorsFirstLoad = true;
+			state.debtsFirstLoad = true;
+		},
+		debtsFirstLoadEnd: (state) => {
+			state.debtsFirstLoad = false;
+		},
+		debtorsFirstLoadEnd: (state) => {
+			state.debtorsFirstLoad = false;
 		},
 	},
 });
@@ -60,4 +73,6 @@ export const {
 	setUpdateValue,
 	minorDebtRequestEnd,
 	minorDebtRequestStart,
+	debtsFirstLoadEnd,
+	debtorsFirstLoadEnd,
 } = debtsSlice.actions;

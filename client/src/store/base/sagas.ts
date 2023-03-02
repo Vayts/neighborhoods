@@ -11,6 +11,6 @@ export function* workerFirstLoadApp(): SagaIterator {
 	const data = getNeighborhoodFromSessionStorage();
 	if (data) yield put(setCurrentNeighborhood(data));
 }
-export function* watchApp() {
+export function* watchApp(): SagaIterator {
 	yield takeLatest(loadApp, workerFirstLoadApp);
 }

@@ -10,6 +10,7 @@ import { registerSlice } from '@src/store/auth/register/reducer';
 import { userSlice } from '@src/store/auth/user/reducer';
 import { currentNeighborhoodSlice } from '@src/store/currentNeighborhood/reducer';
 import { debtSlice } from '@src/store/debt/reducer';
+import { dutiesSlice } from '@src/store/duties/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -24,6 +25,7 @@ export const store = configureStore({
 		debts: debtsSlice.reducer,
 		debt: debtSlice.reducer,
 		createDebt: createDebtSlice.reducer,
+		duties: dutiesSlice.reducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

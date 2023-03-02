@@ -8,6 +8,8 @@ export interface IDebtsState {
 		minValue: number | string,
 		maxValue: number | string,
 	},
+	debtsFirstLoad: boolean,
+	debtorsFirstLoad: boolean,
 	isLoading: boolean,
 	minorIsLoading: boolean,
 	updateValue: number | null,

@@ -7,3 +7,6 @@ export const selectCurrentDebtsFilters = (state: RootState): IDebtsState['filter
 export const selectCurrentDebtsLoading = (state: RootState): boolean => state.debts.isLoading;
 export const selectMinorDebtIsLoading = (state: RootState): boolean => state.debts.minorIsLoading;
 export const selectDebtUpdateValue = (state: RootState): IDebtsState['updateValue'] => state.debts.updateValue;
+export const selectDebtsFirstLoad = (state: RootState): boolean => state.debts.debtsFirstLoad;
+
+export const selectDebtorsFirstLoad = (state: RootState): boolean => state.debts.debtorsFirstLoad;

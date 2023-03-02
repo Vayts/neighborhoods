@@ -10,3 +10,4 @@ export const increaseDebtRequest = createAction('INCREASE_DEBT', (_id, value) =>
 export const deleteDebtRequest = createAction('DELETE_DEBT', (_id) => ({ payload: { _id } }));
 export const editDebtRequest = createAction('EDIT_DEBT', (_id, values) => ({ payload: { _id, values } }));
 export const getDebtsRequest = createAction('GET_DEBTS', (_id, isDebtors) => ({ payload: { _id, isDebtors } }));
+export const getDebtsFirstLoad = createAction('FIRST_DEBTS_LOAD', (_id, isDebtors) => ({ payload: { _id, isDebtors } }));

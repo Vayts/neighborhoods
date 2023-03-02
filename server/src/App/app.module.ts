@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from '../modules/auth.module';
 import { NeighborhoodModule } from '../modules/neighborhood.module';
 import { DebtModule } from '../modules/debt.module';
+import { DutyModule } from '../modules/duty.module';
 
 @Module({
   controllers: [AppController],
@@ -14,6 +15,7 @@ import { DebtModule } from '../modules/debt.module';
 		AuthModule,
 		NeighborhoodModule,
 		DebtModule,
+		DutyModule,
 	]
 })
 export class AppModule {}

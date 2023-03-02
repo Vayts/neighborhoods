@@ -1,7 +1,7 @@
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import {
 	addStatusToDebtFilter, addUserToDebtFilter,
-	closeDebtRequest, deleteDebtRequest, editDebtRequest,
+	closeDebtRequest, deleteDebtRequest, editDebtRequest, getDebtsFirstLoad,
 	getDebtsRequest, increaseDebtRequest,
 	partialPaymentRequest,
 	reduceDebtRequest,
@@ -12,8 +12,9 @@ import { tokenExpired } from '@src/store/auth/user/sagas';
 import { errorManager } from '@src/api/errorManager';
 import { selectCurrentDebts, selectCurrentDebtsFilters } from '@src/store/debts/selectors';
 import {
+	debtorsFirstLoadEnd,
 	debtRequestEnd,
-	debtRequestStart,
+	debtRequestStart, debtsFirstLoadEnd,
 	minorDebtRequestEnd,
 	minorDebtRequestStart,
 	setCurrentDebts, setFullFilters,
@@ -26,8 +27,9 @@ import { generateAxiosPrivate } from '@src/api/axiosPrivate';
 import { resetModal } from '@src/store/base/reducer';
 import { getNotification } from '@src/notification/notifications';
 import i18n from 'i18next';
+import { getDebtsFiltersFromSessionStorage } from '@helpers/sessionStorage.helper';
 
-export function* workerDebts(action): SagaIterator {
+export function* workerDebts(action: Record<string, string | any>): SagaIterator {
 	const { isDebtors, _id } = action.payload;
 	
 	try {
@@ -39,6 +41,8 @@ export function* workerDebts(action): SagaIterator {
 		const response = yield call(getRequest, link, axiosPrivate);
 		yield put(setCurrentDebts(response.data));
 		yield put(debtRequestEnd());
+		if (isDebtors) yield put(debtorsFirstLoadEnd());
+		if (!isDebtors) yield put(debtsFirstLoadEnd());
 	} catch (e) {
 		if (e?.response?.data?.message === ERRORS.NOT_AUTHORIZED) {
 			yield call(tokenExpired, () => getDebtsRequest(_id, isDebtors));
@@ -47,6 +51,13 @@ export function* workerDebts(action): SagaIterator {
 			yield put(debtRequestEnd());
 		}
 	}
+}
+
+function* firstDebtsLoadSaga(action): SagaIterator {
+	const { isDebtors, _id } = action.payload;
+	const debtsFilters = getDebtsFiltersFromSessionStorage(_id, isDebtors);
+	if (debtsFilters) yield put(setFullFilters(debtsFilters));
+	yield call(workerDebts, action);
 }
 
 function* closeDebtSaga(action): SagaIterator {
@@ -309,4 +320,5 @@ export function* watchDebts(): SagaIterator {
 	yield takeEvery(editDebtRequest, editDebtSaga);
 	yield takeLatest(addStatusToDebtFilter, addStatusSaga);
 	yield takeLatest(addUserToDebtFilter, addUserFilterSaga);
+	yield takeLatest(getDebtsFirstLoad, firstDebtsLoadSaga);
 }

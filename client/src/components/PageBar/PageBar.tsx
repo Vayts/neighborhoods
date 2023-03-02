@@ -35,7 +35,7 @@ export const PageBar: React.FC = () => {
 						<PageLinkIcon className='icon-debtors'/>
 						<PageLinkText>{t('debtors')}</PageLinkText>
 					</PageLink>
-					<PageLink to={`neighborhood/tasks/${neighborhood._id}`}>
+					<PageLink to={`neighborhood/duties/${neighborhood._id}`}>
 						<PageLinkIcon className='icon-Task'/>
 						<PageLinkText>{t('duties')}</PageLinkText>
 					</PageLink>

@@ -15,5 +15,8 @@ export const ROUTES = {
 	increaseDebt: '/debt/increase_debt',
 	editDebt: '/debt/edit_debt',
 	debtHistory: '/debt/history',
-	createDebt: 'debt/create_debt',
+	createDebt: '/debt/create_debt',
+	duty: {
+		getDuties: '/duty',
+	},
 };

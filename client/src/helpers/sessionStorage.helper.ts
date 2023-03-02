@@ -40,12 +40,11 @@ export function getDebtsFiltersFromSessionStorage(_id: string, isDebtors: boolea
 		if (parsed._id === _id) {
 			return parsed.filters;
 		}
-		return null;
 	}
 	return null;
 }
 
-export function setNeighborhoodToSessionStorage(neighborhoodData: INeighborhood) {
+export function setNeighborhoodToSessionStorage(neighborhoodData: INeighborhood): void {
 	sessionStorage.setItem('neighborhood', JSON.stringify(neighborhoodData));
 }
 
