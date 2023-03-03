@@ -9,5 +9,5 @@ export interface IUserEvent {
 	neighborhood: string;
 	content: Record<string, string|boolean|number|null>;
 	hasSeen: boolean;
-	timeStamp: number | Date;
+	timeStamp: string;
 }

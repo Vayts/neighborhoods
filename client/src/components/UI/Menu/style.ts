@@ -19,7 +19,7 @@ export const MenuWrapper = styled.div`
 `;
 
 export const MenuIcon = styled.span`
-  font-size: 25px;
+  font-size: 22px;
   color: ${({ theme }) => theme.subTxtColor};
 
   &:hover {

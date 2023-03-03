@@ -19,6 +19,6 @@ export const AvatarWrapper = styled.div<IAvatarStyleBlock>`
 	border-radius: 50%;
 	text-transform: capitalize;
 	user-select: none;
-	cursor: default;
+	cursor: inherit;
 	vertical-align: bottom;
 `;

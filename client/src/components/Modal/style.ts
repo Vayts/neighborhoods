@@ -44,6 +44,7 @@ export const ModalWindow = styled.div`
 	padding-top: 25px;
   animation: ${appear} 0.1s linear;
 	margin: 10px;
+  overflow: hidden;
 	min-width: 300px;
 `;
 

@@ -16,8 +16,8 @@ export const TableFullRow = styled.tr<ITableDebtStyle>`
 	background-color: #fff;
 	opacity: ${({ shown }) => (shown ? '1' : '0')};
   animation: ${appear} 0.2s linear;
-  border: 1px solid #f1f1f1;
   position: relative;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
 
   td {
 	  transition: all 0.2s;

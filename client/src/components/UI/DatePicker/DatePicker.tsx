@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Calendar from 'react-calendar';
-import './calendar.css';
+import './calendarStyles.css';
 import {
 	CalendarWrapper,
 	DatePickerContent, DatePickerIcon,
@@ -50,7 +50,7 @@ export const DatePicker: React.FC<IDatePicker> = (
 				<DatePickerInput onFocus={isOpen ? null : () => setOpen(true)} height={height} name={name} placeholder={placeholder} onChange={() => null} onClick={isOpen ? null : () => setOpen(true)} fz={fz} padding={padding} width={width} id={id} value={value ? format(new Date(Number(value)), 'dd/MM/yyyy') : ''}/>
 				<DatePickerIcon className='icon-calendar' onClick={isOpen ? null : () => setOpen(true)}/>
 				<CalendarWrapper isOpen={isOpen} ref={calendarRef}>
-					<Calendar onChange={change} value={current} locale={`${lang}-${lang.toUpperCase()}`} disabled={disabled}/>
+					<Calendar onChange={change} value={current} locale={`${lang}-${lang.toUpperCase()}`} disabled={disabled} className='react-calendar-small important'/>
 				</CalendarWrapper>
 			</DatePickerContent>
 			

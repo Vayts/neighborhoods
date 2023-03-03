@@ -74,6 +74,7 @@
   "main": "Main",
   "mainPage": "Dashboard",
   "mar": "Mar",
+  "markAsDone": "Mark as done",
   "may": "May",
   "mustBeANumber": "Must be a number",
   "mustBeGreaterThan": "Must be greater than {{value}}",
@@ -138,5 +139,6 @@
   "yourDebtor": "Active debtors",
   "yourDebtorInTheAmount": "Your debtor in the amount",
   "yourDebtors": "Your Debtors",
-  "yourDebts": "Your Debts"
+  "yourDebts": "Your Debts",
+  "yourDuties": "Your Duties"
 }

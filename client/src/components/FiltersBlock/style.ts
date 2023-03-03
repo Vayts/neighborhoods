@@ -4,6 +4,7 @@ export const FilterBlockWrapper = styled.div`
 	background-color: #fff;
 	padding: 10px;
 	margin-bottom: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
 `;
 
 export const FilterTitleWrapper = styled.div`

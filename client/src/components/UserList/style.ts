@@ -5,6 +5,8 @@ export const UserListWrapper = styled.div``;
 
 export const UserListContent = styled.ul`
   display: flex;
+	padding: 0 0 0 10px;
+	margin: 0;
 `;
 
 export const UserListItem = styled.li<IUserListItem>`

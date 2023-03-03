@@ -30,12 +30,11 @@ export const NCardContent = styled.div`
   margin: 0 0 30px 0;
   background-color: #fff;
   padding: 20px 15px;
-  border-radius: 15px;
+  border-radius: 5px;
   animation: ${appear} 0.2s linear;
   position: relative;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
   flex-grow: 1;
-  border: 1px solid #e5e5e5;
 
   & > span {
     position: absolute;

@@ -79,12 +79,10 @@ interface ICalendar {
 }
 
 export const CalendarWrapper = styled.div<ICalendar>`
-	bottom: 50%;
+	bottom: 10px;
 	right: 10px;
   position: absolute;
 	z-index: 10;
 	display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   animation: ${appear} 0.1s linear;
-	max-width: 300px;
-	max-height: 300px;
 `;

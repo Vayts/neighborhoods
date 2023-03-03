@@ -74,6 +74,7 @@
   "main": "Головне",
   "mainPage": "Головна",
   "mar": "Бер",
+  "markAsDone": "Відзначити як виконане",
   "may": "Тра",
   "mustBeANumber": "Тільки число",
   "mustBeGreaterThan": "Має бути більше ніж {{value}}",
@@ -138,5 +139,6 @@
   "yourDebtor": "Активних боржників",
   "yourDebtorInTheAmount": "Вам повернуть",
   "yourDebtors": "Ваші Боржники",
-  "yourDebts": "Ваші Борги"
+  "yourDebts": "Ваші Борги",
+  "yourDuties": "Ваші Обов'язки"
 }

@@ -14,6 +14,7 @@ import { IncreaseDebtModal } from '@src/components/Modal/Debt/IncreaseDebtModal/
 import { DeleteDebtModal } from '@src/components/Modal/Debt/DeleteDebtModal/DeleteDebtModal';
 import { EditDebtModal } from '@src/components/Modal/Debt/EditDebtModal/EditDebtModal';
 import { ReopenDebtModal } from '@src/components/Modal/Debt/ReopenDebtModal/ReopenDebtModal';
+import { DutyMarkModal } from '@src/components/Modal/DutyMarkModal/DutyMarkModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -97,6 +98,14 @@ export const Modal: React.FC = () => {
 			return (
 				<ReopenDebtModal
 					debt={modalContent.debt}
+				/>
+			);
+		case MODALS.dutyMark:
+			return (
+				<DutyMarkModal
+					duty={modalContent.duty}
+					neighborhood={modalContent.neighborhood}
+					date={modalContent.date}
 				/>
 			);
 		default:

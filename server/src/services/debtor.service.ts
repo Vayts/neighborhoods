@@ -81,7 +81,7 @@ export class DebtorService {
 			{
 				type: 'debt',
 				content: {
-					debt: debtId,
+					debt: new mongoose.Types.ObjectId(debtId),
 					message: 'debtWasReopened',
 					value: debt.value,
 				},
@@ -140,7 +140,7 @@ export class DebtorService {
 			{
 				type: 'debt',
 				content: {
-					debt: debtId,
+					debt: new mongoose.Types.ObjectId(debtId),
 					message: 'partialReturn',
 					value: Number(partialPaymentValue.toFixed(2)),
 				},
@@ -165,7 +165,7 @@ export class DebtorService {
 			{
 				type: 'debt',
 				content: {
-					debt: debtId,
+					debt: new mongoose.Types.ObjectId(debtId),
 					message: 'reduceDebt',
 					value: Number(reduceValue.toFixed(2)),
 				},

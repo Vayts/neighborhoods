@@ -3,6 +3,7 @@ import mongoose, { HydratedDocument } from 'mongoose';
 import { User } from './user.schema';
 import { DebtEventSchema } from './debtEvent.schema';
 import { Neighborhood } from './neighborhood.schema';
+import { DutyEventSchema } from './dutyEvent.schema';
 
 export type UserEventDocument = HydratedDocument<UserEvent>;
 
@@ -21,10 +22,10 @@ export class UserEvent {
 	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Neighborhood', default: null })
 	neighborhood: Neighborhood;
 	
-	@Prop({type: DebtEventSchema})
-	content: DebtEventSchema;
+	@Prop({type: Object})
+	content: DutyEventSchema | DebtEventSchema;
 	
-	@Prop()
+	@Prop({default: false})
 	hasSeen: boolean;
 	
 	@Prop({default: Date.now()})

@@ -8,4 +8,5 @@ export const MODALS = {
 	deleteDebt: 'deleteDEbt',
 	editDebt: 'editDebt',
 	reopenDebt: 'reopenDebt',
+	dutyMark: 'dutyMark',
 };

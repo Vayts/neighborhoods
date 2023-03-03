@@ -14,7 +14,7 @@ const appear = keyframes`
 export const SmallRowWrapper = styled.tr<ITableDebtStyle>`
   background-color: #fff;
   border-radius: 15px;
-  border: 1px solid #f1f1f1;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
   width: 100%;
   animation: ${appear} 0.2s linear;
   position: relative;

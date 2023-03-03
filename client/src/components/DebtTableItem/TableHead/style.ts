@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const TableHeadWrapper = styled.tr`
   width: 100%;
 	background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.02);
 
   td {
 	  vertical-align: middle;
