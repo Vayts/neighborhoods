@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { Neighborhood, NeighborhoodDocument } from '../schemas/neighborhood.schema';
-import { Neighborhood_UserDocument, Neighborhood_Users } from '../schemas/neighborhood_user.schema';
-import { InvalidDataException } from '../exception/invalidData.exception';
-import { ERRORS } from '../constants/errors';
+import { Neighborhood, NeighborhoodDocument } from '../../schemas/neighborhood.schema';
+import { Neighborhood_UserDocument, Neighborhood_Users } from '../../schemas/neighborhood_user.schema';
+import { InvalidDataException } from '../../exception/invalidData.exception';
+import { ERRORS } from '../../constants/errors';
 
 @Injectable()
 export class NeighborhoodService {

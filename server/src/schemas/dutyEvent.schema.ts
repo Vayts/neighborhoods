@@ -6,8 +6,11 @@ import { Duty } from './duty.schema';
 export class DutyEventSchema {
 	
 	@Prop()
-	message: string;
+	date: Date;
 	
 	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Duty' })
 	duty: Duty;
+	
+	@Prop()
+	priority: number;
 }

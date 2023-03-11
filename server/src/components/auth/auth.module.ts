@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from '../services/auth.service';
-import { AuthController } from '../controllers/auth.controller';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
 
 import { JwtModule } from '@nestjs/jwt';
-import { TokenModule } from './token.module';
-import { UserService } from '../services/user.service';
+import { TokenModule } from '../token/token.module';
+import { UserService } from '../user/user.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '../schemas/user.schema';
+import { User, UserSchema } from '../../schemas/user.schema';
 
 @Module({
 	providers: [AuthService, UserService],

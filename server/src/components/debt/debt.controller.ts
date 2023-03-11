@@ -1,20 +1,18 @@
 import { Body, Controller, Delete, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { DebtService } from '../services/debt.service';
-import { DebtorService } from '../services/debtor.service';
-import { JwtAuthGuard } from '../guards/jwtAuth.guard';
-import { UserInNeighborhoodGuard } from '../guards/userInNeighborhood.guard';
+import { DebtService } from './debt.service';
+import { JwtAuthGuard } from '../../guards/jwtAuth.guard';
+import { UserInNeighborhoodGuard } from '../../guards/userInNeighborhood.guard';
 import { Request } from 'express';
-import { DebtAuthorGuard } from '../guards/debtAuthor.guard';
-import { InvalidDataException } from '../exception/invalidData.exception';
-import { ERRORS } from '../constants/errors';
-import { DebtDto } from '../dto/debt.dto';
-import { EditDebtDto } from '../dto/edit-debt.dto';
+import { DebtAuthorGuard } from '../../guards/debtAuthor.guard';
+import { InvalidDataException } from '../../exception/invalidData.exception';
+import { ERRORS } from '../../constants/errors';
+import { DebtDto } from '../../dto/debt.dto';
+import { EditDebtDto } from '../../dto/edit-debt.dto';
 
 @Controller('debt')
 export class DebtController {
 	constructor(
 		private debtService: DebtService,
-		private debtorService: DebtorService,
 	) {}
 	
 	
@@ -27,7 +25,7 @@ export class DebtController {
 	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard)
 	@Get('/debtors/:neighborhoodId')
 	getUserDebtorsInNeighborhood(@Req() request: Request) {
-		return this.debtorService.getUserDebtorsInNeighborhood(request);
+		return this.debtService.getUserDebtorsInNeighborhood(request);
 	}
 	
 	@UseGuards(JwtAuthGuard, UserInNeighborhoodGuard)
@@ -39,19 +37,19 @@ export class DebtController {
 	@UseGuards(JwtAuthGuard)
 	@Post('/create_debt/:neighborhoodId')
 	createDebt(@Req() request: Request, @Body() body: DebtDto) {
-		return this.debtorService.createDebt(request, body)
+		return this.debtService.createDebt(request, body)
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
 	@Post('/close_debt/:debtId')
 	closeUserDebt(@Req() request: Request) {
-		return this.debtorService.closeDebt(request);
+		return this.debtService.closeDebt(request);
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
 	@Post('/reopen_debt/:debtId')
 	reopenUserDebt(@Req() request: Request) {
-		return this.debtorService.reopenDebt(request);
+		return this.debtService.reopenDebt(request);
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
@@ -65,7 +63,7 @@ export class DebtController {
 			throw new InvalidDataException(ERRORS.NO_ACCESS)
 		}
 		
-		return this.debtorService.addPartialPayment(request, debt);
+		return this.debtService.addPartialPayment(request, debt);
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
@@ -79,7 +77,7 @@ export class DebtController {
 			throw new InvalidDataException(ERRORS.NO_ACCESS)
 		}
 		
-		return this.debtorService.reduceDebt(request, debt);
+		return this.debtService.reduceDebt(request, debt);
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
@@ -92,7 +90,7 @@ export class DebtController {
 			throw new InvalidDataException(ERRORS.NO_ACCESS)
 		}
 		
-		return this.debtorService.increaseDebt(request, debt);
+		return this.debtService.increaseDebt(request, debt);
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
@@ -100,12 +98,12 @@ export class DebtController {
 	async deleteDebt(@Req() request: Request) {
 		const {debtId} = request.params;
 		const debt = await this.debtService.getDebtByIdAndAuthor(debtId, request.user._id);
-		return this.debtorService.deleteDebt(request, debt);
+		return this.debtService.deleteDebt(request, debt);
 	}
 	
 	@UseGuards(JwtAuthGuard, DebtAuthorGuard)
 	@Post('/edit_debt/:debtId')
 	async editDebt(@Req() request: Request, @Body() editValues: EditDebtDto) {
-		return this.debtorService.editDebt(request, editValues);
+		return this.debtService.editDebt(request, editValues);
 	}
 }

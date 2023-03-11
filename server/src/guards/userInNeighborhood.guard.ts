@@ -4,7 +4,7 @@ import {
 	Injectable, UnauthorizedException,
 } from '@nestjs/common';
 import { ERRORS } from '../constants/errors';
-import { NeighborhoodService } from '../services/neighborhood.service';
+import { NeighborhoodService } from '../components/neighborhood/neighborhood.service';
 
 @Injectable()
 export class UserInNeighborhoodGuard implements CanActivate {

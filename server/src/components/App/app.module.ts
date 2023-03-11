@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from '../modules/auth.module';
-import { NeighborhoodModule } from '../modules/neighborhood.module';
-import { DebtModule } from '../modules/debt.module';
-import { DutyModule } from '../modules/duty.module';
+import { AuthModule } from '../auth/auth.module';
+import { NeighborhoodModule } from '../neighborhood/neighborhood.module';
+import { DebtModule } from '../debt/debt.module';
+import { DutyModule } from '../duty/duty.module';
 
 @Module({
   controllers: [AppController],

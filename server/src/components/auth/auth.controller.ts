@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Req, Res, UsePipes } from '@nestjs/common';
-import { LoginUserDto } from '../dto/login-user.dto';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { AuthService } from '../services/auth.service';
-import { ValidationPipe } from '../pipes/validation.pipe';
+import { LoginUserDto } from '../../dto/login-user.dto';
+import { CreateUserDto } from '../../dto/create-user.dto';
+import { AuthService } from './auth.service';
+import { ValidationPipe } from '../../pipes/validation.pipe';
 import { Request } from 'express';
 
 @Controller('auth')
