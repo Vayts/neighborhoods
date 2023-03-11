@@ -5,4 +5,5 @@ export interface IDutiesState {
 		list: IDuty[],
 	}
 	isLoading: boolean,
+	minorIsLoading: boolean,
 }

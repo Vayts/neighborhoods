@@ -18,5 +18,7 @@ export const ROUTES = {
 	createDebt: '/debt/create_debt',
 	duty: {
 		getDuties: '/duty',
+		addMark: '/duty/add_mark',
+		addRequest: '/duty/add_request',
 	},
 };

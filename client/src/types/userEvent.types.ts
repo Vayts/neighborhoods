@@ -4,7 +4,7 @@ export interface IUserEvent {
 	
 	_id: string,
 	type: string;
-	author: IUserInNeighborhood;
+	author: IUserInNeighborhood | string;
 	recipient: IUserInNeighborhood;
 	neighborhood: string;
 	content: Record<string, string|boolean|number|null>;

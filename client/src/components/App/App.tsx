@@ -67,16 +67,3 @@ export const App: React.FC = () => {
 		</ThemeProvider>
 	);
 };
-
-// 	<Route path='/' element={<RequireAuth/>}>
-// 		<Route path='/' element={<Layout/>}>
-// 			<Route path='/' element={<Main/>}/>
-// 			<Route path='/dashboard' element={<Main/>}/>
-// 			<Route path='/neighborhoods' element={<NeighborhoodsPage/>}/>
-// 			<Route path='/notification' element={<NotificationsPage/>}/>
-// 			<Route path='neighborhood/:id' element={<NeighborhoodCurrentPage/>}/>
-// 			<Route path='neighborhood/debts/:id' element={<DebtsPage isDebtors={false}/>}/>
-// 			<Route path='neighborhood/debtors/:id' element={<DebtsPage isDebtors/>}/>
-// 		</Route>
-// 	</Route>
-// </Routes>

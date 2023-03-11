@@ -5,7 +5,9 @@ import { AvatarWrapper } from '@src/components/AvatarFiller/style';
 export const AvatarFiller: React.FC<IAvatarProps> = ({ size, text, fz }) => {
 	return (
 		<AvatarWrapper fz={fz} size={size}>
-			{text.slice(0, 1)}
+			<span>
+				{text.slice(0, 1)}
+			</span>
 		</AvatarWrapper>
 	);
 };

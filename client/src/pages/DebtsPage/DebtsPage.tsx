@@ -21,7 +21,6 @@ import { getDebtsFirstLoad, getDebtsRequest } from '@src/store/debts/actions';
 import { Title } from '@src/components/Title/Title';
 import { resetDebtFilters, setUpdateValue } from '@src/store/debts/reducer';
 import {
-	removeDebtsFiltersFromSessionStorage,
 	setDebtsFiltersToSessionStorage,
 } from '@helpers/sessionStorage.helper';
 import { IDebtPage } from '@src/types/debt.types';
@@ -67,7 +66,7 @@ export const DebtsPage: React.FC<IDebtPage> = ({ isDebtors }) => {
 	useEffect(() => {
 		if (!neighborhood || neighborhood._id !== id) {
 			dispatch(getNeighborhoodRequest(id));
-			removeDebtsFiltersFromSessionStorage(isDebtors);
+			// removeDebtsFiltersFromSessionStorage(isDebtors);
 		}
 	}, [neighborhood]);
 	const updateHandler = () => {

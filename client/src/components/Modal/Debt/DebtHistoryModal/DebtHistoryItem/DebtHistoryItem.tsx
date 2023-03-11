@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import {
-	DebtHistoryContent,
-	DebtHistoryDate,
-	DebtHistoryItemText, DebtHistoryItemTitle,
-	DebtHistoryItemWrapper, DebtHistoryMainInfo, DebtHistorySubInfo,
+	DebtHistoryItemWrapper,
 } from '@src/components/Modal/Debt/DebtHistoryModal/DebtHistoryItem/style';
-import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { AvatarFiller } from '@src/components/AvatarFiller/AvatarFiller';
-import { Title } from '@src/components/Title/Title';
 import { selectUser } from '@src/store/auth/user/selectors';
 import { useAppSelector } from '@src/hooks/hooks';
 import { IDebtHistoryItem } from '@src/types/debt.types';
+import { UserEventItem } from '@src/components/UserEventItem/UserEventItem';
 
 interface IDebtHistoryItemProps {
 	debtHistory: IDebtHistoryItem,
 	index: number,
 }
 
-export const DebtHistoryItem: React.FC<IDebtHistoryItemProps> = ({ debtHistory, index }) => {
+export const DebtHistoryItem: React.FC<IDebtHistoryItemProps> = ({
+	debtHistory,
+	index,
+}) => {
 	const { t } = useTranslation();
 	const [shown, setShown] = useState(false);
 	const user = useAppSelector(selectUser);
@@ -35,101 +34,76 @@ export const DebtHistoryItem: React.FC<IDebtHistoryItemProps> = ({ debtHistory, 
 	
 	const generateCloseItem = () => {
 		return (
-			<DebtHistoryContent>
-				<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>
-				<DebtHistoryMainInfo>
-					<DebtHistoryItemTitle>
-						<Title fz='16px' margin='0'>{debtHistory.author.login}</Title>
-						<DebtHistoryDate>{format(new Date(debtHistory.timeStamp), 'dd/MM/yy HH:mm')}</DebtHistoryDate>
-					</DebtHistoryItemTitle>
-					<DebtHistorySubInfo>
-						<DebtHistoryItemText>
-							{user._id === debtHistory.author._id
-								? `${t('youClosedTheDebt', { value: debtHistory.content.value })} ₴` : `${t('authorClosedTheDebt', { author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`, value: debtHistory.content.value })} ₴`}
-						</DebtHistoryItemText>
-					</DebtHistorySubInfo>
-				</DebtHistoryMainInfo>
-			</DebtHistoryContent>
+			<UserEventItem
+				date={debtHistory.timeStamp}
+				leftContent={<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>}
+				title={debtHistory.author.login}
+				text={user._id === debtHistory.author._id
+					? `${t('youClosedTheDebt', { value: debtHistory.content.value })} ₴` : `${t('authorClosedTheDebt', {
+						author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`,
+						value: debtHistory.content.value,
+					})} ₴`}
+			/>
 		);
 	};
 	
 	const generateReopenItem = () => {
 		return (
-			<DebtHistoryContent>
-				<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>
-				<DebtHistoryMainInfo>
-					<DebtHistoryItemTitle>
-						<Title fz='16px' margin='0'>{debtHistory.author.login}</Title>
-						<DebtHistoryDate>{format(new Date(debtHistory.timeStamp), 'dd/MM/yy HH:mm')}</DebtHistoryDate>
-					</DebtHistoryItemTitle>
-					<DebtHistorySubInfo>
-						<DebtHistoryItemText>
-							{user._id === debtHistory.author._id
-								? `${t('youReopenTheDebt', { value: debtHistory.content.value })} ₴` : `${t('authorReopenedTheDebt', { author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`, value: debtHistory.content.value })} ₴`}
-						</DebtHistoryItemText>
-					</DebtHistorySubInfo>
-				</DebtHistoryMainInfo>
-			</DebtHistoryContent>
+			<UserEventItem
+				date={debtHistory.timeStamp}
+				leftContent={<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>}
+				title={debtHistory.author.login}
+				text={user._id === debtHistory.author._id
+					? `${t('youReopenTheDebt', { value: debtHistory.content.value })} ₴` : `${t('authorReopenedTheDebt', {
+						author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`,
+						value: debtHistory.content.value,
+					})} ₴`}
+			/>
 		);
 	};
 	
 	const generateReduceItem = () => {
 		return (
-			<DebtHistoryContent>
-				<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>
-				<DebtHistoryMainInfo>
-					<DebtHistoryItemTitle>
-						<Title fz='16px' margin='0'>{debtHistory.author.login}</Title>
-						<DebtHistoryDate>{format(new Date(debtHistory.timeStamp), 'dd/MM/yy HH:mm')}</DebtHistoryDate>
-					</DebtHistoryItemTitle>
-					<DebtHistorySubInfo>
-						<DebtHistoryItemText>
-							{user._id === debtHistory.author._id
-								? `${t('youReduceDebt', { value: debtHistory.content.value })} ₴` : `${t('authorReduceDebt', { author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`, value: debtHistory.content.value })} ₴`}
-						</DebtHistoryItemText>
-					</DebtHistorySubInfo>
-				</DebtHistoryMainInfo>
-			</DebtHistoryContent>
+			<UserEventItem
+				date={debtHistory.timeStamp}
+				leftContent={<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>}
+				title={debtHistory.author.login}
+				text={user._id === debtHistory.author._id
+					? `${t('youReduceDebt', { value: debtHistory.content.value })} ₴` : `${t('authorReduceDebt', {
+						author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`,
+						value: debtHistory.content.value,
+					})} ₴`}
+			/>
 		);
 	};
 	
 	const generateIncreaseItem = () => {
 		return (
-			<DebtHistoryContent>
-				<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>
-				<DebtHistoryMainInfo>
-					<DebtHistoryItemTitle>
-						<Title fz='16px' margin='0'>{debtHistory.author.login}</Title>
-						<DebtHistoryDate>{format(new Date(debtHistory.timeStamp), 'dd/MM/yy HH:mm')}</DebtHistoryDate>
-					</DebtHistoryItemTitle>
-					<DebtHistorySubInfo>
-						<DebtHistoryItemText>
-							{user._id === debtHistory.author._id
-								? `${t('youIncreaseDebt', { value: debtHistory.content.value })} ₴` : `${t('authorIncreaseDebt', { author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`, value: debtHistory.content.value })} ₴`}
-						</DebtHistoryItemText>
-					</DebtHistorySubInfo>
-				</DebtHistoryMainInfo>
-			</DebtHistoryContent>
+			<UserEventItem
+				date={debtHistory.timeStamp}
+				leftContent={<AvatarFiller text={debtHistory.author.login} size={35} fz={14}/>}
+				title={debtHistory.author.login}
+				text={user._id === debtHistory.author._id
+					? `${t('youIncreaseDebt', { value: debtHistory.content.value })} ₴` : `${t('authorIncreaseDebt', {
+						author: `${debtHistory.author.firstName} ${debtHistory.author.lastName.slice(0, 1)}.`,
+						value: debtHistory.content.value,
+					})} ₴`}
+			/>
 		);
 	};
 	
 	const generatePartialItem = () => {
 		return (
-			<DebtHistoryContent>
-				<AvatarFiller text={debtHistory.debtor.login} size={35} fz={14}/>
-				<DebtHistoryMainInfo>
-					<DebtHistoryItemTitle>
-						<Title fz='16px' margin='0'>{debtHistory.debtor.login}</Title>
-						<DebtHistoryDate>{format(new Date(debtHistory.timeStamp), 'dd/MM/yy HH:mm')}</DebtHistoryDate>
-					</DebtHistoryItemTitle>
-					<DebtHistorySubInfo>
-						<DebtHistoryItemText>
-							{user._id === debtHistory.debtor._id
-								? `${t('partialPaymentOwn', { value: debtHistory.content.value })} ₴` : `${t('partialPayment', { debtor: `${debtHistory.debtor.firstName} ${debtHistory.debtor.lastName.slice(0, 1)}.`, value: debtHistory.content.value })} ₴`}
-						</DebtHistoryItemText>
-					</DebtHistorySubInfo>
-				</DebtHistoryMainInfo>
-			</DebtHistoryContent>
+			<UserEventItem
+				date={debtHistory.timeStamp}
+				leftContent={<AvatarFiller text={debtHistory.debtor.login} size={35} fz={14}/>}
+				title={debtHistory.author.login}
+				text={user._id === debtHistory.debtor._id
+					? `${t('partialPaymentOwn', { value: debtHistory.content.value })} ₴` : `${t('partialPayment', {
+						debtor: `${debtHistory.debtor.firstName} ${debtHistory.debtor.lastName.slice(0, 1)}.`,
+						value: debtHistory.content.value,
+					})} ₴`}
+			/>
 		);
 	};
 	

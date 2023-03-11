@@ -6,7 +6,7 @@ export interface IDuty {
 	title: string,
 	members: IUserInNeighborhood[],
 	author: string,
-	marks: IDutyMark[]
+	marks: Record<string, IDutyMark[]>
 	active: boolean,
 	neighborhood: string,
 }

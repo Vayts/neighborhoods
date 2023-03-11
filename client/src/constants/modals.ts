@@ -9,4 +9,6 @@ export const MODALS = {
 	editDebt: 'editDebt',
 	reopenDebt: 'reopenDebt',
 	dutyMark: 'dutyMark',
+	dutyRequest: 'dutyRequest',
+	dutyDayHistory: 'dutyDayHistory',
 };

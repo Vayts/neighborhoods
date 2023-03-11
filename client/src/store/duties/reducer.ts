@@ -7,12 +7,16 @@ const initialState: IDutiesState = {
 		list: [],
 	},
 	isLoading: true,
+	minorIsLoading: false,
 };
 
 export const dutiesSlice = createSlice({
 	name: 'duties',
 	initialState,
 	reducers: {
+		setDuties: (state, action: PayloadAction<IDuty[]>) => {
+			state.data.list = action.payload;
+		},
 		dutiesRequestStart: (state) => {
 			state.isLoading = true;
 		},
@@ -23,7 +27,20 @@ export const dutiesSlice = createSlice({
 		dutiesRequestEnd: (state) => {
 			state.isLoading = false;
 		},
+		minorDutiesRequestStart: (state) => {
+			state.minorIsLoading = true;
+		},
+		minorDutiesRequestEnd: (state) => {
+			state.minorIsLoading = false;
+		},
 	},
 });
 
-export const { dutiesRequestStart, dutiesRequestEnd, dutiesRequestSuccess } = dutiesSlice.actions;
+export const {
+	dutiesRequestStart,
+	dutiesRequestEnd,
+	dutiesRequestSuccess,
+	setDuties,
+	minorDutiesRequestStart,
+	minorDutiesRequestEnd,
+} = dutiesSlice.actions;

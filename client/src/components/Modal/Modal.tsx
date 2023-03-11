@@ -14,7 +14,9 @@ import { IncreaseDebtModal } from '@src/components/Modal/Debt/IncreaseDebtModal/
 import { DeleteDebtModal } from '@src/components/Modal/Debt/DeleteDebtModal/DeleteDebtModal';
 import { EditDebtModal } from '@src/components/Modal/Debt/EditDebtModal/EditDebtModal';
 import { ReopenDebtModal } from '@src/components/Modal/Debt/ReopenDebtModal/ReopenDebtModal';
-import { DutyMarkModal } from '@src/components/Modal/DutyMarkModal/DutyMarkModal';
+import { DutyMarkModal } from '@src/components/Modal/Duty/DutyMarkModal/DutyMarkModal';
+import { DutyRequestModal } from '@src/components/Modal/Duty/DutyRequestModal/DutyRequestModal';
+import { DutyDayHistoryModal } from '@src/components/Modal/Duty/DutyDayHistoryModal/DutyDayHistoryModal';
 
 export const Modal: React.FC = () => {
 	const modalType = useAppSelector(selectModal).type;
@@ -104,8 +106,21 @@ export const Modal: React.FC = () => {
 			return (
 				<DutyMarkModal
 					duty={modalContent.duty}
-					neighborhood={modalContent.neighborhood}
 					date={modalContent.date}
+				/>
+			);
+		case MODALS.dutyRequest:
+			return (
+				<DutyRequestModal
+					duty={modalContent.duty}
+					date={modalContent.date}
+				/>
+			);
+		case MODALS.dutyDayHistory:
+			return (
+				<DutyDayHistoryModal
+					members={modalContent.members}
+					marks={modalContent.marks}
 				/>
 			);
 		default:

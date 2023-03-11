@@ -111,13 +111,15 @@
   background-color: transparent;
   color: #1d1d1d;
 }
-.react-calendar__tile--now {
+.react-calendar-duty .react-calendar__tile--now {
   font-weight: 700;
   color: #1d1d1d;
+  background-color: #e7f0fa;
 }
-.react-calendar__tile--now:enabled:hover,
-.react-calendar__tile--now:enabled:focus {
+.react-calendar-duty .react-calendar__tile--now:enabled:hover,
+.react-calendar-duty .react-calendar__tile--now:enabled:focus {
   border: 1px solid #1d1d1d;
+  background-color: #dde9f6;
 }
 .react-calendar-duty .react-calendar__tile--hasActive {
   background: transparent;

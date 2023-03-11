@@ -3,4 +3,5 @@ export interface IDescription {
 	margin?: string,
 	color?: string,
 	height?: string,
+	align?: 'center' | 'left' | 'right',
 }

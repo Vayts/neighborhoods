@@ -6,4 +6,5 @@ export const DescriptionItem = styled.p<IDescription>`
   margin: ${({ margin = '15px 0' }) => margin};
   color: ${({ color, theme }) => color || theme.subTxtColor};
   height: ${({ height = 'auto' }) => height};
+	text-align: ${({ align = 'left' }) => align};
 `;

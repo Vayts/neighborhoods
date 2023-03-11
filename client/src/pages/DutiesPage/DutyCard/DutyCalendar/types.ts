@@ -5,11 +5,13 @@ import { IDuty } from '@src/types/duty.types';
 export interface IDutyMark extends IUserEvent {
 	content: {
 		duty: string
+		date: string,
+		priority: number,
 	}
 }
 
 export interface IDutyCalendarProps {
 	duty: IDuty,
-	marks: IDutyMark[],
+	marks: Record<string, IDutyMark[]>,
 	members: IUserInNeighborhood[],
 }
