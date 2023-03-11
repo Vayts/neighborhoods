@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const ReduceDebtWrapper = styled.div`
-  padding: 0 25px 15px;
-	width: 450px;
-	max-width: 450px;
+  padding: 0 20px 15px;
+	width: 420px;
+	max-width: 420px;
 	
 	& > h3 {
 		text-align: center;

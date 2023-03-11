@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CreateDebtWrapper = styled.div`
 	min-width: 420px;
-	padding: 0 25px 10px;
+	padding: 0 20px 10px;
 	
 	h3 {
 		text-align: center;
